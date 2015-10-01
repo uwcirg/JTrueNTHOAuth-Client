@@ -216,4 +216,13 @@ public class TrueNTHOAuthService implements OAuthService {
 	return getAuthorizationUrl(numberEncodings, callbackParameters, null);
     }
 
+    /**
+     * Returns the service configuration object.
+     * 
+     * @since 1.5
+     * @return Service configuration.
+     */
+    public TrueNTHOAuthConfig getConfig(){
+	return config;
+    }
 }
