@@ -11,10 +11,9 @@ import org.scribe.oauth.OAuthService;
 import org.scribe.utils.Preconditions;
 
 import edu.uw.cirg.truenth.oauth.builder.api.TrueNTHOAuthProvider;
-import edu.uw.cirg.truenth.oauth.model.TrueNTHGrantType;
 import edu.uw.cirg.truenth.oauth.model.TrueNTHOAuthConfig;
-import edu.uw.cirg.truenth.oauth.model.TrueNTHOAuthConstants;
-import edu.uw.cirg.truenth.oauth.model.TrueNTHTokenType;
+import edu.uw.cirg.truenth.oauth.model.definitions.TrueNTHGrantType;
+import edu.uw.cirg.truenth.oauth.model.definitions.TrueNTHTokenType;
 
 /**
  * OAuth service.
@@ -63,7 +62,7 @@ public class TrueNTHOAuthService implements OAuthService {
 	OAuthRequest request = new OAuthRequest(api.getAccessTokenVerb(), api.getAccessTokenEndpoint(config));
 	request.addBodyParameter(OAuthConstants.CLIENT_ID, config.getApiKey());
 	request.addBodyParameter(OAuthConstants.CLIENT_SECRET, config.getApiSecret());
-	request.addBodyParameter(TrueNTHOAuthConstants.GRANT_TYPE, TrueNTHGrantType.CODE.toString());
+	request.addBodyParameter(TrueNTHGrantType.GRANT_TYPE, TrueNTHGrantType.CODE.toString());
 	request.addBodyParameter(OAuthConstants.CODE, verifier.getValue());
 	request.addBodyParameter(OAuthConstants.REDIRECT_URI, config.getCallback());
 	if (config.hasScope())

@@ -1,4 +1,4 @@
-package edu.uw.cirg.truenth.oauth.model;
+package edu.uw.cirg.truenth.oauth.model.definitions;
 
 
 /**
@@ -14,7 +14,7 @@ public enum TrueNTHTokenType{
          * @since 0.5
          */
 	BEARER("Bearer");
-	
+		
 	private String tokenType;
 	
 	private TrueNTHTokenType(String tokenType) {
@@ -23,5 +23,5 @@ public enum TrueNTHTokenType{
 	
 	public String toString(){
 	    return tokenType;
-	}
+	}	
 }

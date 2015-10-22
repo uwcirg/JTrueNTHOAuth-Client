@@ -12,7 +12,7 @@ import org.scribe.utils.OAuthEncoder;
 
 import edu.uw.cirg.truenth.oauth.TrueNTHOAuthService;
 import edu.uw.cirg.truenth.oauth.model.TrueNTHOAuthConfig;
-import edu.uw.cirg.truenth.oauth.model.TrueNTHOAuthConstants;
+import edu.uw.cirg.truenth.oauth.model.definitions.TrueNTHOAuthConstants;
 
 /**
  * OAuth API provider.

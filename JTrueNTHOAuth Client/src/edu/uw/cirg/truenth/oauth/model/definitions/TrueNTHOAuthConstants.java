@@ -1,4 +1,4 @@
-package edu.uw.cirg.truenth.oauth.model;
+package edu.uw.cirg.truenth.oauth.model.definitions;
 
 /**
  * TrueNTH specific OAuth Constants.
@@ -8,14 +8,6 @@ package edu.uw.cirg.truenth.oauth.model;
  * @version 2.0
  */
 public class TrueNTHOAuthConstants {
-
-    /**
-     * Name of "grant type" parameter.
-     * 
-     * @since 0.5
-     * @see TrueNTHGrantType
-     */
-    public static final String GRANT_TYPE = "grant_type";
 
     /**
      * Name of "next" parameter.
