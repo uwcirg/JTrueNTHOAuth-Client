@@ -38,10 +38,10 @@ import edu.uw.cirg.truenth.oauth.model.definitions.TrueNTHTokenType;
  */
 public class TrueNTHAccessToken extends TrueNTHToken {
 
-    private static final long serialVersionUID = 329140790394969559L;
-    private long	      expiresIn;
-    private String	    refreshToken;
-    private String	    scope;
+    private static final long   serialVersionUID = 329140790394969559L;
+    private long		expiresIn;
+    private TrueNTHRefreshToken refreshToken;
+    private String	      scope;
 
     /**
      * Constructor.
@@ -86,7 +86,7 @@ public class TrueNTHAccessToken extends TrueNTHToken {
      * @since 0.5
      * @return Refresh token.
      */
-    public String getRefreshToken() {
+    public TrueNTHRefreshToken getRefreshToken() {
 
 	return refreshToken;
     }
@@ -123,8 +123,7 @@ public class TrueNTHAccessToken extends TrueNTHToken {
      */
     private void setRefreshToken(String refreshToken) {
 
-	Preconditions.checkEmptyString(refreshToken, "Refresh token cannot be null or empty.");
-	this.refreshToken = refreshToken;
+	this.refreshToken = new TrueNTHRefreshToken(refreshToken);
     }
 
     /**
@@ -168,4 +167,35 @@ public class TrueNTHAccessToken extends TrueNTHToken {
 	}
 
     }
+
+    @Override
+    public int hashCode() {
+
+	final int prime = 31;
+	int result = super.hashCode();
+	result = prime * result + (int) (expiresIn ^ (expiresIn >>> 32));
+	result = prime * result + refreshToken.hashCode();
+	result = prime * result + ((scope == null) ? 0 : scope.hashCode());
+	return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+
+	if (this == obj) return true;
+	if (!super.equals(obj)) return false;
+	if (!(obj instanceof TrueNTHAccessToken)) return false;
+
+	TrueNTHAccessToken other = (TrueNTHAccessToken) obj;
+
+	if (expiresIn != other.expiresIn) return false;
+	if (refreshToken == null) {
+	    if (other.refreshToken != null) return false;
+	} else if (!refreshToken.equals(other.refreshToken)) return false;
+	if (scope == null) {
+	    if (other.scope != null) return false;
+	} else if (!scope.equals(other.scope)) return false;
+	return true;
+    }
+
 }

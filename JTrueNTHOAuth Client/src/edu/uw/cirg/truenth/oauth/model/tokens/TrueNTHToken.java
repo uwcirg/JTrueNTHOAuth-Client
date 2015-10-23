@@ -80,12 +80,12 @@ public abstract class TrueNTHToken extends Token {
     }
     
     @Override
-    public boolean equals(Object o)
+    public boolean equals(Object obj)
     {
-      if (this == o) return true;
-      if (o == null || getClass() != o.getClass()) return false;
+      if (this == obj) return true;
+      if (!(obj instanceof TrueNTHToken)) return false;
 
-      TrueNTHToken other = (TrueNTHToken) o;
+      TrueNTHToken other = (TrueNTHToken) obj;
       String token = getToken();
       return token.equals(other.getToken()) && tokenType==other.getTokenType();
     }
@@ -94,7 +94,7 @@ public abstract class TrueNTHToken extends Token {
     public int hashCode() {
 
 	final int prime = 31;
-	int result = getToken().hashCode() ;
+	int result =  getToken().hashCode();
 	result = prime * result + tokenType.hashCode();
 	return result;
     }
