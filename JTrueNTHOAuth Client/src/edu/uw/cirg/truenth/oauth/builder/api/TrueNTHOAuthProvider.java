@@ -2,9 +2,9 @@ package edu.uw.cirg.truenth.oauth.builder.api;
 
 import java.security.InvalidParameterException;
 
+import javax.json.JsonObject;
+
 import org.scribe.builder.api.Api;
-import org.scribe.extractors.AccessTokenExtractor;
-import org.scribe.extractors.JsonTokenExtractor;
 import org.scribe.model.OAuthConfig;
 import org.scribe.model.ParameterList;
 import org.scribe.model.Verb;
@@ -13,6 +13,8 @@ import org.scribe.utils.OAuthEncoder;
 import edu.uw.cirg.truenth.oauth.TrueNTHOAuthService;
 import edu.uw.cirg.truenth.oauth.model.TrueNTHOAuthConfig;
 import edu.uw.cirg.truenth.oauth.model.definitions.TrueNTHOAuthConstants;
+import edu.uw.cirg.truenth.oauth.model.tokens.extractors.JSonTrueNTHAccessTokenExtractor;
+import edu.uw.cirg.truenth.oauth.model.tokens.extractors.TrueNTHAccessTokenExtractor;
 
 /**
  * OAuth API provider.
@@ -35,7 +37,7 @@ import edu.uw.cirg.truenth.oauth.model.definitions.TrueNTHOAuthConstants;
  * 
  * @author Victor de Lima Soares
  * @since 0.5 Sep 11, 2015
- * @version 2.0
+ * @version 3.0
  * 
  * @see TrueNTHOAuthService
  * @see TrueNTHOAuthConfig
@@ -142,7 +144,7 @@ public class TrueNTHOAuthProvider implements Api {
      *            Additional parameters to add on the Authorization URL. This
      *            parameter list should be used for especial circumstances to
      *            fine tune requests directed to the the OAuth server; for
-     *            instance, CS's "next" parameter: 
+     *            instance, CS's "next" parameter:
      *            {@link TrueNTHOAuthConstants#NEXT}.
      * @return the URL where users will be redirected.
      */
@@ -152,8 +154,7 @@ public class TrueNTHOAuthProvider implements Api {
 
 	String callback = config.getCallback();
 
-	if (callbackParameters != null)
-	    callback = callbackParameters.appendTo(callback);
+	if (callbackParameters != null) callback = callbackParameters.appendTo(callback);
 
 	for (int i = 0; i < numberEncodings; i++) {
 	    callback = OAuthEncoder.encode(callback);
@@ -200,8 +201,7 @@ public class TrueNTHOAuthProvider implements Api {
     @Override
     public TrueNTHOAuthService createService(OAuthConfig config) {
 
-	if (config instanceof TrueNTHOAuthConfig)
-	    return createService((TrueNTHOAuthConfig) config);
+	if (config instanceof TrueNTHOAuthConfig) return createService((TrueNTHOAuthConfig) config);
 
 	throw new InvalidParameterException("config is not a instance of TrueNTHOAuthConfig");
     }
@@ -216,9 +216,9 @@ public class TrueNTHOAuthProvider implements Api {
      * @since 0.5
      * @return access token extractor
      */
-    public AccessTokenExtractor getAccessTokenExtractor() {
+    public TrueNTHAccessTokenExtractor<JsonObject> getAccessTokenExtractor() {
 
-	return new JsonTokenExtractor();
+	return new JSonTrueNTHAccessTokenExtractor();
     }
 
 }

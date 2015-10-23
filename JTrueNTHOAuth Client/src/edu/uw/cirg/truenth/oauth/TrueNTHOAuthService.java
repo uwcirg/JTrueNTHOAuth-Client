@@ -14,28 +14,30 @@ import edu.uw.cirg.truenth.oauth.builder.api.TrueNTHOAuthProvider;
 import edu.uw.cirg.truenth.oauth.model.TrueNTHOAuthConfig;
 import edu.uw.cirg.truenth.oauth.model.definitions.TrueNTHGrantType;
 import edu.uw.cirg.truenth.oauth.model.definitions.TrueNTHTokenType;
+import edu.uw.cirg.truenth.oauth.model.tokens.TrueNTHAccessToken;
 
 /**
  * OAuth service.
  * 
  * @author Victor de Lima Soares
  * @since 0.5 Sep 11, 2015
- * @version 2.0
+ * @version 3.0
  *
  */
 public class TrueNTHOAuthService implements OAuthService {
 
     /**
      * OAuth version.
+     * 
      * @since 0.5
      */
     private static final String	VERSION = "2.0";
 
     private final TrueNTHOAuthProvider api;
-    private final TrueNTHOAuthConfig config;
+    private final TrueNTHOAuthConfig   config;
 
     /**
-     * Default constructor
+     * Default constructor.
      * 
      * @since 0.5
      * @param trueNTHOAuthProvider
@@ -54,21 +56,24 @@ public class TrueNTHOAuthService implements OAuthService {
      * Fetches an access token and returns as a token object - Scribe's model.
      * 
      * @since 0.5
-     * @return access token
+     * @param requestToken
+     *            This parameter will not be used and can be safely set to null.
+     * @param verifier
+     *            Code to fetch the access token.
+     * @return access token.
      */
     @Override
-    public Token getAccessToken(Token requestToken, Verifier verifier) {
+    public TrueNTHAccessToken getAccessToken(Token requestToken, Verifier verifier) {
 
 	OAuthRequest request = new OAuthRequest(api.getAccessTokenVerb(), api.getAccessTokenEndpoint(config));
 	request.addBodyParameter(OAuthConstants.CLIENT_ID, config.getApiKey());
 	request.addBodyParameter(OAuthConstants.CLIENT_SECRET, config.getApiSecret());
-	request.addBodyParameter(TrueNTHGrantType.GRANT_TYPE, TrueNTHGrantType.CODE.toString());
+	request.addBodyParameter(TrueNTHGrantType.PARAMETER, TrueNTHGrantType.CODE.toString());
 	request.addBodyParameter(OAuthConstants.CODE, verifier.getValue());
 	request.addBodyParameter(OAuthConstants.REDIRECT_URI, config.getCallback());
-	if (config.hasScope())
-	    request.addBodyParameter(OAuthConstants.SCOPE, config.getScope());
+	if (config.hasScope()) request.addBodyParameter(OAuthConstants.SCOPE, config.getScope());
 	Response response = request.send();
-	return api.getAccessTokenExtractor().extract(response.getBody());
+	return (TrueNTHAccessToken) api.getAccessTokenExtractor().extract(response.getBody());
     }
 
     /**
@@ -141,6 +146,7 @@ public class TrueNTHOAuthService implements OAuthService {
      * <p>
      * Same as {@link #getAuthorizationUrl()}
      * </p>
+     * 
      * @since 0.5
      * @param requestToken
      *            Access token.
@@ -152,7 +158,7 @@ public class TrueNTHOAuthService implements OAuthService {
 
 	return api.getAuthorizationUrl(config);
     }
-    
+
     /**
      * Returns the redirection URL where users authenticate.
      * 
@@ -177,14 +183,16 @@ public class TrueNTHOAuthService implements OAuthService {
      *            URL. Two encoding operations are necessary to communicate
      *            properly with CS after browser redirections in POP UPs.
      * @param callbackParameters
-     *            Additional parameters to add with the callback URL. This parameter list will be added to the callback URL. 
-     *            Those parameters are destined to the callback target. 
+     *            Additional parameters to add with the callback URL. This
+     *            parameter list will be added to the callback URL. Those
+     *            parameters are destined to the callback target.
      * @param parameters
      *            Additional parameters to add on the Authorization URL. This
      *            parameter list should be used for especial circumstances to
      *            fine tune requests directed to the the OAuth server; for
-     *            instance CS's "next" parameter. 
-     *            Parameters coming form the OAuthConfig will be automatically appended (by the provider); such as "scope".
+     *            instance CS's "next" parameter. Parameters coming form the
+     *            OAuthConfig will be automatically appended (by the provider);
+     *            such as "scope".
      * @return the URL where users will be redirected.
      */
     public String getAuthorizationUrl(int numberEncodings, ParameterList callbackParameters, ParameterList parameters) {
@@ -193,12 +201,13 @@ public class TrueNTHOAuthService implements OAuthService {
 
 	return baseURL;
     }
-    
+
     /**
      * Returns the redirection URL.
      * 
      * <p>
-     * This is just a convenience method. Same as: {@link #getAuthorizationUrl(int, ParameterList, ParameterList)}
+     * This is just a convenience method. Same as:
+     * {@link #getAuthorizationUrl(int, ParameterList, ParameterList)}
      * </p>
      * 
      * @since 1.5
@@ -207,11 +216,13 @@ public class TrueNTHOAuthService implements OAuthService {
      *            URL. Two encoding operations are necessary to communicate
      *            properly with CS after browser redirections in POP UPs.
      * @param callbackParameters
-     *            Additional parameters to add with the callback URL. This parameter list will be added to the callback URL. 
-     *            Those parameters are destined to the callback target. 
+     *            Additional parameters to add with the callback URL. This
+     *            parameter list will be added to the callback URL. Those
+     *            parameters are destined to the callback target.
      * @return the URL where users will be redirected.
      */
     public String getAuthorizationUrl(int numberEncodings, ParameterList callbackParameters) {
+
 	return getAuthorizationUrl(numberEncodings, callbackParameters, null);
     }
 
@@ -221,7 +232,8 @@ public class TrueNTHOAuthService implements OAuthService {
      * @since 1.5
      * @return Service configuration.
      */
-    public TrueNTHOAuthConfig getConfig(){
+    public TrueNTHOAuthConfig getConfig() {
+
 	return config;
     }
 }

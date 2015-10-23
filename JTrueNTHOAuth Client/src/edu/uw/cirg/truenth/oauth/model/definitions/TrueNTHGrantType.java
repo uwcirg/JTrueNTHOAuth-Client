@@ -16,7 +16,7 @@ public enum TrueNTHGrantType {
      * 
      * @since 1.5
      */
-    public static final String GRANT_TYPE = "grant_type";
+    public static final String PARAMETER = "grant_type";
 
     private String	     grantType;
 
@@ -32,6 +32,6 @@ public enum TrueNTHGrantType {
 
     public static String getParameterName() {
 
-	return GRANT_TYPE;
+	return PARAMETER;
     }
 }
