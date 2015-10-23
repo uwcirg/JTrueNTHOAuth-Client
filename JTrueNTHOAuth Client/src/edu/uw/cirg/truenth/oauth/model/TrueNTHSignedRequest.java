@@ -59,7 +59,7 @@ public class TrueNTHSignedRequest {
      * @throws InvalidKeyException
      *             If the key is not suitable for the algorithm.
      */
-    public static TrueNTHSignedRequest parce(String signed_request, String validationKey) throws NoSuchAlgorithmException, InvalidKeyException {
+    public static TrueNTHSignedRequest parse(String signed_request, String validationKey) throws NoSuchAlgorithmException, InvalidKeyException {
 
 	if (signed_request == null) { throw new NullPointerException("signed_request cannot be null"); }
 
