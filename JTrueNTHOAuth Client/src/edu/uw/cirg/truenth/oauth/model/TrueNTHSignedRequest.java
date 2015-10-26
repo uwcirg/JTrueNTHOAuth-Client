@@ -18,7 +18,7 @@ import org.apache.commons.codec.binary.Base64;
  * 
  * @author Victor de Lima Soares
  * @since 0.5 Oct 21, 2015
- * @version 1.0
+ * @version 2.0
  */
 public class TrueNTHSignedRequest {
 
@@ -46,7 +46,7 @@ public class TrueNTHSignedRequest {
      * :"logout","algorithm":"HMAC-SHA256"}
      * </p>
      * 
-     * @since 0.5
+     * @since 1.5
      * @param signed_request
      *            Raw string containing the "signed_request": signature+data.
      * @param validationKey
