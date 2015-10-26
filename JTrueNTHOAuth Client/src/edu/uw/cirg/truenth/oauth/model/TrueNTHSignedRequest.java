@@ -28,8 +28,6 @@ public class TrueNTHSignedRequest {
     private final static Charset charset   = StandardCharsets.UTF_8;
     private final static String  algorithm = "HmacSHA256";
     private final static Base64  base64    = new Base64(false);
-
-    private TrueNTHSignedRequest(){};
     
     /**
      * Builds a TrueNTHSignedRequest instance from an existing request in a
@@ -59,22 +57,18 @@ public class TrueNTHSignedRequest {
      * @throws InvalidKeyException
      *             If the key is not suitable for the algorithm.
      */
-    public static TrueNTHSignedRequest parse(String signed_request, String validationKey) throws NoSuchAlgorithmException, InvalidKeyException {
-
+    public TrueNTHSignedRequest(String signed_request, String validationKey) throws InvalidKeyException, NoSuchAlgorithmException{
 	if (signed_request == null) { throw new NullPointerException("signed_request cannot be null"); }
 
-	TrueNTHSignedRequest request = new TrueNTHSignedRequest();
 	String[] signedRequest = signed_request.split("\\.", 2);
 
-	request.signature = new String(base64.decode(signedRequest[0].getBytes(charset)));
+	this.signature = new String(base64.decode(signedRequest[0].getBytes(charset)));
 
 	String rawData = signedRequest[1];
-	request.data = Json.createReader(new StringReader(new String(base64.decode(rawData.getBytes(charset))))).readObject();
+	this.data = Json.createReader(new StringReader(new String(base64.decode(rawData.getBytes(charset))))).readObject();
 
-	request.validate(rawData, validationKey);
-
-	return request;
-    }
+	this.validate(rawData, validationKey);
+    };
 
     /**
      * Validates the data received, matching it with the expected signature.
