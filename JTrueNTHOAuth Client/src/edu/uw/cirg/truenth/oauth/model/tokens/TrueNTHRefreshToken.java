@@ -1,5 +1,7 @@
 package edu.uw.cirg.truenth.oauth.model.tokens;
 
+import java.io.Serializable;
+
 import org.scribe.utils.Preconditions;
 
 /**
@@ -10,8 +12,10 @@ import org.scribe.utils.Preconditions;
  * @version 1.0
  *
  */
-public class TrueNTHRefreshToken {
+public class TrueNTHRefreshToken implements Serializable {
 
+    private static final long serialVersionUID = 4351396514937408267L;
+    
     private String token;
 
     public TrueNTHRefreshToken(String token) {
@@ -44,6 +48,11 @@ public class TrueNTHRefreshToken {
 	
 	TrueNTHRefreshToken other = (TrueNTHRefreshToken) obj;
 	return token.equals(other.token);
+    }
+    
+    @Override
+    public String toString() {
+        return getToken();
     }
 
 }
