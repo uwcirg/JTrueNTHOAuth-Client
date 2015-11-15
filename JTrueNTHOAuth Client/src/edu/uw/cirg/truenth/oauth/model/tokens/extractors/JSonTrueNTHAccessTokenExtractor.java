@@ -28,21 +28,25 @@ public class JSonTrueNTHAccessTokenExtractor implements TrueNTHAccessTokenExtrac
      *            Data containing the token.
      * @return Token extracted.
      * @throws IllegalArgumentException
-     *             If an error message is received.
+     *             If an error message is received or when the data is
+     *             incomplete.
      */
     @Override
     public TrueNTHAccessToken extract(JsonObject data) {
 
 	String error = data.getString(TrueNTHOAuthConstants.ERROR);
 	if (error != null) { throw new IllegalArgumentException("Error: " + error + "\n" + data.toString()); }
+	try {
+	    String accessToken = data.getString(TrueNTHAccessToken.Parameters.ACCESS_TOKEN.toString()).trim();
+	    long expiresIn = data.getJsonNumber(TrueNTHAccessToken.Parameters.EXPIRES_IN.toString()).longValue();
+	    String refreshToken = data.getString(TrueNTHAccessToken.Parameters.REFRESH_TOKEN.toString()).trim();
+	    String scope = data.getString(TrueNTHAccessToken.Parameters.SCOPE.toString()).trim();
+	    String tokenType = data.getString(TrueNTHAccessToken.Parameters.TOKEN_TYPE.toString()).trim();
 
-	String accessToken = data.getString(TrueNTHAccessToken.Parameters.ACCESS_TOKEN.toString()).trim();
-	long expiresIn = data.getJsonNumber(TrueNTHAccessToken.Parameters.EXPIRES_IN.toString()).longValue();
-	String refreshToken = data.getString(TrueNTHAccessToken.Parameters.REFRESH_TOKEN.toString()).trim();
-	String scope = data.getString(TrueNTHAccessToken.Parameters.SCOPE.toString()).trim();
-	String tokenType = data.getString(TrueNTHAccessToken.Parameters.TOKEN_TYPE.toString()).trim();
-
-	return new TrueNTHAccessToken(accessToken, expiresIn, refreshToken, scope, tokenType);
+	    return new TrueNTHAccessToken(accessToken, expiresIn, refreshToken, scope, tokenType);
+	} catch (NullPointerException e) {
+	    throw new IllegalArgumentException("Error: data incomplete: \n" + data.toString());
+	}
     }
 
     /**
