@@ -4,6 +4,7 @@ import java.io.StringReader;
 
 import javax.json.Json;
 import javax.json.JsonObject;
+import javax.json.JsonString;
 
 import org.scribe.utils.Preconditions;
 
@@ -34,9 +35,10 @@ public class JSonTrueNTHAccessTokenExtractor implements TrueNTHAccessTokenExtrac
     @Override
     public TrueNTHAccessToken extract(JsonObject data) {
 
-	String error = data.getString(TrueNTHOAuthConstants.ERROR);
-	if (error != null) { throw new IllegalArgumentException("Error: " + error + "\n" + data.toString()); }
+	JsonString error = data.getJsonString(TrueNTHOAuthConstants.ERROR);
+	if (error != null) { throw new IllegalArgumentException("Error: " + error.toString() + "\n" + data.toString()); }
 	try {
+	    
 	    String accessToken = data.getString(TrueNTHAccessToken.Parameters.ACCESS_TOKEN.toString()).trim();
 	    long expiresIn = data.getJsonNumber(TrueNTHAccessToken.Parameters.EXPIRES_IN.toString()).longValue();
 	    String refreshToken = data.getString(TrueNTHAccessToken.Parameters.REFRESH_TOKEN.toString()).trim();
@@ -65,9 +67,7 @@ public class JSonTrueNTHAccessTokenExtractor implements TrueNTHAccessTokenExtrac
     public TrueNTHAccessToken extract(String data) {
 
 	Preconditions.checkEmptyString(data, "No data to extract");
-	JsonObject json = null;
-
-	json = Json.createReader(new StringReader(data)).readObject();
+	JsonObject json = Json.createReader(new StringReader(data)).readObject();
 	return extract(json);
     }
 }
