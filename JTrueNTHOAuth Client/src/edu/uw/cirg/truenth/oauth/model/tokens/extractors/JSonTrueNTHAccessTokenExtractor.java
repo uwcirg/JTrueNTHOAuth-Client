@@ -7,6 +7,7 @@ import javax.json.JsonObject;
 
 import org.scribe.utils.Preconditions;
 
+import edu.uw.cirg.truenth.oauth.model.definitions.TrueNTHOAuthConstants;
 import edu.uw.cirg.truenth.oauth.model.tokens.TrueNTHAccessToken;
 
 /**
@@ -14,7 +15,7 @@ import edu.uw.cirg.truenth.oauth.model.tokens.TrueNTHAccessToken;
  * 
  * @author Victor de Lima Soares
  * @since 0.5 Oct 22, 2015
- * @version 0.5
+ * @version 1.0
  *
  */
 public class JSonTrueNTHAccessTokenExtractor implements TrueNTHAccessTokenExtractor<JsonObject> {
@@ -26,19 +27,24 @@ public class JSonTrueNTHAccessTokenExtractor implements TrueNTHAccessTokenExtrac
      * @param data
      *            Data containing the token.
      * @return Token extracted.
+     * @throws IllegalArgumentException
+     *             If an error message is received.
      */
     @Override
     public TrueNTHAccessToken extract(JsonObject data) {
 
-	String accessToken=data.getString(TrueNTHAccessToken.Parameters.ACCESS_TOKEN.toString()).trim();
-	long expiresIn=data.getJsonNumber(TrueNTHAccessToken.Parameters.EXPIRES_IN.toString()).longValue();
-	String refreshToken=data.getString(TrueNTHAccessToken.Parameters.REFRESH_TOKEN.toString()).trim();
-	String scope=data.getString(TrueNTHAccessToken.Parameters.SCOPE.toString()).trim();
-	String tokenType=data.getString(TrueNTHAccessToken.Parameters.TOKEN_TYPE.toString()).trim();
-	
+	String error = data.getString(TrueNTHOAuthConstants.ERROR);
+	if (error != null) { throw new IllegalArgumentException("Error: " + error + "\n" + data.toString()); }
+
+	String accessToken = data.getString(TrueNTHAccessToken.Parameters.ACCESS_TOKEN.toString()).trim();
+	long expiresIn = data.getJsonNumber(TrueNTHAccessToken.Parameters.EXPIRES_IN.toString()).longValue();
+	String refreshToken = data.getString(TrueNTHAccessToken.Parameters.REFRESH_TOKEN.toString()).trim();
+	String scope = data.getString(TrueNTHAccessToken.Parameters.SCOPE.toString()).trim();
+	String tokenType = data.getString(TrueNTHAccessToken.Parameters.TOKEN_TYPE.toString()).trim();
+
 	return new TrueNTHAccessToken(accessToken, expiresIn, refreshToken, scope, tokenType);
     }
-    
+
     /**
      * Reads a TrueNTH access token from a String instance, JSon formated.
      * 
@@ -52,9 +58,12 @@ public class JSonTrueNTHAccessTokenExtractor implements TrueNTHAccessTokenExtrac
      * @return Token extracted.
      */
     @Override
-    public TrueNTHAccessToken extract(String data){
+    public TrueNTHAccessToken extract(String data) {
+
 	Preconditions.checkEmptyString(data, "No data to extract");
-	JsonObject json = Json.createReader(new StringReader(data)).readObject();
+	JsonObject json = null;
+
+	json = Json.createReader(new StringReader(data)).readObject();
 	return extract(json);
     }
 }

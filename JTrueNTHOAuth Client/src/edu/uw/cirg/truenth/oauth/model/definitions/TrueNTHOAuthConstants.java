@@ -5,7 +5,7 @@ package edu.uw.cirg.truenth.oauth.model.definitions;
  * 
  * @author Victor de Lima Soares
  * @since 0.5 Sep 11, 2015
- * @version 2.0
+ * @version 3.0
  */
 public class TrueNTHOAuthConstants {
 
@@ -25,7 +25,7 @@ public class TrueNTHOAuthConstants {
     public static final String NEXT       = "next";
 
     /**
-     * Used to internally redirect users.
+     * Used to internally to redirect users.
      * 
      * <p>
      * Used internally to redirect users after an OAuth call.
@@ -48,4 +48,11 @@ public class TrueNTHOAuthConstants {
      * @since 1.5
      */
     public static final String REDIRECT   = "redirect";
+    
+    /**
+     * Error messages identification, sent by CS.
+     * 
+     * @since 2.5
+     */
+    public static final String ERROR = "error";
 }
