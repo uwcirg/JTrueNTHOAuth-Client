@@ -21,7 +21,7 @@ import edu.uw.cirg.truenth.oauth.model.tokens.TrueNTHAccessToken;
  * 
  * @author Victor de Lima Soares
  * @since 0.5 Sep 11, 2015
- * @version 3.0
+ * @version 4.0
  *
  */
 public class TrueNTHOAuthService implements OAuthService {
@@ -235,5 +235,44 @@ public class TrueNTHOAuthService implements OAuthService {
     public TrueNTHOAuthConfig getConfig() {
 
 	return config;
+    }
+    
+    
+    /**
+     * Returns the configured roles URL.
+     * 
+     * @see 2.5
+     * @return Roles URL.
+     */
+    public String getRolesURL() {
+
+	return getConfig().getRolesURL();
+    }
+
+    /**
+     * Returns the configured resource URL (API base).
+     * 
+     * @see 2.5
+     * @return Resource URL.
+     */
+    public String getResourceURL() {
+
+	return getConfig().getResourceURL();
+    }
+
+    /**
+     * Returns the configured Central Services base URL.
+     * 
+     * <p>
+     * This URL points to central services base URL, it should not be used for
+     * OAuth operation, but for fetching static resources, such as css. It is
+     * mainly used for templates.
+     * </p>
+     * @see 2.5
+     * @return Configured Central Services base URL.
+     */
+    public String getBaseURL() {
+    
+        return getConfig().getBaseURL();
     }
 }

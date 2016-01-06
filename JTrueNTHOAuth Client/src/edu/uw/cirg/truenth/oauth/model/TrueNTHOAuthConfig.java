@@ -15,7 +15,7 @@ import org.scribe.model.SignatureType;
  * 
  * @author Victor de Lima Soares
  * @since 0.5 Sep 21, 2015
- * @version 1.0
+ * @version 2.0
  */
 public class TrueNTHOAuthConfig extends OAuthConfig {
 
@@ -32,6 +32,31 @@ public class TrueNTHOAuthConfig extends OAuthConfig {
      * @since 0.5
      */
     private final String baseAuthorizationURL;
+
+    /**
+     * Central Services' roles URL.
+     * 
+     * @since 1.5
+     */
+    private final String rolesURL;
+
+    /**
+     * Resource URL.
+     * 
+     * @since 1.5
+     */
+    private final String resourceURL;
+
+    /**
+     * Central Services base URL.
+     * <p>
+     * This URL points to central services base URL, it should not be used for
+     * OAuth operation, but for fetching static resources, such as css. It is
+     * mainly used for templates.
+     * </p>
+     * @since 1.5
+     */
+    private final String baseURL;
 
     /**
      * Constructor.
@@ -54,12 +79,16 @@ public class TrueNTHOAuthConfig extends OAuthConfig {
      *            Authorization scope.
      * @param stream
      */
-    public TrueNTHOAuthConfig(String key, String secret, String accessTokenEndpointURL, String baseAuthorizationURL, String callback,
-	    SignatureType signatureType, String scope, OutputStream stream) {
+    public TrueNTHOAuthConfig(String key, String secret, String accessTokenEndpointURL, String baseAuthorizationURL, String baseURL,
+	    String resourceURL, String rolesURL, String callback, SignatureType signatureType, String scope, OutputStream stream) {
 
 	super(key, secret, callback, signatureType, scope, stream);
 	this.accessTokenEndpoint = accessTokenEndpointURL;
 	this.baseAuthorizationURL = baseAuthorizationURL;
+
+	this.baseURL = baseURL;
+	this.resourceURL = resourceURL;
+	this.rolesURL = rolesURL;
 
     }
 
@@ -73,4 +102,42 @@ public class TrueNTHOAuthConfig extends OAuthConfig {
 	return baseAuthorizationURL;
     }
 
+    /**
+     * Returns the configured roles URL.
+     * 
+     * @see 1.5
+     * @return Roles URL.
+     */
+    public String getRolesURL() {
+
+	return rolesURL;
+    }
+
+    /**
+     * Returns the configured resource URL (API base).
+     * 
+     * @see 1.5
+     * @return Resource URL.
+     */
+    public String getResourceURL() {
+
+	return resourceURL;
+    }
+
+    /**
+     * Returns the configured Central Services base URL.
+     * 
+     * <p>
+     * This URL points to central services base URL, it should not be used for
+     * OAuth operation, but for fetching static resources, such as css. It is
+     * mainly used for templates.
+     * </p>
+     * @see 1.5
+     * @return Configured Central Services base URL.
+     */
+    public String getBaseURL() {
+    
+        return baseURL;
+    }
+ 
 }

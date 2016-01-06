@@ -1,6 +1,5 @@
 package edu.uw.cirg.truenth.oauth.builder;
 
-
 import java.io.OutputStream;
 
 import org.scribe.builder.ServiceBuilder;
@@ -17,29 +16,31 @@ import edu.uw.cirg.truenth.oauth.model.TrueNTHOAuthConfig;
  * "Extension" of ServiceBuilder to include server configuration parameters.
  * 
  * <p>
- * Due to the private nature of <code>ServiceBuilder<code>'s variables, and lack of getters/setters, extension was not used. 
+ * Due to the private nature of
+ * <code>ServiceBuilder<code>'s variables, and lack of getters/setters, extension was not used.
  * </p>
  * 
  * @author Victor de Lima Soares
  * @since 0.5 Sep 21, 2015
- * @version 1.0
+ * @version 2.0
  *
  */
 public class TrueNTHServiceBuilder {
 
     /**
      * URL that receives the access token requests.
+     * 
      * @since 0.5
      */
-    private String accessTokenEndpointURL;
-    
+    private String	       accessTokenEndpointURL;
+
     /**
      * The redirection URL where users authenticate.
+     * 
      * @since 0.5
      */
-    private String baseAuthorizationURL;
-    
-    
+    private String	       baseAuthorizationURL;
+
     private String	       apiKey;
     private String	       apiSecret;
     private String	       callbackURL;
@@ -49,10 +50,38 @@ public class TrueNTHServiceBuilder {
     private OutputStream	 debugStream;
 
     /**
+     * Central Services roles URL.
+     * 
+     * @since 1.5
+     */
+    private String	       rolesURL;
+
+    /**
+     * Resource URL.
+     * 
+     * @since 1.5
+     */
+    private String	       resourceURL;
+
+    /**
+     * Central Services base URL.
+     * <p>
+     * This URL points to central services base URL, it should not be used for
+     * OAuth operation, but for fetching static resources, such as css. It is
+     * mainly used for templates.
+     * </p>
+     * 
+     * @since 1.5
+     */
+    private String	       baseURL;
+
+    /**
      * Default constructor
+     * 
      * @since 0.5
      */
     public TrueNTHServiceBuilder() {
+
 	this.signatureType = SignatureType.Header;
     }
 
@@ -61,7 +90,8 @@ public class TrueNTHServiceBuilder {
      * 
      * @since 0.5
      * @param apiClass
-     *            The class of one of the existent {@link TrueNTHOAuthProvider}s.
+     *            The class of one of the existent {@link TrueNTHOAuthProvider}
+     *            s.
      * @return The {@link TrueNTHServiceBuilder} instance for method chaining.
      */
     public TrueNTHServiceBuilder provider(Class<? extends TrueNTHOAuthProvider> apiClass) {
@@ -105,7 +135,7 @@ public class TrueNTHServiceBuilder {
      * @since 0.5
      * @param baseAuthorizationURL
      *            Base Authorization URL. Must be a valid URL.
-     *            
+     * 
      * @return The {@link TrueNTHServiceBuilder} instance for method chaining.
      */
     public TrueNTHServiceBuilder baseAuthorizationURL(String baseAuthorizationURL) {
@@ -114,14 +144,59 @@ public class TrueNTHServiceBuilder {
 	this.baseAuthorizationURL = baseAuthorizationURL;
 	return this;
     }
-    
+
+    /**
+     * Configures the Central Services roles URL.
+     * 
+     * @since 1.5
+     * @param rolesURL
+     *            Central Services' roles URL. Must be a valid URL.
+     * @return the {@link TrueNTHServiceBuilder} instance for method chaining.
+     */
+    public TrueNTHServiceBuilder rolesURL(String rolesURL) {
+
+	Preconditions.checkValidUrl(rolesURL, "rolesURL is not a valid URL");
+	this.rolesURL = rolesURL;
+	return this;
+    }
+
+    /**
+     * Configures the Central Services' resource URL.
+     * 
+     * @since 1.5
+     * @param resourceURL
+     *            Central Services' resource URL. Must be a valid URL.
+     * @return the {@link TrueNTHServiceBuilder} instance for method chaining.
+     */
+    public TrueNTHServiceBuilder resourceURL(String resourceURL) {
+
+	Preconditions.checkValidUrl(resourceURL, "resourceURL is not a valid URL");
+	this.resourceURL = resourceURL;
+	return this;
+    }
+
+    /**
+     * Configures the Central Services' base URL.
+     * 
+     * @since 1.5
+     * @param baseURL
+     *            Central Services' base URL. Must be a valid URL.
+     * @return the {@link TrueNTHServiceBuilder} instance for method chaining.
+     */
+    public TrueNTHServiceBuilder baseURL(String baseURL) {
+
+	Preconditions.checkValidUrl(baseURL, "baseURL is not a valid URL");
+	this.baseURL = baseURL;
+	return this;
+    }
+
     /**
      * Adds an OAuth access token endpoint URL.
      * 
      * @since 0.5
      * @param accessTokenEndpointURL
      *            Access token end point URL. Must be a valid URL.
-     *            
+     * 
      * @return The {@link TrueNTHServiceBuilder} instance for method chaining.
      */
     public TrueNTHServiceBuilder accessTokenEndpointURL(String accessTokenEndpointURL) {
@@ -130,14 +205,14 @@ public class TrueNTHServiceBuilder {
 	this.accessTokenEndpointURL = accessTokenEndpointURL;
 	return this;
     }
-    
+
     /**
      * Adds an OAuth callbackURL URL.
      * 
      * @since 0.5
      * @param callbackURL
      *            Callback URL. Must be a valid URL.
-     *            
+     * 
      * @return The {@link TrueNTHServiceBuilder} instance for method chaining.
      */
     public TrueNTHServiceBuilder callbackURL(String callback) {
@@ -178,10 +253,10 @@ public class TrueNTHServiceBuilder {
     }
 
     /**
-     * Configures the OAuth scope. 
+     * Configures the OAuth scope.
      * 
      * <p>
-     * 	This is only necessary in some APIs.
+     * This is only necessary in some APIs.
      * </p>
      * 
      * @since 0.5
@@ -195,7 +270,7 @@ public class TrueNTHServiceBuilder {
 	this.scope = scope;
 	return this;
     }
-    
+
     /**
      * Configures the signature type, choose between header, querystring, etc.
      * 
@@ -237,70 +312,61 @@ public class TrueNTHServiceBuilder {
     public TrueNTHOAuthService build() {
 
 	Preconditions.checkNotNull(api, "Must specify a valid api through the provider() method");
-	
+
 	Preconditions.checkEmptyString(accessTokenEndpointURL, "Must provide an access token endpoint URL");
 	Preconditions.checkEmptyString(baseAuthorizationURL, "Must provide an base authorization URL");
 	Preconditions.checkEmptyString(callbackURL, "Must provide an callback URL");
-	
+
 	Preconditions.checkEmptyString(apiKey, "Must provide an api key");
 	Preconditions.checkEmptyString(apiSecret, "Must provide an api secret");
-	
-	return api.createService(new TrueNTHOAuthConfig(apiKey, apiSecret,accessTokenEndpointURL, baseAuthorizationURL, callbackURL, signatureType, scope, debugStream));
+
+	return api.createService(new TrueNTHOAuthConfig(apiKey, apiSecret, accessTokenEndpointURL, baseAuthorizationURL, baseURL, resourceURL,
+		rolesURL, callbackURL, signatureType, scope, debugStream));
     }
 
-    
     public String getAccessTokenEndpointURL() {
-    
-        return accessTokenEndpointURL;
+
+	return accessTokenEndpointURL;
     }
 
-    
     public String getBaseAuthorizationURL() {
-    
-        return baseAuthorizationURL;
+
+	return baseAuthorizationURL;
     }
 
-    
     public String getApiKey() {
-    
-        return apiKey;
+
+	return apiKey;
     }
 
-    
     public String getApiSecret() {
-    
-        return apiSecret;
+
+	return apiSecret;
     }
 
-    
     public String getCallbackURL() {
-    
-        return callbackURL;
+
+	return callbackURL;
     }
 
-    
     public TrueNTHOAuthProvider getApi() {
-    
-        return api;
+
+	return api;
     }
 
-    
     public String getScope() {
-    
-        return scope;
+
+	return scope;
     }
 
-    
     public SignatureType getSignatureType() {
-    
-        return signatureType;
+
+	return signatureType;
     }
 
-    
     public OutputStream getDebugStream() {
-    
-        return debugStream;
-    }
-    
-}
 
+	return debugStream;
+    }
+
+}
