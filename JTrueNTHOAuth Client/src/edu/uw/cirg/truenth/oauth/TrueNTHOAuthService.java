@@ -261,7 +261,7 @@ public class TrueNTHOAuthService implements OAuthService {
     }
 
     /**
-     * Returns the configured Central Services base URL.
+     * Returns the configured Central Services' base URL.
      * 
      * <p>
      * This URL points to central services base URL, it should not be used for

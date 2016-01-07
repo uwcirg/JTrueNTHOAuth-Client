@@ -54,6 +54,7 @@ public class TrueNTHOAuthConfig extends OAuthConfig {
      * OAuth operation, but for fetching static resources, such as css. It is
      * mainly used for templates.
      * </p>
+     * 
      * @since 1.5
      */
     private final String baseURL;
@@ -70,6 +71,12 @@ public class TrueNTHOAuthConfig extends OAuthConfig {
      *            URL that receives the access token requests.
      * @param baseAuthorizationURL
      *            The redirection URL where users authenticate.
+     * @param baseURL
+     *            Central Services' base URL.
+     * @param resourceURL
+     *            Central Services' resource URL (protected API base).
+     * @param rolesURL
+     *            Central Services' roles URL.
      * @param callback
      *            Point where to redirect users after receiving a code to
      *            request access tokens.
@@ -132,12 +139,13 @@ public class TrueNTHOAuthConfig extends OAuthConfig {
      * OAuth operation, but for fetching static resources, such as css. It is
      * mainly used for templates.
      * </p>
+     * 
      * @see 1.5
      * @return Configured Central Services base URL.
      */
     public String getBaseURL() {
-    
-        return baseURL;
+
+	return baseURL;
     }
- 
+
 }
