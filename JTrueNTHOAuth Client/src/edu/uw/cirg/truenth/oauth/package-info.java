@@ -15,14 +15,6 @@
  * <li>Service: Offers client services, such as requesting tokens.</li>
  * <li>Builder: Builds a configured service, using a specific provider.</li>
  * </ul>
- * <p>
- * Version numbers will follow the rules:
- * </p>
- * <ul>
- * <li>Decimal number indicate unstable and work in progress;</li>
- * <li>Decimal will be incremented by 0.5;</li>
- * <li>Package version will indicate the package fitness for production use, some classes might have decimal numbers with instability not exposed.</li>
- * </ul>
  * 
  * <p>
  * Dependences:
@@ -50,7 +42,6 @@
  */
 /**
  * @author Victor de Lima Soares
- * @since 0.5 Sep 11, 2015
- * @version 2.0
+ * @since Sep 11, 2015
  */
 package edu.uw.cirg.truenth.oauth;

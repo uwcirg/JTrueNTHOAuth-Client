@@ -14,6 +14,7 @@ import edu.uw.cirg.truenth.oauth.builder.api.TrueNTHOAuthProvider;
 import edu.uw.cirg.truenth.oauth.model.TrueNTHOAuthConfig;
 import edu.uw.cirg.truenth.oauth.model.definitions.TrueNTHGrantType;
 import edu.uw.cirg.truenth.oauth.model.definitions.TrueNTHTokenType;
+import edu.uw.cirg.truenth.oauth.model.definitions.TrueNTHUrlPlaceHolders;
 import edu.uw.cirg.truenth.oauth.model.tokens.TrueNTHAccessToken;
 
 /**
@@ -28,8 +29,6 @@ public class TrueNTHOAuthService implements OAuthService {
 
     /**
      * OAuth version.
-     * 
-     * @since 0.5
      */
     private static final String	VERSION = "2.0";
 
@@ -39,7 +38,6 @@ public class TrueNTHOAuthService implements OAuthService {
     /**
      * Default constructor.
      * 
-     * @since 0.5
      * @param trueNTHOAuthProvider
      *            OAuth2.0 api information
      * @param config
@@ -55,7 +53,6 @@ public class TrueNTHOAuthService implements OAuthService {
     /**
      * Fetches an access token and returns as a token object - Scribe's model.
      * 
-     * @since 0.5
      * @param requestToken
      *            This parameter will not be used and can be safely set to null.
      * @param verifier
@@ -79,7 +76,6 @@ public class TrueNTHOAuthService implements OAuthService {
     /**
      * Fetches request token.
      * 
-     * @since 0.5
      * @throws UnsupportedOperationException
      *             This operation is not supported by CS; thus, this workflow
      *             shall not be used.
@@ -95,7 +91,6 @@ public class TrueNTHOAuthService implements OAuthService {
     /**
      * Access current OAuth version.
      * 
-     * @since 0.5
      * @return OAuth version.
      */
     @Override
@@ -125,7 +120,6 @@ public class TrueNTHOAuthService implements OAuthService {
      * parameter.
      * </p>
      * 
-     * @since 0.5
      */
     @Override
     public void signRequest(Token accessToken, OAuthRequest request) {
@@ -147,7 +141,6 @@ public class TrueNTHOAuthService implements OAuthService {
      * Same as {@link #getAuthorizationUrl()}
      * </p>
      * 
-     * @since 0.5
      * @param requestToken
      *            Access token.
      * @return the URL where you should redirect your users.
@@ -162,7 +155,6 @@ public class TrueNTHOAuthService implements OAuthService {
     /**
      * Returns the redirection URL where users authenticate.
      * 
-     * @since 0.5
      * @param requestToken
      *            Access token.
      * @return the URL where you should redirect your users.
@@ -177,7 +169,7 @@ public class TrueNTHOAuthService implements OAuthService {
     /**
      * Returns the redirection URL.
      * 
-     * @since 1.5
+     * 
      * @param numberEncodings
      *            Number of encoding operations to be applied on the callback
      *            URL. Two encoding operations are necessary to communicate
@@ -210,7 +202,7 @@ public class TrueNTHOAuthService implements OAuthService {
      * {@link #getAuthorizationUrl(int, ParameterList, ParameterList)}
      * </p>
      * 
-     * @since 1.5
+     * 
      * @param numberEncodings
      *            Number of encoding operations to be applied on the callback
      *            URL. Two encoding operations are necessary to communicate
@@ -229,30 +221,40 @@ public class TrueNTHOAuthService implements OAuthService {
     /**
      * Returns the service configuration object.
      * 
-     * @since 1.5
      * @return Service configuration.
      */
     public TrueNTHOAuthConfig getConfig() {
 
 	return config;
     }
-    
-    
+
     /**
      * Returns the configured roles URL.
      * 
-     * @see 2.5
+     * 
      * @return Roles URL.
      */
     public String getRolesURL() {
 
 	return getConfig().getRolesURL();
     }
+    
+    /**
+     * Returns the configured roles URL, for a specific user.
+     * 
+     * <p>
+     * Replaces the userId place holder the the String representation of the TrueNTH user ID.
+     * </p>
+     * 
+     * @return Roles URL.
+     */
+    public String getRolesURL(long userId) {
+	return getRolesURL().replaceFirst(TrueNTHUrlPlaceHolders.USER_ID, String.valueOf(userId));
+    }
 
     /**
      * Returns the configured resource URL (API base).
      * 
-     * @see 2.5
      * @return Resource URL.
      */
     public String getResourceURL() {
@@ -268,11 +270,11 @@ public class TrueNTHOAuthService implements OAuthService {
      * OAuth operation, but for fetching static resources, such as css. It is
      * mainly used for templates.
      * </p>
-     * @see 2.5
+     * 
      * @return Configured Central Services base URL.
      */
     public String getBaseURL() {
-    
-        return getConfig().getBaseURL();
+
+	return getConfig().getBaseURL();
     }
 }

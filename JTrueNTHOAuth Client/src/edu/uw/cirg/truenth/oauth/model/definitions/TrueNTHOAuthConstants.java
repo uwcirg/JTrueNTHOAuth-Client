@@ -4,8 +4,7 @@ package edu.uw.cirg.truenth.oauth.model.definitions;
  * TrueNTH specific OAuth Constants.
  * 
  * @author Victor de Lima Soares
- * @since 0.5 Sep 11, 2015
- * @version 3.0
+ * @since Sep 11, 2015
  */
 public class TrueNTHOAuthConstants {
 
@@ -19,8 +18,6 @@ public class TrueNTHOAuthConstants {
      * <p>
      * This parameter should be embedded into the authorization URLs, as a regular parameter.
      * </p>
-     * 
-     * @since 1.5
      */
     public static final String NEXT       = "next";
 
@@ -44,15 +41,11 @@ public class TrueNTHOAuthConstants {
      * <p>
      * This parameter should be embedded into the callback URLs.
      * </p>
-     * 
-     * @since 1.5
      */
     public static final String REDIRECT   = "redirect";
     
     /**
      * Error messages identification, sent by CS.
-     * 
-     * @since 2.5
      */
     public static final String ERROR = "error";
 }
