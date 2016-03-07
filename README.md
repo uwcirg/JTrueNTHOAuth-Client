@@ -2,8 +2,7 @@
 
 TrueNTHConnect includes its own OAuth library to ease communication
 with our Central Services. This component was designed to provide a stable
-and uniform methodology for issuing requests and interpreting their out-
-comes, while observing our specific OAuth needs. The artifacts explicitly
+and uniform methodology for issuing requests and interpreting their outcomes, while observing our specific OAuth needs. The artifacts explicitly
 extend ScribeJava elements; thus, it has a stable and mature implementation as its base. 
 
 Additionally, the library was conceived as a independent
@@ -17,7 +16,7 @@ other projects to come.
 
 ###How to use
 This library was designed to behave like the ScribeJava OAuth library. 
-We developed its interface to be similar to that library and for most situations its usage is aligned with Scribe's documentation. 
+We developed its interface to be similar to that library and for most situations, its usage is aligned with Scribe's documentation. 
 
 ####Create a service
 A service is the main object that will provide all OAuth services and centralize all necessary configuration. 
@@ -43,7 +42,7 @@ TrueNTHOAuthService service = new TrueNTHServiceBuilder()
 Here you will find some examples we use in our code. 
 This should be just a guideline, and you can adapt your code accordingly to implement your protocol.
 
-Whenever you see services.get(companyId), you can just assume that we are retrieving a service instance, created as described above (we use a service repository).
+Whenever you see services.get(companyId), you can just assume that we are retrieving a service instance created as described above (we use a service repository).
 
 We built some helper classes to help managing basic functionally and the library is responsible for setting all necessary parameters for you automatically.
 
@@ -114,7 +113,9 @@ This are some methods in one of our client applications, which use the library.
 		}
     }
 ```
-Which this helper class defined we can just use it to retrieve resources whenever necessary.
+
+With this helper class defined we can just use it to retrieve resources whenever necessary.
+
 ```Java
     /**
      * Executes the struts login action: sets login environment for auto login.
@@ -134,42 +135,43 @@ Which this helper class defined we can just use it to retrieve resources wheneve
 		    HttpSession session = request.getSession();
 	
 		    if (canLogin) {
-	
-			ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
-			long companyId = themeDisplay.getCompanyId();
-	
-			if (!TrueNTHConnectUtil.isEnabled(companyId)) { throw new PrincipalException(); }
-	
-			String code = ParamUtil.getString(request, "code");
-	
-			try {
-	
-			    TrueNTHAccessToken accessToken = TrueNTHConnectUtil.getAccessToken(companyId, code);
-	
-			    TrueNTHUser user = setTrueNTHCredentials(session, themeDisplay.getCompanyId(), accessToken);
-	
-			    if ((user != null)) {
-	
-				updateGroups(companyId, user.getTrueNTHAssociation(), accessToken);
-	
-				if ((user.getStatus() == WorkflowConstants.STATUS_INCOMPLETE)) {
-	
-				    redirectUpdateAccount(request, response, user);
-	
-				    return null;
+		
+				ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
+				long companyId = themeDisplay.getCompanyId();
+		
+				if (!TrueNTHConnectUtil.isEnabled(companyId)) { throw new PrincipalException(); }
+		
+				String code = ParamUtil.getString(request, "code");
+		
+				try {
+		
+				    TrueNTHAccessToken accessToken = TrueNTHConnectUtil.getAccessToken(companyId, code);
+		
+				    TrueNTHUser user = setTrueNTHCredentials(session, themeDisplay.getCompanyId(), accessToken);
+		
+				    if ((user != null)) {
+		
+					updateGroups(companyId, user.getTrueNTHAssociation(), accessToken);
+		
+					if ((user.getStatus() == WorkflowConstants.STATUS_INCOMPLETE)) {
+		
+					    redirectUpdateAccount(request, response, user);
+		
+					    return null;
+					}
+				    }
+		
+				} catch (Exception e) {
+				    // Invalid codes, tokens, communication with CS
+				    // (demographics and roles APIs)...
+				    log.error(e);
+				    session.invalidate();
+				    response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
 				}
-			    }
-	
-			} catch (Exception e) {
-			    // Invalid codes, tokens, communication with CS
-			    // (demographics and roles APIs)...
-			    log.error(e);
-			    session.invalidate();
-			    response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
-			}
 		    } else {
 				session.setAttribute(Maintenance.PRIVATE_BLOCKED, true);
 		    }
+		    
 		    if (Validator.isNotNull(redirect)) response.sendRedirect(redirect);
 		    return null;
 	
