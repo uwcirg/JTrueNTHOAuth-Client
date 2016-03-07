@@ -151,14 +151,14 @@ With this helper class defined we can just use it to retrieve resources whenever
 		
 				    if ((user != null)) {
 		
-					updateGroups(companyId, user.getTrueNTHAssociation(), accessToken);
-		
-					if ((user.getStatus() == WorkflowConstants.STATUS_INCOMPLETE)) {
-		
-					    redirectUpdateAccount(request, response, user);
-		
-					    return null;
-					}
+						updateGroups(companyId, user.getTrueNTHAssociation(), accessToken);
+			
+						if ((user.getStatus() == WorkflowConstants.STATUS_INCOMPLETE)) {
+			
+						    redirectUpdateAccount(request, response, user);
+			
+						    return null;
+						}
 				    }
 		
 				} catch (Exception e) {
