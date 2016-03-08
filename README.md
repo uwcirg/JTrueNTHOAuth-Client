@@ -18,7 +18,7 @@ other projects to come.
 This library was designed to behave like the ScribeJava OAuth library. 
 We developed its interface to be similar to that library and for most situations, its usage is aligned with Scribe's documentation. 
 
-####Create a service
+####1.Create a service
 A service is the main object that will provide all OAuth services and centralize all necessary configuration. 
 The class is named TrueNTHOAuthService.
 
@@ -39,7 +39,7 @@ TrueNTHOAuthService service = new TrueNTHServiceBuilder()
 ```
 
 ####Using the service
-Here you will find some examples we use in our code. 
+Here, you will find some examples we use in our code. 
 This should be just a guideline, and you can adapt your code accordingly to implement your protocol.
 
 Whenever you see services.get(companyId), you can just assume that we are retrieving a service instance created as described above (we use a service repository).
@@ -47,6 +47,17 @@ Whenever you see services.get(companyId), you can just assume that we are retrie
 We built some helper classes to help managing basic functionally and the library is responsible for setting all necessary parameters for you automatically.
 
 This are some methods in one of our client applications, which use the library.
+
+Those methods are implemented in a helper class called TrueNTHConnectUtil, which is used inside the system to consistently call functionalities from our OAuth library. We suggest you implement one like it in your own system, although it is not necessary.
+
+####Real example: TrueNTHConnectUtil
+The following method fetches a OAuth token, using the code provided by the user.
+
+The library provides:
+
+1. TrueNTHOAuthService
+2. Verifier
+3. TrueNTHAccessToken 
 
 ```Java
     @Override
@@ -58,6 +69,17 @@ This are some methods in one of our client applications, which use the library.
 		Verifier verifierCode = new Verifier(code);
 		return service.getAccessToken(null, verifierCode);
     }
+ ```
+ 
+ This method provides the system with the ability to fetch any resource from the Central Services API, given that the token has the necessary permissions.
+ 
+ The library provides:
+
+ 1. OAuthRequest, coming from Scribe
+ 2. Json, coming from javax.json
+ 3. JsonObject, coming from javax.json
+ 
+ ```Java
     
     @Override
     public JsonObject getResources(long companyId, String path, Token accessToken) {
@@ -82,7 +104,16 @@ This are some methods in one of our client applications, which use the library.
 		    return null;
 		}
     }
-    
+  ```
+  
+  Now, this method demonstrates how to retrieve roles from CS.
+  
+  Basically, whenever CS sends us a set of roles for a given user, it does so by sending a JSON object. 
+  Our library is able to read such data and return it as a list of Java objects.
+  
+  Please note that the library does not provide TrueNTHRoleJsonExtractor or  TrueNTHRole, as TrueNTHRole is a internal representation of roles in our system. We will be putting a basic representation of such elements into the library this week (you can watch the library on Git to receive the new code). PS: roles are not necessary in order to implement login protocols.
+  
+  ```Java 
     @Override
     public List<TrueNTHRole> getTrueNTHRoles(long companyId, long trueNTHUserId, TrueNTHAccessToken accessToken) {
 
@@ -114,7 +145,8 @@ This are some methods in one of our client applications, which use the library.
     }
 ```
 
-With this helper class defined we can just use it to retrieve resources whenever necessary.
+With this helper class defined, we can just use it to retrieve resources whenever necessary.
+The following code represents a Struts action, which is responsible for retrieving information about the user: demographics and roles.
 
 ```Java
     /**
@@ -181,6 +213,30 @@ With this helper class defined we can just use it to retrieve resources whenever
 
     }
 ```
+
+Those examples present all that is necessary to fetch demographic information and roles; however, how your system uses and stores this information needs to be implemented for each system, as the internal needs greatly changes. Here is an example, the updateGroups function, used on the above example, fetches the user's roles and stores them into our database, next we use this information to associate the user with user groups, which is one of our internal representation for CS roles.
+
+```Java
+    /**
+     * Updates TrueNTH user groups.
+     * 
+     * @param companyId
+     * @param association
+     * @param accessToken
+     * @throws SystemException
+     * @throws PortalException
+     */
+    protected void updateGroups(long companyId, TrueNTHAssociation association, TrueNTHAccessToken accessToken) throws SystemException,
+	    PortalException {
+
+		long[] trueNTHRoleIds = getTrueNTHRoles(companyId, association.getTrueNTHId(), accessToken);
+		TrueNTHAssociationLocalServiceUtil.updateTrueNTHRoles(association.getAssociationId(), trueNTHRoleIds);
+	
+		UserGroupLocalServiceUtil.setUserUserGroups(association.getUserId(), getUpdatedGroupIds(companyId, association, trueNTHRoleIds));
+    }
+
+```
+
 
 
 ###Reporting bugs
