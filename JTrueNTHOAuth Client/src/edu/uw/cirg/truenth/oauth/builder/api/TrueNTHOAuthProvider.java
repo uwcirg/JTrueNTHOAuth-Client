@@ -36,8 +36,7 @@ import edu.uw.cirg.truenth.oauth.model.tokens.extractors.TrueNTHAccessTokenExtra
  * </p>
  * 
  * @author Victor de Lima Soares
- * @since 0.5 Sep 11, 2015
- * @version 3.0
+ * @since Sep 11, 2015
  * 
  * @see TrueNTHOAuthService
  * @see TrueNTHOAuthConfig
@@ -54,8 +53,6 @@ public class TrueNTHOAuthProvider implements Api {
      * CS requires POST.
      * </p>
      * 
-     * @since 0.5
-     * 
      * @return Access method.
      */
     public Verb getAccessTokenVerb() {
@@ -66,7 +63,6 @@ public class TrueNTHOAuthProvider implements Api {
     /**
      * Returns the URL that receives the access token requests.
      * 
-     * @since 0.5
      * @return request token URL
      */
     public String getAccessTokenEndpoint(TrueNTHOAuthConfig config) {
@@ -77,7 +73,6 @@ public class TrueNTHOAuthProvider implements Api {
     /**
      * Returns the redirection URL where users authenticate.
      * 
-     * @since 0.5
      * @param config
      *            OAuth configuration.
      * @return the URL where you should redirect your users.
@@ -105,7 +100,6 @@ public class TrueNTHOAuthProvider implements Api {
      * .
      * </p>
      * 
-     * @since 1.5
      * @param config
      *            OAuth configuration.
      * @param numberEncodings
@@ -128,7 +122,6 @@ public class TrueNTHOAuthProvider implements Api {
     /**
      * Returns the redirection URL where users authenticate.
      * 
-     * @since 1.5
      * @param config
      *            OAuth configuration.
      * @param numberEncodings
@@ -172,7 +165,6 @@ public class TrueNTHOAuthProvider implements Api {
     /**
      * Creates an {@link TrueNTHOAuthService}
      * 
-     * @since 1.5
      * @param config
      *            OAuth API configuration.
      * @return Fully configured {@link TrueNTHOAuthService}
@@ -186,7 +178,7 @@ public class TrueNTHOAuthProvider implements Api {
     /**
      * Creates an {@link TrueNTHOAuthService}
      * 
-     * @since 0.5
+
      * @param config
      *            OAuth API configuration.
      * @return Fully configured {@link TrueNTHOAuthService}.
@@ -213,7 +205,6 @@ public class TrueNTHOAuthProvider implements Api {
      * This method uses a JSON based extractor as required by CS.
      * </p>
      * 
-     * @since 0.5
      * @return access token extractor
      */
     public TrueNTHAccessTokenExtractor<JsonObject> getAccessTokenExtractor() {

@@ -6,8 +6,6 @@
  * </p>
  * 
  * @author Victor de Lima Soares
- * @since 0.5 Sep 25, 2015
- * @version 2.0
- * 
+ * @since Sep 25, 2015
  */
 package edu.uw.cirg.truenth.oauth.model;

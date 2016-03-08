@@ -8,8 +8,7 @@ import edu.uw.cirg.truenth.oauth.model.definitions.TrueNTHTokenType;
  * TrueNTH token model.
  * 
  * @author Victor de Lima Soares
- * @since 0.5 Oct 22, 2015
- * @version 1.0
+ * @since Oct 22, 2015
  *
  */
 public abstract class TrueNTHToken extends Token {
@@ -21,7 +20,6 @@ public abstract class TrueNTHToken extends Token {
     /**
      * Constructor.
      *
-     * @since 0.5
      * @param token
      *            Token value. Can't be null.
      * @param tokenType
@@ -35,7 +33,6 @@ public abstract class TrueNTHToken extends Token {
     /**
      * Constructor with raw data for record keeping.
      *
-     * @since 0.5
      * @param token
      *            Token value. Can't be null.
      * @param tokenType
@@ -54,7 +51,6 @@ public abstract class TrueNTHToken extends Token {
     /**
      * Set the token type.
      * 
-     * @since 0.5
      * @param tokenType
      * @throws IllegalArgumentException
      *             If {@link TrueNTHTokenType} has no constant with the
@@ -71,7 +67,6 @@ public abstract class TrueNTHToken extends Token {
     /**
      * Access token type.
      * 
-     * @since 0.5
      * @return Token type.
      */
     public TrueNTHTokenType getTokenType() {

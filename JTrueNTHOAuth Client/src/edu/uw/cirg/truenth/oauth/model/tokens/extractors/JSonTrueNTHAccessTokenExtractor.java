@@ -15,8 +15,7 @@ import edu.uw.cirg.truenth.oauth.model.tokens.TrueNTHAccessToken;
  * TrueNTH access token extractor for JsonObject instances.
  * 
  * @author Victor de Lima Soares
- * @since 0.5 Oct 22, 2015
- * @version 1.0
+ * @since Oct 22, 2015
  *
  */
 public class JSonTrueNTHAccessTokenExtractor implements TrueNTHAccessTokenExtractor<JsonObject> {
@@ -24,7 +23,6 @@ public class JSonTrueNTHAccessTokenExtractor implements TrueNTHAccessTokenExtrac
     /**
      * Reads a TrueNTH access token from a JsonObject instance.
      * 
-     * @since 0.5
      * @param data
      *            Data containing the token.
      * @return Token extracted.
@@ -58,7 +56,6 @@ public class JSonTrueNTHAccessTokenExtractor implements TrueNTHAccessTokenExtrac
      * This method should expects a JSon formated string.
      * </p>
      * 
-     * @since 0.5
      * @param data
      *            Data containing the token.
      * @return Token extracted.

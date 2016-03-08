@@ -17,8 +17,7 @@ import org.apache.commons.codec.binary.Base64;
  * TrueNTH "signed requests" model.
  * 
  * @author Victor de Lima Soares
- * @since 0.5 Oct 21, 2015
- * @version 2.0
+ * @since Oct 21, 2015
  */
 public class TrueNTHSignedRequest {
 
@@ -46,7 +45,6 @@ public class TrueNTHSignedRequest {
      * :"logout","algorithm":"HMAC-SHA256"}
      * </p>
      * 
-     * @since 1.5
      * @param signed_request
      *            Raw string containing the "signed_request": signature+data.
      * @param validationKey
@@ -73,7 +71,6 @@ public class TrueNTHSignedRequest {
     /**
      * Validates the data received, matching it with the expected signature.
      * 
-     * @since 0.5
      * @param rawData
      *            Raw data received in the "signed_request".
      * @param validationKey
@@ -96,7 +93,6 @@ public class TrueNTHSignedRequest {
     /**
      * Calculates the expected signature for the received data.
      * 
-     * @since 0.5
      * @param data
      *            Raw data received in the "signed_request".
      * @param key
@@ -119,8 +115,7 @@ public class TrueNTHSignedRequest {
 
     /**
      * Access the signature used.
-     * 
-     * @since 0.5
+     *
      * @return Signed request's signature.
      */
     public String getSignature() {
@@ -131,7 +126,6 @@ public class TrueNTHSignedRequest {
     /**
      * Access the extracted JSon data.
      * 
-     * @since 0.5
      * @return Signed request's data.
      */
     public JsonObject getData() {

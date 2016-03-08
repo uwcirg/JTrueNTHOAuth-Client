@@ -8,8 +8,7 @@ import org.scribe.utils.Preconditions;
  * Refresh token model.
  * 
  * @author Victor de Lima Soares
- * @since 0.5 Oct 23, 2015
- * @version 1.0
+ * @since Oct 23, 2015
  *
  */
 public class TrueNTHRefreshToken implements Serializable {

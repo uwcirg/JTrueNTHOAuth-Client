@@ -32,9 +32,7 @@ import edu.uw.cirg.truenth.oauth.model.definitions.TrueNTHTokenType;
  * </p>
  * 
  * @author Victor de Lima Soares
- * @since 0.5 Oct 22, 2015
- * @version 1.0
- *
+ * @since Oct 22, 2015
  */
 public class TrueNTHAccessToken extends TrueNTHToken {
 
@@ -46,7 +44,6 @@ public class TrueNTHAccessToken extends TrueNTHToken {
     /**
      * Constructor.
      * 
-     * @since 0.5
      * @param token
      *            Token string.
      * @param expiresIn
@@ -72,7 +69,6 @@ public class TrueNTHAccessToken extends TrueNTHToken {
     /**
      * Access token's life span.
      * 
-     * @since 0.5
      * @return Token expiration time, after creation.
      */
     public long getExpiresIn() {
@@ -83,7 +79,6 @@ public class TrueNTHAccessToken extends TrueNTHToken {
     /**
      * Access the refresh token to be used when this token is no longer valid.
      * 
-     * @since 0.5
      * @return Refresh token.
      */
     public TrueNTHRefreshToken getRefreshToken() {
@@ -94,7 +89,6 @@ public class TrueNTHAccessToken extends TrueNTHToken {
     /**
      * Access the scope where this token is valid.
      * 
-     * @since 0.5
      * @return Token's scope.
      */
     public String getScope() {
@@ -105,7 +99,6 @@ public class TrueNTHAccessToken extends TrueNTHToken {
     /**
      * Sets token's life span.
      * 
-     * @since 0.5
      * @param expiresIn
      *            The amount of time this token will remain valid.
      */
@@ -117,7 +110,6 @@ public class TrueNTHAccessToken extends TrueNTHToken {
     /**
      * Sets refresh token.
      * 
-     * @since 0.5
      * @param refreshToken
      *            Token to be used when this token is no longer valid.
      */
@@ -129,7 +121,6 @@ public class TrueNTHAccessToken extends TrueNTHToken {
     /**
      * Sets token scope.
      * 
-     * @since 0.5
      * @param scope
      *            Scope to which this token is valid.
      */
@@ -146,8 +137,7 @@ public class TrueNTHAccessToken extends TrueNTHToken {
      * </p>
      * 
      * @author Victor de Lima Soares
-     * @since 0.5 Oct 22, 2015
-     * @version 1.0
+     * @since Oct 22, 2015
      *
      */
     public enum Parameters {

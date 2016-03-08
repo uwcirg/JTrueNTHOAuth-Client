@@ -8,8 +8,7 @@ import edu.uw.cirg.truenth.oauth.model.tokens.TrueNTHAccessToken;
  * TrueNTH access token extractor.
  * 
  * @author Victor de Lima Soares
- * @since 0.5 Oct 22, 2015
- * @version 1.0
+ * @since Oct 22, 2015
  *
  */
 public interface TrueNTHAccessTokenExtractor<T> extends AccessTokenExtractor {
@@ -17,7 +16,6 @@ public interface TrueNTHAccessTokenExtractor<T> extends AccessTokenExtractor {
     /**
      * Reads a TrueNTH access token from a object of type T.
      * 
-     * @since 0.5
      * @param data
      *            Data containing the token.
      * @return Token extracted.
@@ -32,7 +30,6 @@ public interface TrueNTHAccessTokenExtractor<T> extends AccessTokenExtractor {
      * instance.
      * </p>
      * 
-     * @since 0.5
      * @param data
      *            Data containing the token.
      * @return Token extracted.

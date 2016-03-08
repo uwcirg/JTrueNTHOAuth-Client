@@ -39,8 +39,7 @@
  * Portal -> CS [label=Access Token]
  * CS -> Portal [label=Protected Resource]
  * @endmsc 
- */
-/**
+ *
  * @author Victor de Lima Soares
  * @since Sep 11, 2015
  */

@@ -4,14 +4,10 @@ package edu.uw.cirg.truenth.oauth.model.definitions;
  * Provides token types supported by this API and our CS.
  * 
  * @author Victor de Lima Soares
- * @since 0.5 Sep 11, 2015
- * @version 1.0
- *
+ * @since Sep 11, 2015
  */
 public enum TrueNTHTokenType {
-    /**
-     * @since 0.5
-     */
+
     BEARER("Bearer");
 
     private String tokenType;

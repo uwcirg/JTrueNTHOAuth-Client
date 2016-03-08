@@ -21,9 +21,7 @@ import edu.uw.cirg.truenth.oauth.model.tokens.TrueNTHAccessToken;
  * OAuth service.
  * 
  * @author Victor de Lima Soares
- * @since 0.5 Sep 11, 2015
- * @version 4.0
- *
+ * @since Sep 11, 2015
  */
 public class TrueNTHOAuthService implements OAuthService {
 

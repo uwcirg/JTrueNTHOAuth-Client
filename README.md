@@ -38,7 +38,7 @@ TrueNTHOAuthService service = new TrueNTHServiceBuilder()
 		    .build();
 ```
 
-####Using the service
+####2.Using the service
 Here, you will find some examples we use in our code. 
 This should be just a guideline, and you can adapt your code accordingly to implement your protocol.
 
@@ -50,7 +50,7 @@ This are some methods in one of our client applications, which use the library.
 
 Those methods are implemented in a helper class called TrueNTHConnectUtil, which is used inside the system to consistently call functionalities from our OAuth library. We suggest you implement one like it in your own system, although it is not necessary.
 
-####Real example: TrueNTHConnectUtil
+#####Real example: TrueNTHConnectUtil
 The following method fetches a OAuth token, using the code provided by the user.
 
 The library provides:
@@ -60,29 +60,28 @@ The library provides:
 3. TrueNTHAccessToken 
 
 ```Java
-    @Override
-    public TrueNTHAccessToken getAccessToken(long companyId, String code) {
+@Override
+public TrueNTHAccessToken getAccessToken(long companyId, String code) {
 
 		TrueNTHOAuthService service = services.get(companyId);
 		if (service == null) return null;
 
 		Verifier verifierCode = new Verifier(code);
 		return service.getAccessToken(null, verifierCode);
-    }
- ```
- 
- This method provides the system with the ability to fetch any resource from the Central Services API, given that the token has the necessary permissions.
- 
- The library provides:
+}
+```
 
- 1. OAuthRequest, coming from Scribe
- 2. Json, coming from javax.json
- 3. JsonObject, coming from javax.json
- 
- ```Java
-    
-    @Override
-    public JsonObject getResources(long companyId, String path, Token accessToken) {
+This method provides the system with the ability to fetch any resource from the Central Services API, given that the token has the necessary permissions.
+
+The library provides:
+
+1. OAuthRequest, coming from Scribe
+2. Json, coming from javax.json
+3. JsonObject, coming from javax.json
+
+```Java
+@Override
+public JsonObject getResources(long companyId, String path, Token accessToken) {
 
 		try {
 		    TrueNTHOAuthService service = services.get(companyId);
@@ -103,19 +102,19 @@ The library provides:
 	
 		    return null;
 		}
-    }
-  ```
-  
-  Now, this method demonstrates how to retrieve roles from CS.
-  
-  Basically, whenever CS sends us a set of roles for a given user, it does so by sending a JSON object. 
-  Our library is able to read such data and return it as a list of Java objects.
-  
-  Please note that the library does not provide TrueNTHRoleJsonExtractor or  TrueNTHRole, as TrueNTHRole is a internal representation of roles in our system. We will be putting a basic representation of such elements into the library this week (you can watch the library on Git to receive the new code). PS: roles are not necessary in order to implement login protocols.
-  
-  ```Java 
-    @Override
-    public List<TrueNTHRole> getTrueNTHRoles(long companyId, long trueNTHUserId, TrueNTHAccessToken accessToken) {
+}
+```
+
+Now, this method demonstrates how to retrieve roles from CS.
+
+Basically, whenever CS sends us a set of roles for a given user, it does so by sending a JSON object. 
+Our library is able to read such data and return it as a list of Java objects.
+
+Please note that the library does not provide TrueNTHRoleJsonExtractor or  TrueNTHRole, as TrueNTHRole is a internal representation of roles in our system. We will be putting a basic representation of such elements into the library this week (you can watch the library on Git to receive the new code). PS: roles are not necessary in order to implement login protocols.
+
+```Java 
+@Override
+public List<TrueNTHRole> getTrueNTHRoles(long companyId, long trueNTHUserId, TrueNTHAccessToken accessToken) {
 
 		TrueNTHOAuthService service = null;
 		URL url = null;
@@ -142,22 +141,22 @@ The library provides:
 		    log.error(url + "/n" + json);
 		    return null;
 		}
-    }
+}
 ```
 
 With this helper class defined, we can just use it to retrieve resources whenever necessary.
 The following code represents a Struts action, which is responsible for retrieving information about the user: demographics and roles.
 
 ```Java
-    /**
-     * Executes the struts login action: sets login environment for auto login.
-     * 
-     * @throws PrincipalException
-     * @throws SystemException
-     * @throws IOException
-     */
-    @Override
-    public String execute(HttpServletRequest request, HttpServletResponse response) throws PrincipalException, SystemException, IOException {
+/**
+* Executes the struts login action: sets login environment for auto login.
+* 
+* @throws PrincipalException
+* @throws SystemException
+* @throws IOException
+*/
+@Override
+public String execute(HttpServletRequest request, HttpServletResponse response) throws PrincipalException, SystemException, IOException {
 
 		boolean canLogin = Maintenance.startLogin();
 	
@@ -211,30 +210,29 @@ The following code represents a Struts action, which is responsible for retrievi
 		    if (canLogin) Maintenance.finishLogin();
 		}
 
-    }
+}
 ```
 
-Those examples present all that is necessary to fetch demographic information and roles; however, how your system uses and stores this information needs to be implemented for each system, as the internal needs greatly changes. Here is an example, the updateGroups function, used on the above example, fetches the user's roles and stores them into our database, next we use this information to associate the user with user groups, which is one of our internal representation for CS roles.
+Those examples present all that is necessary to fetch demographic information and roles; however, how a system uses and stores this information needs to be implemented for each system, as the internal needs greatly changes. Here is an example, the updateGroups function, used on the above example, fetches the user's roles and stores them into our database, next we use this information to associate the user with user groups, which is one of our internal representation for CS roles.
 
 ```Java
-    /**
-     * Updates TrueNTH user groups.
-     * 
-     * @param companyId
-     * @param association
-     * @param accessToken
-     * @throws SystemException
-     * @throws PortalException
-     */
-    protected void updateGroups(long companyId, TrueNTHAssociation association, TrueNTHAccessToken accessToken) throws SystemException,
+/**
+* Updates TrueNTH user groups.
+* 
+* @param companyId
+* @param association
+* @param accessToken
+* @throws SystemException
+* @throws PortalException
+*/
+protected void updateGroups(long companyId, TrueNTHAssociation association, TrueNTHAccessToken accessToken) throws SystemException,
 	    PortalException {
 
 		long[] trueNTHRoleIds = getTrueNTHRoles(companyId, association.getTrueNTHId(), accessToken);
 		TrueNTHAssociationLocalServiceUtil.updateTrueNTHRoles(association.getAssociationId(), trueNTHRoleIds);
 	
 		UserGroupLocalServiceUtil.setUserUserGroups(association.getUserId(), getUpdatedGroupIds(companyId, association, trueNTHRoleIds));
-    }
-
+}
 ```
 
 

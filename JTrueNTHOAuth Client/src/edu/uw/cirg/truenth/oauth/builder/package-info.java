@@ -12,11 +12,8 @@
  * <li>Service: Offers client services, such as requesting tokens.</li>
  * <li>Builder: Builds a configured service, using a specific provider.</li>
  * </ul>
- */
-/**
- * @author Victor de Lima Soares
- * @since 0.5 Sep 25, 2015
- * @version 1.0
  * 
+ * @author Victor de Lima Soares
+ * @since Sep 25, 2015
  */
 package edu.uw.cirg.truenth.oauth.builder;

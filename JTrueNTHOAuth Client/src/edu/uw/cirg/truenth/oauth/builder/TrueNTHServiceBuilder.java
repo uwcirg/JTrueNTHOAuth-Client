@@ -21,9 +21,7 @@ import edu.uw.cirg.truenth.oauth.model.TrueNTHOAuthConfig;
  * </p>
  * 
  * @author Victor de Lima Soares
- * @since 0.5 Sep 21, 2015
- * @version 2.0
- *
+ * @since Sep 21, 2015
  */
 public class TrueNTHServiceBuilder {
 
@@ -51,15 +49,11 @@ public class TrueNTHServiceBuilder {
 
     /**
      * Central Services roles URL.
-     * 
-     * @since 1.5
      */
     private String	       rolesURL;
 
     /**
      * Resource URL.
-     * 
-     * @since 1.5
      */
     private String	       resourceURL;
 
@@ -70,15 +64,11 @@ public class TrueNTHServiceBuilder {
      * OAuth operation, but for fetching static resources, such as css. It is
      * mainly used for templates.
      * </p>
-     * 
-     * @since 1.5
      */
     private String	       baseURL;
 
     /**
      * Default constructor
-     * 
-     * @since 0.5
      */
     public TrueNTHServiceBuilder() {
 
@@ -88,7 +78,6 @@ public class TrueNTHServiceBuilder {
     /**
      * Configures the {@link TrueNTHOAuthProvider} ({@link Api}).
      * 
-     * @since 0.5
      * @param apiClass
      *            The class of one of the existent {@link TrueNTHOAuthProvider}
      *            s.
@@ -117,7 +106,6 @@ public class TrueNTHServiceBuilder {
      *
      * Overloaded version. Let's you use an instance instead of a class.
      *
-     * @since 0.5
      * @param api
      *            instance of {@link Api}s
      * @return The {@link TrueNTHServiceBuilder} instance for method chaining.
@@ -132,7 +120,6 @@ public class TrueNTHServiceBuilder {
     /**
      * Adds an OAuth base Authorization URL.
      * 
-     * @since 0.5
      * @param baseAuthorizationURL
      *            Base Authorization URL. Must be a valid URL.
      * 
@@ -148,7 +135,6 @@ public class TrueNTHServiceBuilder {
     /**
      * Configures the Central Services roles URL.
      * 
-     * @since 1.5
      * @param rolesURL
      *            Central Services' roles URL. Must be a valid URL.
      * @return the {@link TrueNTHServiceBuilder} instance for method chaining.
@@ -163,7 +149,6 @@ public class TrueNTHServiceBuilder {
     /**
      * Configures the Central Services' resource URL.
      * 
-     * @since 1.5
      * @param resourceURL
      *            Central Services' resource URL. Must be a valid URL.
      * @return the {@link TrueNTHServiceBuilder} instance for method chaining.
@@ -178,7 +163,6 @@ public class TrueNTHServiceBuilder {
     /**
      * Configures the Central Services' base URL.
      * 
-     * @since 1.5
      * @param baseURL
      *            Central Services' base URL. Must be a valid URL.
      * @return the {@link TrueNTHServiceBuilder} instance for method chaining.
@@ -193,7 +177,6 @@ public class TrueNTHServiceBuilder {
     /**
      * Adds an OAuth access token endpoint URL.
      * 
-     * @since 0.5
      * @param accessTokenEndpointURL
      *            Access token end point URL. Must be a valid URL.
      * 
@@ -209,7 +192,6 @@ public class TrueNTHServiceBuilder {
     /**
      * Adds an OAuth callbackURL URL.
      * 
-     * @since 0.5
      * @param callbackURL
      *            Callback URL. Must be a valid URL.
      * 
@@ -225,7 +207,6 @@ public class TrueNTHServiceBuilder {
     /**
      * Configures the App key.
      * 
-     * @since 0.5
      * @param apiKey
      *            The App key for your application.
      * @return the {@link TrueNTHServiceBuilder} instance for method chaining
@@ -240,7 +221,6 @@ public class TrueNTHServiceBuilder {
     /**
      * Configures the api secret.
      * 
-     * @since 0.5
      * @param apiSecret
      *            The api secret for your application.
      * @return the {@link TrueNTHServiceBuilder} instance for method chaining
@@ -259,7 +239,6 @@ public class TrueNTHServiceBuilder {
      * This is only necessary in some APIs.
      * </p>
      * 
-     * @since 0.5
      * @param scope
      *            The OAuth scope.
      * @return the {@link TrueNTHServiceBuilder} instance for method chaining
@@ -278,7 +257,6 @@ public class TrueNTHServiceBuilder {
      * Defaults to Header.
      * </p>
      * 
-     * @since 0.5
      * @param scope
      *            The OAuth scope
      * @return the {@link ServiceBuilder} instance for method chaining
@@ -306,7 +284,6 @@ public class TrueNTHServiceBuilder {
     /**
      * Returns the fully configured {@link OAuthService}
      * 
-     * @since 0.5
      * @return Fully configured {@link TrueNTHOAuthService}
      */
     public TrueNTHOAuthService build() {
