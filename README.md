@@ -24,6 +24,9 @@ Additionally, the library was conceived as a independent
 project, not linked in anyway to the portal, in order to make it available to
 other projects to come. 
 
+###Documentation
+https://uwcirg.github.io/JTrueNTHOAuth-Client
+
 ###Dependences
 1. scribe-1.3.0.jar
 2. javax.json-1.04.jar
