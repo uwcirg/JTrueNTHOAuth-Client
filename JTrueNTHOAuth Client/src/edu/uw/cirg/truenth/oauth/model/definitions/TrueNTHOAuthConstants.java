@@ -26,40 +26,51 @@ public class TrueNTHOAuthConstants {
      * Name of "next" parameter.
      * 
      * <p>
+     * <b>Removed from the CS's protocols<b>.
+     * </p>
+     * 
+     * <p>
      * Used by third parties to redirect users after an OAuth call. Per CS
      * rules.
      * </p>
+     * 
      * <p>
-     * This parameter should be embedded into the authorization URLs, as a regular parameter.
+     * This parameter should be embedded into the authorization URLs, as a
+     * regular parameter.
      * </p>
+     * 
      */
-    public static final String NEXT       = "next";
+    @Deprecated
+    public static final String NEXT     = "next";
 
     /**
-     * Used to internally to redirect users.
+     * Used to internally redirect users.
      * 
      * <p>
      * Used internally to redirect users after an OAuth call.
      * </p>
+     * 
      * <p>
-     * This parameter differs from <code>next</code>, as it is destined to
-     * perform redirections made by the server that originated the OAuth calls.
-     * On the other hand, <code>next</code> is used the redirect clients from
-     * CS.
+     * This parameter is similar to <code>next</code>, as it is destined to
+     * perform redirections made by the local server that originated the OAuth
+     * calls. <code>next</code> was used the redirect clients coming from CS,
+     * after an OAuth login operation, but was removed from the protocol.
      * </p>
+     * 
      * <p>
      * On normal circumstances, this parameter should be preferred as it allows
      * the server to control redirection with more flexibility. Additionally,
-     * redirection can occur faster, as soon as the server gets the access token.
+     * redirection can occur faster, and more efficiently.
      * </p>
+     * 
      * <p>
      * This parameter should be embedded into the callback URLs.
      * </p>
      */
-    public static final String REDIRECT   = "redirect";
-    
+    public static final String REDIRECT = "redirect";
+
     /**
-     * Error messages identification, sent by CS.
+     * Error messages' identification, sent by CS.
      */
-    public static final String ERROR = "error";
+    public static final String ERROR    = "error";
 }

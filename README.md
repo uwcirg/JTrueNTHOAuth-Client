@@ -21,7 +21,7 @@ and uniform methodology for issuing requests and interpreting their outcomes, wh
 extend ScribeJava elements; thus, it has a stable and mature implementation as its base. 
 
 Additionally, the library was conceived as a independent
-project, not linked in anyway to the portal, in order to make it available for
+project, not linked in anyway to the portal, in order to make it available to
 other projects to come. 
 
 ###Dependences
@@ -61,7 +61,7 @@ Whenever you see services.get(companyId), you can just assume that we are retrie
 
 We built some helper classes to help managing basic functionally and the library is responsible for setting all necessary parameters for you automatically.
 
-This are some methods in one of our client applications, which use the library.
+These are some methods in one of our client applications, which use the library.
 
 Those methods are implemented in a helper class called TrueNTHConnectUtil, which is used inside the system to consistently call functionalities from our OAuth library. We suggest you implement one like it in your own system, although it is not necessary.
 
@@ -86,7 +86,7 @@ public TrueNTHAccessToken getAccessToken(long companyId, String code) {
 }
 ```
 
-This method provides the system with the ability to fetch any resource from the Central Services API, given that the token has the necessary permissions.
+This method provides the system with the ability to fetch any resource from the Central Services' API, given that the token has the necessary permissions.
 
 The library provides:
 
@@ -125,7 +125,9 @@ Now, this method demonstrates how to retrieve roles from CS.
 Basically, whenever CS sends us a set of roles for a given user, it does so by sending a JSON object. 
 Our library is able to read such data and return it as a list of Java objects.
 
-Please note that the library does not provide TrueNTHRoleJsonExtractor or  TrueNTHRole, as TrueNTHRole is a internal representation of roles in our system. We will be putting a basic representation of such elements into the library this week (you can watch the library on Git to receive the new code). PS: roles are not necessary in order to implement login protocols.
+Please note that the library does not provide TrueNTHRoleJsonExtractor or  TrueNTHRole, as TrueNTHRole is an internal representation of roles in our system. 
+We will be putting a basic representation of such elements into the library this week (you can watch the library on Git to receive the new code). 
+PS: roles are not necessary in order to implement login protocols.
 
 ```Java 
 @Override
@@ -228,7 +230,7 @@ public String execute(HttpServletRequest request, HttpServletResponse response) 
 }
 ```
 
-Those examples present all that is necessary to fetch demographic information and roles; however, how a system uses and stores this information needs to be implemented for each system, as the internal needs greatly changes. Here is an example, the updateGroups function, used on the above example, fetches the user's roles and stores them into our database, next we use this information to associate the user with user groups, which is one of our internal representation for CS roles.
+Those examples present all that is necessary to fetch demographic information and roles; however, how systems use and store this information needs to be implemented in each system, as the internal needs greatly changes. Here is an example, the updateGroups function, used on the above example, fetches the user's roles and stores them into our database, next we use this information to associate the user with user groups, which is one of our internal representation for CS roles.
 
 ```Java
 /**
@@ -249,8 +251,3 @@ protected void updateGroups(long companyId, TrueNTHAssociation association, True
 		UserGroupLocalServiceUtil.setUserUserGroups(association.getUserId(), getUpdatedGroupIds(companyId, association, trueNTHRoleIds));
 }
 ```
-
-
-
-###Reporting bugs
-vdls@uw.edu
