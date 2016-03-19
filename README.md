@@ -45,16 +45,18 @@ TrueNTHOAuthService service = new TrueNTHServiceBuilder()
 		    .provider(TrueNTHOAuthProvider.class)
 		    .baseAuthorizationURL(serverConfig.getAuthURL())
 		    .accessTokenEndpointURL(serverConfig.getTokenURL())
-		    .baseURL(serverConfig.getCSBaseURL())
-		    .resourceURL(serverConfig.getResourceURL())
-		    .rolesURL(serverConfig.getCSRolesURL())
-		    .callbackURL(serverConfig.getRedirectURL())
-		    .apiKey(serverConfig.getAppID())
-		    .apiSecret(serverConfig.getAppSecret())
+		    .baseURL(CS_BASE) // As https://stg.us.truenth.org
+		    .resourceURL(CS_API) // As https://stg.us.truenth.org/api
+		    .rolesURL(CS_ROLE_API) // As https://stg.us.truenth.org/api/user/#userId/roles
+		    .callbackURL(YOUR_APP_CALLBACK_URL) 
+		    .apiKey(YOUR_API_KEY)
+		    .apiSecret(YOUR_API_SECRET)
 		    .signatureType(SignatureType.Header)
 		    .scope("email")
 		    .build();
 ```
+
+(As our API becomes more stable, this example will be simplified.)
 
 ####2.Using the service
 Here, you will find some examples we use in our code. 
