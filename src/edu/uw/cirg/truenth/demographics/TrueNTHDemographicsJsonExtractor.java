@@ -106,7 +106,7 @@ public class TrueNTHDemographicsJsonExtractor implements TrueNTHDemographicsExtr
      * "identifier": [
      *       {
      *           "label": "Truenth identifier",
-     *           "value": 10015</b>
+     *           <b>"value": 10015</b>
      *       },
      *       {
      *           "label": "Truenth username",

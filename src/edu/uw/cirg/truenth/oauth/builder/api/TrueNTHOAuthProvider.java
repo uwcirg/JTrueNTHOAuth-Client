@@ -77,6 +77,8 @@ public class TrueNTHOAuthProvider implements Api {
     /**
      * Returns the URL that receives the access token requests.
      * 
+     * @param config
+     *            TrueNTH OAuth configuration.
      * @return request token URL
      */
     public String getAccessTokenEndpoint(TrueNTHOAuthConfig config) {
@@ -126,7 +128,8 @@ public class TrueNTHOAuthProvider implements Api {
      *            parameters are destined to the callback target.
      * @return the URL where users will be redirected.
      * 
-     * @see #getAuthorizationUrl(OAuthConfig, int, ParameterList, ParameterList)
+     * @see #getAuthorizationUrl(TrueNTHOAuthConfig, int, ParameterList,
+     *      ParameterList)
      */
     public String getAuthorizationUrl(TrueNTHOAuthConfig config, int numberEncodings, ParameterList callbackParameters) {
 
@@ -192,7 +195,7 @@ public class TrueNTHOAuthProvider implements Api {
     /**
      * Creates an {@link TrueNTHOAuthService}
      * 
-
+     * 
      * @param config
      *            OAuth API configuration.
      * @return Fully configured {@link TrueNTHOAuthService}.

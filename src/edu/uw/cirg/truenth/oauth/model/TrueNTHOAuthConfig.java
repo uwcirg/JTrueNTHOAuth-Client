@@ -87,6 +87,7 @@ public class TrueNTHOAuthConfig extends OAuthConfig {
      * @param scope
      *            Authorization scope.
      * @param stream
+     *            Output stream.
      */
     public TrueNTHOAuthConfig(String key, String secret, String accessTokenEndpointURL, String baseAuthorizationURL, String baseURL,
 	    String resourceURL, String rolesURL, String callback, SignatureType signatureType, String scope, OutputStream stream) {

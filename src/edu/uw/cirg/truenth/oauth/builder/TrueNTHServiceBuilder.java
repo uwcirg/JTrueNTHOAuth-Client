@@ -16,7 +16,6 @@ package edu.uw.cirg.truenth.oauth.builder;
 
 import java.io.OutputStream;
 
-import org.scribe.builder.ServiceBuilder;
 import org.scribe.builder.api.Api;
 import org.scribe.exceptions.OAuthException;
 import org.scribe.model.SignatureType;
@@ -30,8 +29,8 @@ import edu.uw.cirg.truenth.oauth.model.TrueNTHOAuthConfig;
  * "Extension" of ServiceBuilder to include server configuration parameters.
  * 
  * <p>
- * Due to the private nature of
- * <code>ServiceBuilder<code>'s variables, and lack of getters/setters, extension was not used.
+ * Due to the private nature of ServiceBuilder's variables, and the lack of
+ * getters/setters, extension was not used.
  * </p>
  * 
  * @author Victor de Lima Soares
@@ -202,7 +201,7 @@ public class TrueNTHServiceBuilder {
     /**
      * Adds an OAuth callbackURL URL.
      * 
-     * @param callbackURL
+     * @param callback
      *            Callback URL. Must be a valid URL.
      * 
      * @return The {@link TrueNTHServiceBuilder} instance for method chaining.
@@ -267,9 +266,9 @@ public class TrueNTHServiceBuilder {
      * Defaults to Header.
      * </p>
      * 
-     * @param scope
-     *            The OAuth scope
-     * @return the {@link ServiceBuilder} instance for method chaining
+     * @param type
+     *            The OAuth signature type.
+     * @return the ServiceBuilder instance for method chaining
      */
     public TrueNTHServiceBuilder signatureType(SignatureType type) {
 
@@ -292,7 +291,7 @@ public class TrueNTHServiceBuilder {
     }
 
     /**
-     * Returns the fully configured {@link OAuthService}
+     * Returns the fully configured TrueNTHOAuthService
      * 
      * @return Fully configured {@link TrueNTHOAuthService}
      */

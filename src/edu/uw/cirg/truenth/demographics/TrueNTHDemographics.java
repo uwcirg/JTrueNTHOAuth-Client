@@ -38,7 +38,7 @@ public enum TrueNTHDemographics {
     /**
      * Constructor.
      * 
-     * @param propName
+     * @param propName Property name.
      */
     private TrueNTHDemographics(String propName) {	
 	propertyName=propName;

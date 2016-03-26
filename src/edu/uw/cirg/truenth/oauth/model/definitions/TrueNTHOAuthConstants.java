@@ -26,7 +26,7 @@ public class TrueNTHOAuthConstants {
      * Name of "next" parameter.
      * 
      * <p>
-     * <b>Removed from the CS's protocols<b>.
+     * <b>Removed from the CS's protocols</b>.
      * </p>
      * 
      * <p>

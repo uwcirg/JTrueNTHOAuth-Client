@@ -14,7 +14,6 @@
  *******************************************************************************/
 package edu.uw.cirg.truenth.oauth;
 
-import org.scribe.model.OAuthConfig;
 import org.scribe.model.OAuthConstants;
 import org.scribe.model.OAuthRequest;
 import org.scribe.model.ParameterList;
@@ -156,7 +155,7 @@ public class TrueNTHOAuthService implements OAuthService {
      * @param requestToken
      *            Access token.
      * @return the URL where you should redirect your users.
-     * @see TrueNTHOAuthProvider#getAuthorizationUrl(OAuthConfig)
+     * @see TrueNTHOAuthProvider#getAuthorizationUrl(TrueNTHOAuthConfig)
      */
     @Override
     public String getAuthorizationUrl(Token requestToken) {
@@ -167,11 +166,9 @@ public class TrueNTHOAuthService implements OAuthService {
     /**
      * Returns the redirection URL where users authenticate.
      * 
-     * @param requestToken
-     *            Access token.
      * @return the URL where you should redirect your users.
      * 
-     * @see TrueNTHOAuthProvider#getAuthorizationUrl(OAuthConfig)
+     * @see TrueNTHOAuthProvider#getAuthorizationUrl(TrueNTHOAuthConfig)
      */
     public String getAuthorizationUrl() {
 
@@ -250,17 +247,21 @@ public class TrueNTHOAuthService implements OAuthService {
 
 	return getConfig().getRolesURL();
     }
-    
+
     /**
      * Returns the configured roles URL, for a specific user.
      * 
      * <p>
-     * Replaces the userId place holder the the String representation of the TrueNTH user ID.
+     * Replaces the userId place holder the the String representation of the
+     * TrueNTH user ID.
      * </p>
      * 
+     * @param userId
+     *            TrueNTH User ID.
      * @return Roles URL.
      */
     public String getRolesURL(long userId) {
+
 	return getRolesURL().replaceFirst(TrueNTHUrlPlaceHolders.USER_ID, String.valueOf(userId));
     }
 
