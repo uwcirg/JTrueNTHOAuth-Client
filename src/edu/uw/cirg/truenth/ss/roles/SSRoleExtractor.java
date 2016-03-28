@@ -77,7 +77,7 @@ public interface SSRoleExtractor<T> {
      * @param data
      *            Data origin.
      * @return Extracted SS roles.
-     * @see #extractRole(T)
+     * @see #extractRole(Object)
      */
     List<SSRole> extractRoles(T data);
 }

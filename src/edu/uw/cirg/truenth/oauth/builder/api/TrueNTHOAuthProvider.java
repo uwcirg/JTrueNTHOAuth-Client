@@ -46,7 +46,7 @@ import edu.uw.cirg.truenth.oauth.model.tokens.extractors.TrueNTHAccessTokenExtra
  *
  * <p>
  * Originally, this class was aligned with Scribe's service implementations, but
- * as new requirements for dynamic server configuration emerged, the use of
+ * as new requirements for dynamic server configuration emerged and the use of
  * {@link TrueNTHOAuthConfig} became imperative.
  * </p>
  *
