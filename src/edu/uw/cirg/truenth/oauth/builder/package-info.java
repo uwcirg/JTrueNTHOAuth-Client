@@ -14,7 +14,7 @@
  *******************************************************************************/
 /**
  * Service builders.
- * 
+ *
  * <p>
  * This package contains the necessary classes to build a working service given a defined provider.
  * </p>
@@ -26,7 +26,7 @@
  * <li>Service: Offers client services, such as requesting tokens.</li>
  * <li>Builder: Builds a configured service, using a specific provider.</li>
  * </ul>
- * 
+ *
  * @author Victor de Lima Soares
  * @since Sep 25, 2015
  */

@@ -14,7 +14,7 @@
  *******************************************************************************/
 /**
  * Define TrueNTH tokens and utils.
- *  
+ *
  * @author Victor de Lima Soares
  * @since Oct 22, 2015
  */

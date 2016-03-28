@@ -4,27 +4,18 @@ import java.util.List;
 
 /**
  * Generic role information extractor.
- * 
+ *
  * @author Victor de Lima Soares
  * @since Mar 28, 2016
- * 
+ *
  * @param <T>
  *            Data type of the information source.
  */
 public interface SSRoleExtractor<T> {
 
     /**
-     * Extracts: name.
-     * 
-     * @param data
-     *            Data origin.
-     * @return Role name.
-     */
-    String extractName(T data);
-
-    /**
      * Extracts: description.
-     * 
+     *
      * @param data
      *            Data origin.
      * @return Role description.
@@ -32,8 +23,17 @@ public interface SSRoleExtractor<T> {
     String extractDescription(T data);
 
     /**
+     * Extracts: name.
+     *
+     * @param data
+     *            Data origin.
+     * @return Role name.
+     */
+    String extractName(T data);
+
+    /**
      * Extracts: SSRole instance.
-     * 
+     *
      * @param data
      *            Data origin.
      * @return Extracted SS role.
@@ -42,21 +42,23 @@ public interface SSRoleExtractor<T> {
 
     /**
      * Extracts: SSRoles from an array of roles.
-     * 
-     * <p>Example (JSON):</p>
-     * 
-     *<PRE>
-     *{
-     * "roles": [
-     *    {
-     *        description": "Administrator privileges, i.e. carte blanche",
-     *        "name": "admin"
-     *     }
-     *  ]
-     *}
+     *
+     * <p>
+     * Example (JSON):
+     * </p>
+     *
+     * <PRE>
+     * {
+     *  "roles": [
+     *     {
+     *         description": "Administrator privileges, i.e. carte blanche",
+     *         "name": "admin"
+     *      }
+     *   ]
+     * }
      * </PRE>
-     * 
-     * 
+     *
+     *
      * @param data
      *            Data origin.
      * @return Extracted SS roles.

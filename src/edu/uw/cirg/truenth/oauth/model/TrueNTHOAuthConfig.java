@@ -21,12 +21,12 @@ import org.scribe.model.SignatureType;
 
 /**
  * Extension of OAuthConfig to include OAuth providers' server configuration.
- * 
+ *
  * <p>
  * This class was designed to use in multithreading environments, it is tread
  * safe <b>after creation</b>. It is immutable and does not rely on locks.
  * </p>
- * 
+ *
  * @author Victor de Lima Soares
  * @since Sep 21, 2015
  */
@@ -43,16 +43,6 @@ public class TrueNTHOAuthConfig extends OAuthConfig {
     private final String baseAuthorizationURL;
 
     /**
-     * Central Services' roles URL.
-     */
-    private final String rolesURL;
-
-    /**
-     * Resource URL.
-     */
-    private final String resourceURL;
-
-    /**
      * Central Services base URL.
      * <p>
      * This URL points to central services base URL, it should not be used for
@@ -63,8 +53,18 @@ public class TrueNTHOAuthConfig extends OAuthConfig {
     private final String baseURL;
 
     /**
+     * Resource URL.
+     */
+    private final String resourceURL;
+
+    /**
+     * Central Services' roles URL.
+     */
+    private final String rolesURL;
+
+    /**
      * Constructor.
-     * 
+     *
      * @param key
      *            APP key, distributed by CS.
      * @param secret
@@ -89,11 +89,12 @@ public class TrueNTHOAuthConfig extends OAuthConfig {
      * @param stream
      *            Output stream.
      */
-    public TrueNTHOAuthConfig(String key, String secret, String accessTokenEndpointURL, String baseAuthorizationURL, String baseURL,
-	    String resourceURL, String rolesURL, String callback, SignatureType signatureType, String scope, OutputStream stream) {
+    public TrueNTHOAuthConfig(final String key, final String secret, final String accessTokenEndpointURL, final String baseAuthorizationURL,
+	    final String baseURL, final String resourceURL, final String rolesURL, final String callback, final SignatureType signatureType,
+	    final String scope, final OutputStream stream) {
 
 	super(key, secret, callback, signatureType, scope, stream);
-	this.accessTokenEndpoint = accessTokenEndpointURL;
+	accessTokenEndpoint = accessTokenEndpointURL;
 	this.baseAuthorizationURL = baseAuthorizationURL;
 
 	this.baseURL = baseURL;
@@ -113,18 +114,24 @@ public class TrueNTHOAuthConfig extends OAuthConfig {
     }
 
     /**
-     * Returns the configured roles URL.
-     * 
-     * @return Roles URL.
+     * Returns the configured Central Services base URL.
+     *
+     * <p>
+     * This URL points to central services base URL, it should not be used for
+     * OAuth operation, but for fetching static resources, such as css. It is
+     * mainly used for templates.
+     * </p>
+     *
+     * @return Configured Central Services base URL.
      */
-    public String getRolesURL() {
+    public String getBaseURL() {
 
-	return rolesURL;
+	return baseURL;
     }
 
     /**
      * Returns the configured resource URL (API base).
-     * 
+     *
      * @return Resource URL.
      */
     public String getResourceURL() {
@@ -133,19 +140,13 @@ public class TrueNTHOAuthConfig extends OAuthConfig {
     }
 
     /**
-     * Returns the configured Central Services base URL.
-     * 
-     * <p>
-     * This URL points to central services base URL, it should not be used for
-     * OAuth operation, but for fetching static resources, such as css. It is
-     * mainly used for templates.
-     * </p>
-     * 
-     * @return Configured Central Services base URL.
+     * Returns the configured roles URL.
+     *
+     * @return Roles URL.
      */
-    public String getBaseURL() {
+    public String getRolesURL() {
 
-	return baseURL;
+	return rolesURL;
     }
 
 }

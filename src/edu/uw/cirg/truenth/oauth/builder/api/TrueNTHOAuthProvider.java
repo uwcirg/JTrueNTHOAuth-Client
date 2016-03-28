@@ -32,26 +32,26 @@ import edu.uw.cirg.truenth.oauth.model.tokens.extractors.TrueNTHAccessTokenExtra
 
 /**
  * OAuth API provider.
- * 
+ *
  * <p>
  * Based on <i>org.scribe.builder.api.Api</i> and <i>DefaultApi20</i>.
  * </p>
- * 
+ *
  * <p>
  * This class has similar goals as <i>DefaultApi20</i>, but the particularities
  * of our CS called for a custom implementation that the default APIs would not
  * satisfy.
  * </p>
- * 
+ *
  * <p>
  * Originally, this class was aligned with Scribe's service implementations, but
  * as new requirements for dynamic server configuration emerged, the use of
  * {@link TrueNTHOAuthConfig} became imperative.
  * </p>
- * 
+ *
  * @author Victor de Lima Soares
  * @since Sep 11, 2015
- * 
+ *
  * @see TrueNTHOAuthService
  * @see TrueNTHOAuthConfig
  */
@@ -61,12 +61,74 @@ public class TrueNTHOAuthProvider implements Api {
     private static final String SCOPED_AUTHORIZE_URL = AUTHORIZE_URL + "&scope=%s";
 
     /**
+     * Creates an {@link TrueNTHOAuthService}
+     *
+     *
+     * @param config
+     *            OAuth API configuration.
+     * @return Fully configured {@link TrueNTHOAuthService}.
+     *
+     * @throws InvalidParameterException
+     *             config is not a instance of TrueNTHOAuthConfig.
+     *
+     * @see TrueNTHOAuthService
+     * @deprecated Use {@link #createService(TrueNTHOAuthConfig)}.
+     */
+    @Deprecated
+    @Override
+    public TrueNTHOAuthService createService(final OAuthConfig config) {
+
+	if (config instanceof TrueNTHOAuthConfig) { return createService((TrueNTHOAuthConfig) config); }
+
+	throw new InvalidParameterException("config is not a instance of TrueNTHOAuthConfig");
+    }
+
+    /**
+     * Creates an {@link TrueNTHOAuthService}
+     *
+     * @param config
+     *            OAuth API configuration.
+     * @return Fully configured {@link TrueNTHOAuthService}
+     * @see TrueNTHOAuthService
+     */
+    public TrueNTHOAuthService createService(final TrueNTHOAuthConfig config) {
+
+	return new TrueNTHOAuthService(this, config);
+    }
+
+    /**
+     * Returns the URL that receives the access token requests.
+     *
+     * @param config
+     *            TrueNTH OAuth configuration.
+     * @return request token URL
+     */
+    public String getAccessTokenEndpoint(final TrueNTHOAuthConfig config) {
+
+	return config.getAccessTokenEndpoint();
+    }
+
+    /**
+     * Returns the access token extractor.
+     *
+     * <p>
+     * This method uses a JSON based extractor as required by CS.
+     * </p>
+     *
+     * @return access token extractor
+     */
+    public TrueNTHAccessTokenExtractor<JsonObject> getAccessTokenExtractor() {
+
+	return new JSonTrueNTHAccessTokenExtractor();
+    }
+
+    /**
      * Returns the chosen method to obtain an access token.
-     * 
+     *
      * <p>
      * CS requires POST.
      * </p>
-     * 
+     *
      * @return Access method.
      */
     public Verb getAccessTokenVerb() {
@@ -75,29 +137,17 @@ public class TrueNTHOAuthProvider implements Api {
     }
 
     /**
-     * Returns the URL that receives the access token requests.
-     * 
-     * @param config
-     *            TrueNTH OAuth configuration.
-     * @return request token URL
-     */
-    public String getAccessTokenEndpoint(TrueNTHOAuthConfig config) {
-
-	return config.getAccessTokenEndpoint();
-    }
-
-    /**
      * Returns the redirection URL where users authenticate.
-     * 
+     *
      * @param config
      *            OAuth configuration.
      * @return the URL where you should redirect your users.
      */
-    public String getAuthorizationUrl(TrueNTHOAuthConfig config) {
+    public String getAuthorizationUrl(final TrueNTHOAuthConfig config) {
 
-	String baseURL = config.getBaseAuthorizationURL();
+	final String baseURL = config.getBaseAuthorizationURL();
 
-	String callback = OAuthEncoder.encode((config.getCallback()));
+	final String callback = OAuthEncoder.encode((config.getCallback()));
 
 	if (config.hasScope()) {
 	    return baseURL + String.format(SCOPED_AUTHORIZE_URL, config.getApiKey(), callback, OAuthEncoder.encode(config.getScope()));
@@ -109,13 +159,13 @@ public class TrueNTHOAuthProvider implements Api {
 
     /**
      * Returns the redirection URL where users authenticate.
-     * 
+     *
      * <p>
      * Same as
      * <code>getAuthorizationUrl(config, numberEncodings, callbackParameters, null)</code>
      * .
      * </p>
-     * 
+     *
      * @param config
      *            OAuth configuration.
      * @param numberEncodings
@@ -127,18 +177,18 @@ public class TrueNTHOAuthProvider implements Api {
      *            parameter list will be added to the callback URL. Those
      *            parameters are destined to the callback target.
      * @return the URL where users will be redirected.
-     * 
+     *
      * @see #getAuthorizationUrl(TrueNTHOAuthConfig, int, ParameterList,
      *      ParameterList)
      */
-    public String getAuthorizationUrl(TrueNTHOAuthConfig config, int numberEncodings, ParameterList callbackParameters) {
+    public String getAuthorizationUrl(final TrueNTHOAuthConfig config, final int numberEncodings, final ParameterList callbackParameters) {
 
 	return getAuthorizationUrl(config, numberEncodings, callbackParameters, null);
     }
 
     /**
      * Returns the redirection URL where users authenticate.
-     * 
+     *
      * @param config
      *            OAuth configuration.
      * @param numberEncodings
@@ -158,13 +208,16 @@ public class TrueNTHOAuthProvider implements Api {
      *            {@link TrueNTHOAuthConstants#NEXT}.
      * @return the URL where users will be redirected.
      */
-    public String getAuthorizationUrl(TrueNTHOAuthConfig config, int numberEncodings, ParameterList callbackParameters, ParameterList parameters) {
+    public String getAuthorizationUrl(final TrueNTHOAuthConfig config, final int numberEncodings, final ParameterList callbackParameters,
+	    final ParameterList parameters) {
 
 	String baseURL = config.getBaseAuthorizationURL();
 
 	String callback = config.getCallback();
 
-	if (callbackParameters != null) callback = callbackParameters.appendTo(callback);
+	if (callbackParameters != null) {
+	    callback = callbackParameters.appendTo(callback);
+	}
 
 	for (int i = 0; i < numberEncodings; i++) {
 	    callback = OAuthEncoder.encode(callback);
@@ -177,56 +230,6 @@ public class TrueNTHOAuthProvider implements Api {
 	}
 
 	return (parameters == null) ? baseURL : parameters.appendTo(baseURL);
-    }
-
-    /**
-     * Creates an {@link TrueNTHOAuthService}
-     * 
-     * @param config
-     *            OAuth API configuration.
-     * @return Fully configured {@link TrueNTHOAuthService}
-     * @see TrueNTHOAuthService
-     */
-    public TrueNTHOAuthService createService(TrueNTHOAuthConfig config) {
-
-	return new TrueNTHOAuthService(this, config);
-    }
-
-    /**
-     * Creates an {@link TrueNTHOAuthService}
-     * 
-     * 
-     * @param config
-     *            OAuth API configuration.
-     * @return Fully configured {@link TrueNTHOAuthService}.
-     * 
-     * @throws InvalidParameterException
-     *             config is not a instance of TrueNTHOAuthConfig.
-     * 
-     * @see TrueNTHOAuthService
-     * @deprecated Use {@link #createService(TrueNTHOAuthConfig)}.
-     */
-    @Deprecated
-    @Override
-    public TrueNTHOAuthService createService(OAuthConfig config) {
-
-	if (config instanceof TrueNTHOAuthConfig) return createService((TrueNTHOAuthConfig) config);
-
-	throw new InvalidParameterException("config is not a instance of TrueNTHOAuthConfig");
-    }
-
-    /**
-     * Returns the access token extractor.
-     * 
-     * <p>
-     * This method uses a JSON based extractor as required by CS.
-     * </p>
-     * 
-     * @return access token extractor
-     */
-    public TrueNTHAccessTokenExtractor<JsonObject> getAccessTokenExtractor() {
-
-	return new JSonTrueNTHAccessTokenExtractor();
     }
 
 }

@@ -32,7 +32,7 @@ import edu.uw.cirg.truenth.oauth.model.tokens.TrueNTHAccessToken;
 
 /**
  * OAuth service.
- * 
+ *
  * @author Victor de Lima Soares
  * @since Sep 11, 2015
  */
@@ -48,22 +48,22 @@ public class TrueNTHOAuthService implements OAuthService {
 
     /**
      * Default constructor.
-     * 
+     *
      * @param trueNTHOAuthProvider
      *            OAuth2.0 api information
      * @param config
      *            OAuth 2.0 configuration param object
      */
-    public TrueNTHOAuthService(TrueNTHOAuthProvider trueNTHOAuthProvider, TrueNTHOAuthConfig config) {
+    public TrueNTHOAuthService(final TrueNTHOAuthProvider trueNTHOAuthProvider, final TrueNTHOAuthConfig config) {
 
-	this.api = trueNTHOAuthProvider;
+	api = trueNTHOAuthProvider;
 	this.config = config;
 	Preconditions.checkValidUrl(config.getCallback(), "Callback URL must be a valid URL.");
     }
 
     /**
      * Fetches an access token and returns as a token object - Scribe's model.
-     * 
+     *
      * @param requestToken
      *            This parameter will not be used and can be safely set to null.
      * @param verifier
@@ -71,22 +71,132 @@ public class TrueNTHOAuthService implements OAuthService {
      * @return access token.
      */
     @Override
-    public TrueNTHAccessToken getAccessToken(Token requestToken, Verifier verifier) {
+    public TrueNTHAccessToken getAccessToken(final Token requestToken, final Verifier verifier) {
 
-	OAuthRequest request = new OAuthRequest(api.getAccessTokenVerb(), api.getAccessTokenEndpoint(config));
+	final OAuthRequest request = new OAuthRequest(api.getAccessTokenVerb(), api.getAccessTokenEndpoint(config));
 	request.addBodyParameter(OAuthConstants.CLIENT_ID, config.getApiKey());
 	request.addBodyParameter(OAuthConstants.CLIENT_SECRET, config.getApiSecret());
 	request.addBodyParameter(TrueNTHGrantType.PARAMETER, TrueNTHGrantType.CODE.toString());
 	request.addBodyParameter(OAuthConstants.CODE, verifier.getValue());
 	request.addBodyParameter(OAuthConstants.REDIRECT_URI, config.getCallback());
-	if (config.hasScope()) request.addBodyParameter(OAuthConstants.SCOPE, config.getScope());
-	Response response = request.send();
-	return (TrueNTHAccessToken) api.getAccessTokenExtractor().extract(response.getBody());
+	if (config.hasScope()) {
+	    request.addBodyParameter(OAuthConstants.SCOPE, config.getScope());
+	}
+	final Response response = request.send();
+	return api.getAccessTokenExtractor().extract(response.getBody());
+    }
+
+    /**
+     * Returns the redirection URL where users authenticate.
+     *
+     * @return the URL where you should redirect your users.
+     *
+     * @see TrueNTHOAuthProvider#getAuthorizationUrl(TrueNTHOAuthConfig)
+     */
+    public String getAuthorizationUrl() {
+
+	return api.getAuthorizationUrl(config);
+    }
+
+    /**
+     * Returns the redirection URL.
+     *
+     * <p>
+     * This is just a convenience method. Same as:
+     * {@link #getAuthorizationUrl(int, ParameterList, ParameterList)}
+     * </p>
+     *
+     *
+     * @param numberEncodings
+     *            Number of encoding operations to be applied on the callback
+     *            URL. Two encoding operations are necessary to communicate
+     *            properly with CS after browser redirections in POP UPs.
+     * @param callbackParameters
+     *            Additional parameters to add with the callback URL. This
+     *            parameter list will be added to the callback URL. Those
+     *            parameters are destined to the callback target.
+     * @return the URL where users will be redirected.
+     */
+    public String getAuthorizationUrl(final int numberEncodings, final ParameterList callbackParameters) {
+
+	return getAuthorizationUrl(numberEncodings, callbackParameters, null);
+    }
+
+    /**
+     * Returns the redirection URL.
+     *
+     *
+     * @param numberEncodings
+     *            Number of encoding operations to be applied on the callback
+     *            URL. Two encoding operations are necessary to communicate
+     *            properly with CS after browser redirections in POP UPs.
+     * @param callbackParameters
+     *            Additional parameters to add with the callback URL. This
+     *            parameter list will be added to the callback URL. Those
+     *            parameters are destined to the callback target.
+     * @param parameters
+     *            Additional parameters to add on the Authorization URL. This
+     *            parameter list should be used for especial circumstances to
+     *            fine tune requests directed to the the OAuth server; for
+     *            instance CS's "next" parameter. Parameters coming form the
+     *            OAuthConfig will be automatically appended (by the provider);
+     *            such as "scope".
+     * @return the URL where users will be redirected.
+     */
+    public String getAuthorizationUrl(final int numberEncodings, final ParameterList callbackParameters, final ParameterList parameters) {
+
+	final String baseURL = api.getAuthorizationUrl(config, numberEncodings, callbackParameters, parameters);
+
+	return baseURL;
+    }
+
+    /**
+     * Returns the redirection URL where users authenticate.
+     *
+     * <p>
+     * Same as {@link #getAuthorizationUrl()}
+     * </p>
+     *
+     * @param requestToken
+     *            Access token.
+     * @return the URL where you should redirect your users.
+     * @see TrueNTHOAuthProvider#getAuthorizationUrl(TrueNTHOAuthConfig)
+     */
+    @Override
+    public String getAuthorizationUrl(final Token requestToken) {
+
+	return api.getAuthorizationUrl(config);
+    }
+
+    /**
+     * Returns the configured Central Services' base URL.
+     *
+     * <p>
+     * This URL points to central services base URL, it should not be used for
+     * OAuth operation, but for fetching static resources, such as css. It is
+     * mainly used for templates.
+     * </p>
+     *
+     * @return Configured Central Services base URL.
+     */
+    public String getBaseURL() {
+
+	return getConfig().getBaseURL();
+    }
+
+    /**
+     * Returns the service configuration object.
+     *
+     * @return Service configuration.
+     */
+    public TrueNTHOAuthConfig getConfig() {
+
+	return config;
     }
 
     /**
      * Fetches request token.
-     * 
+     *
      * @throws UnsupportedOperationException
      *             This operation is not supported by CS; thus, this workflow
      *             shall not be used.
@@ -100,8 +210,46 @@ public class TrueNTHOAuthService implements OAuthService {
     }
 
     /**
+     * Returns the configured resource URL (API base).
+     *
+     * @return Resource URL.
+     */
+    public String getResourceURL() {
+
+	return getConfig().getResourceURL();
+    }
+
+    /**
+     * Returns the configured roles URL.
+     *
+     *
+     * @return Roles URL.
+     */
+    public String getRolesURL() {
+
+	return getConfig().getRolesURL();
+    }
+
+    /**
+     * Returns the configured roles URL, for a specific user.
+     *
+     * <p>
+     * Replaces the userId place holder the the String representation of the
+     * TrueNTH user ID.
+     * </p>
+     *
+     * @param userId
+     *            TrueNTH User ID.
+     * @return Roles URL.
+     */
+    public String getRolesURL(final long userId) {
+
+	return getRolesURL().replaceFirst(TrueNTHUrlPlaceHolders.USER_ID, String.valueOf(userId));
+    }
+
+    /**
      * Access current OAuth version.
-     * 
+     *
      * @return OAuth version.
      */
     @Override
@@ -130,10 +278,10 @@ public class TrueNTHOAuthService implements OAuthService {
      * SignatureType.QueryString: Append "oauth_token" as a query string
      * parameter.
      * </p>
-     * 
+     *
      */
     @Override
-    public void signRequest(Token accessToken, OAuthRequest request) {
+    public void signRequest(final Token accessToken, final OAuthRequest request) {
 
 	switch (config.getSignatureType()) {
 	    case Header:
@@ -143,151 +291,5 @@ public class TrueNTHOAuthService implements OAuthService {
 		request.addQuerystringParameter(OAuthConstants.ACCESS_TOKEN, accessToken.getToken());
 		break;
 	}
-    }
-
-    /**
-     * Returns the redirection URL where users authenticate.
-     * 
-     * <p>
-     * Same as {@link #getAuthorizationUrl()}
-     * </p>
-     * 
-     * @param requestToken
-     *            Access token.
-     * @return the URL where you should redirect your users.
-     * @see TrueNTHOAuthProvider#getAuthorizationUrl(TrueNTHOAuthConfig)
-     */
-    @Override
-    public String getAuthorizationUrl(Token requestToken) {
-
-	return api.getAuthorizationUrl(config);
-    }
-
-    /**
-     * Returns the redirection URL where users authenticate.
-     * 
-     * @return the URL where you should redirect your users.
-     * 
-     * @see TrueNTHOAuthProvider#getAuthorizationUrl(TrueNTHOAuthConfig)
-     */
-    public String getAuthorizationUrl() {
-
-	return api.getAuthorizationUrl(config);
-    }
-
-    /**
-     * Returns the redirection URL.
-     * 
-     * 
-     * @param numberEncodings
-     *            Number of encoding operations to be applied on the callback
-     *            URL. Two encoding operations are necessary to communicate
-     *            properly with CS after browser redirections in POP UPs.
-     * @param callbackParameters
-     *            Additional parameters to add with the callback URL. This
-     *            parameter list will be added to the callback URL. Those
-     *            parameters are destined to the callback target.
-     * @param parameters
-     *            Additional parameters to add on the Authorization URL. This
-     *            parameter list should be used for especial circumstances to
-     *            fine tune requests directed to the the OAuth server; for
-     *            instance CS's "next" parameter. Parameters coming form the
-     *            OAuthConfig will be automatically appended (by the provider);
-     *            such as "scope".
-     * @return the URL where users will be redirected.
-     */
-    public String getAuthorizationUrl(int numberEncodings, ParameterList callbackParameters, ParameterList parameters) {
-
-	String baseURL = api.getAuthorizationUrl(config, numberEncodings, callbackParameters, parameters);
-
-	return baseURL;
-    }
-
-    /**
-     * Returns the redirection URL.
-     * 
-     * <p>
-     * This is just a convenience method. Same as:
-     * {@link #getAuthorizationUrl(int, ParameterList, ParameterList)}
-     * </p>
-     * 
-     * 
-     * @param numberEncodings
-     *            Number of encoding operations to be applied on the callback
-     *            URL. Two encoding operations are necessary to communicate
-     *            properly with CS after browser redirections in POP UPs.
-     * @param callbackParameters
-     *            Additional parameters to add with the callback URL. This
-     *            parameter list will be added to the callback URL. Those
-     *            parameters are destined to the callback target.
-     * @return the URL where users will be redirected.
-     */
-    public String getAuthorizationUrl(int numberEncodings, ParameterList callbackParameters) {
-
-	return getAuthorizationUrl(numberEncodings, callbackParameters, null);
-    }
-
-    /**
-     * Returns the service configuration object.
-     * 
-     * @return Service configuration.
-     */
-    public TrueNTHOAuthConfig getConfig() {
-
-	return config;
-    }
-
-    /**
-     * Returns the configured roles URL.
-     * 
-     * 
-     * @return Roles URL.
-     */
-    public String getRolesURL() {
-
-	return getConfig().getRolesURL();
-    }
-
-    /**
-     * Returns the configured roles URL, for a specific user.
-     * 
-     * <p>
-     * Replaces the userId place holder the the String representation of the
-     * TrueNTH user ID.
-     * </p>
-     * 
-     * @param userId
-     *            TrueNTH User ID.
-     * @return Roles URL.
-     */
-    public String getRolesURL(long userId) {
-
-	return getRolesURL().replaceFirst(TrueNTHUrlPlaceHolders.USER_ID, String.valueOf(userId));
-    }
-
-    /**
-     * Returns the configured resource URL (API base).
-     * 
-     * @return Resource URL.
-     */
-    public String getResourceURL() {
-
-	return getConfig().getResourceURL();
-    }
-
-    /**
-     * Returns the configured Central Services' base URL.
-     * 
-     * <p>
-     * This URL points to central services base URL, it should not be used for
-     * OAuth operation, but for fetching static resources, such as css. It is
-     * mainly used for templates.
-     * </p>
-     * 
-     * @return Configured Central Services base URL.
-     */
-    public String getBaseURL() {
-
-	return getConfig().getBaseURL();
     }
 }

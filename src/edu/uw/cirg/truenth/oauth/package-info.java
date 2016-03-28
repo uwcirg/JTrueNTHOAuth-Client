@@ -14,7 +14,7 @@
  *******************************************************************************/
 /**
  * TrueNTHConnect OAuth implementation.
- * 
+ *
  * <p>
  * This package provides core OAuth functionality, following the restrictions imposed by our Central Services (CS).
  * </p>
@@ -30,7 +30,7 @@
  * <li>Service: Offers client services, such as requesting tokens.</li>
  * <li>Builder: Builds a configured service, using a specific provider.</li>
  * </ul>
- * 
+ *
  * <p>
  * Dependences:
  * </p>

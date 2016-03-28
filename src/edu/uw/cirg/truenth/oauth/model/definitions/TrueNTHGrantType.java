@@ -16,7 +16,7 @@ package edu.uw.cirg.truenth.oauth.model.definitions;
 
 /**
  * Provides grant types supported by this API and our CS.
- * 
+ *
  * @author Victor de Lima Soares
  * @since Sep 11, 2015
  */
@@ -28,20 +28,21 @@ public enum TrueNTHGrantType {
      */
     public static final String PARAMETER = "grant_type";
 
-    private String	     grantType;
+    public static String getParameterName() {
 
-    private TrueNTHGrantType(String grantType) {
+	return PARAMETER;
+    }
+
+    private String grantType;
+
+    private TrueNTHGrantType(final String grantType) {
 
 	this.grantType = grantType;
     }
 
+    @Override
     public String toString() {
 
 	return grantType;
-    }
-
-    public static String getParameterName() {
-
-	return PARAMETER;
     }
 }

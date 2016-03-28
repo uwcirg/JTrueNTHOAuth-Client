@@ -20,7 +20,7 @@ import edu.uw.cirg.truenth.oauth.model.definitions.TrueNTHTokenType;
 
 /**
  * TrueNTH token model.
- * 
+ *
  * @author Victor de Lima Soares
  * @since Oct 22, 2015
  *
@@ -39,7 +39,7 @@ public abstract class TrueNTHToken extends Token {
      * @param tokenType
      *            Token type.
      */
-    public TrueNTHToken(String token, String tokenType) {
+    public TrueNTHToken(final String token, final String tokenType) {
 
 	this(token, null, tokenType);
     }
@@ -56,15 +56,45 @@ public abstract class TrueNTHToken extends Token {
      *            Raw token data.
      * @see TrueNTHTokenType
      */
-    public TrueNTHToken(String token, String rawResponse, String tokenType) {
+    public TrueNTHToken(final String token, final String rawResponse, final String tokenType) {
 
 	super(token, "", rawResponse);
 	setTokenType(tokenType);
     }
 
+    @Override
+    public boolean equals(final Object obj) {
+
+	if (this == obj) { return true; }
+	if (!(obj instanceof TrueNTHToken)) { return false; }
+
+	final TrueNTHToken other = (TrueNTHToken) obj;
+	final String token = getToken();
+	return token.equals(other.getToken()) && (tokenType == other.getTokenType());
+    }
+
+    /**
+     * Access token type.
+     *
+     * @return Token type.
+     */
+    public TrueNTHTokenType getTokenType() {
+
+	return tokenType;
+    }
+
+    @Override
+    public int hashCode() {
+
+	final int prime = 31;
+	int result = getToken().hashCode();
+	result = (prime * result) + tokenType.hashCode();
+	return result;
+    }
+
     /**
      * Set the token type.
-     * 
+     *
      * @param tokenType
      * @throws IllegalArgumentException
      *             If {@link TrueNTHTokenType} has no constant with the
@@ -73,39 +103,9 @@ public abstract class TrueNTHToken extends Token {
      *             If name is null.
      * @see TrueNTHTokenType
      */
-    private void setTokenType(String tokenType) {
+    private void setTokenType(final String tokenType) {
 
 	this.tokenType = TrueNTHTokenType.getByName(tokenType);
-    }
-
-    /**
-     * Access token type.
-     * 
-     * @return Token type.
-     */
-    public TrueNTHTokenType getTokenType() {
-
-	return tokenType;
-    }
-    
-    @Override
-    public boolean equals(Object obj)
-    {
-      if (this == obj) return true;
-      if (!(obj instanceof TrueNTHToken)) return false;
-
-      TrueNTHToken other = (TrueNTHToken) obj;
-      String token = getToken();
-      return token.equals(other.getToken()) && tokenType==other.getTokenType();
-    }
-
-    @Override
-    public int hashCode() {
-
-	final int prime = 31;
-	int result =  getToken().hashCode();
-	result = prime * result + tokenType.hashCode();
-	return result;
     }
 
 }
