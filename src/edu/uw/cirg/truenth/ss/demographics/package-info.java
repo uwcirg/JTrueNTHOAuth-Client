@@ -18,4 +18,4 @@
  * @author Victor de Lima Soares
  * @since Mar 25, 2016
  */
-package edu.uw.cirg.truenth.demographics;
+package edu.uw.cirg.truenth.ss.demographics;

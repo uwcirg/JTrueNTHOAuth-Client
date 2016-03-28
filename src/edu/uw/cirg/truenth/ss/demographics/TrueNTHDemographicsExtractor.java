@@ -1,4 +1,4 @@
-package edu.uw.cirg.truenth.demographics;
+package edu.uw.cirg.truenth.ss.demographics;
 
 import java.net.URL;
 import java.util.Calendar;
