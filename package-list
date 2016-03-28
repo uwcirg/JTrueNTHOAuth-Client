@@ -1,4 +1,3 @@
-edu.uw.cirg.truenth.demographics
 edu.uw.cirg.truenth.oauth
 edu.uw.cirg.truenth.oauth.builder
 edu.uw.cirg.truenth.oauth.builder.api
@@ -6,3 +5,6 @@ edu.uw.cirg.truenth.oauth.model
 edu.uw.cirg.truenth.oauth.model.definitions
 edu.uw.cirg.truenth.oauth.model.tokens
 edu.uw.cirg.truenth.oauth.model.tokens.extractors
+edu.uw.cirg.truenth.oauth.providers
+edu.uw.cirg.truenth.ss.demographics
+edu.uw.cirg.truenth.ss.roles
