@@ -1,13 +1,13 @@
 package edu.uw.cirg.truenth.ss.demographics;
 
 /**
- * Constants for TrueNTH demographics API, protocol fields.
+ * Constants for TrueNTH (SS) demographics API, protocol fields.
  * 
  * @author Victor de Lima Soares
  * @since Mar 25, 2016
  */
-public enum TrueNTHDemographics {
-    
+public enum SSDemographicsProtocolProperties {
+
     COMMUNICATION("communication"),
     GENDER("gender"),
     GENDER_CODING("coding"),
@@ -32,23 +32,26 @@ public enum TrueNTHDemographics {
     TELECOM_SYSTEM_VALUE("value"),
     PHOTO("photo"),
     PHOTO_URL("url");
-    
+
     private String propertyName;
-        
+
     /**
      * Constructor.
      * 
-     * @param propName Property name.
+     * @param propName
+     *            Property name.
      */
-    private TrueNTHDemographics(String propName) {	
-	propertyName=propName;
+    private SSDemographicsProtocolProperties(String propName) {
+
+	propertyName = propName;
     }
-    
+
     /**
      * Returns the property name represented by the enum constant.
      */
-    public String toString(){
+    public String toString() {
+
 	return propertyName;
     }
-    
+
 }

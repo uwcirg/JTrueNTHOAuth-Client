@@ -15,7 +15,7 @@ import javax.json.JsonString;
  * @author Victor de Lima Soares
  * @since Mar 25, 2016
  */
-public class TrueNTHDemographicsJsonExtractor implements TrueNTHDemographicsExtractor<JsonObject> {
+public class SSDemographicsExtractorJson implements SSDemographicsExtractor<JsonObject> {
 
     private static SimpleDateFormat birthdayFormat = new SimpleDateFormat("yyyy-MM-dd");
 
@@ -65,7 +65,7 @@ public class TrueNTHDemographicsJsonExtractor implements TrueNTHDemographicsExtr
 
 	if (data == null) return -1;
 
-	JsonArray idArray = data.getJsonArray(TrueNTHDemographics.IDENTIFIER.toString());
+	JsonArray idArray = data.getJsonArray(SSDemographicsProtocolProperties.IDENTIFIER.toString());
 
 	if (idArray == null) return -1;
 
@@ -73,10 +73,10 @@ public class TrueNTHDemographicsJsonExtractor implements TrueNTHDemographicsExtr
 
 	    JsonObject id = idArray.getJsonObject(index);
 
-	    String idType = id.getString(TrueNTHDemographics.IDENTIFIER_LABEL.toString());
+	    String idType = id.getString(SSDemographicsProtocolProperties.IDENTIFIER_LABEL.toString());
 
-	    if (TrueNTHDemographics.IDENTIFIER_TRUENTH_ID.toString().equals(idType)) { return id.getJsonNumber(
-		    TrueNTHDemographics.IDENTIFIER_VALUE.toString()).longValue(); }
+	    if (SSDemographicsProtocolProperties.IDENTIFIER_TRUENTH_ID.toString().equals(idType)) { return id.getJsonNumber(
+		    SSDemographicsProtocolProperties.IDENTIFIER_VALUE.toString()).longValue(); }
 	}
 
 	return -1;
@@ -128,7 +128,7 @@ public class TrueNTHDemographicsJsonExtractor implements TrueNTHDemographicsExtr
 
 	if (data == null) return null;
 
-	JsonArray idArray = data.getJsonArray(TrueNTHDemographics.IDENTIFIER.toString());
+	JsonArray idArray = data.getJsonArray(SSDemographicsProtocolProperties.IDENTIFIER.toString());
 
 	if (idArray == null) return null;
 
@@ -136,9 +136,9 @@ public class TrueNTHDemographicsJsonExtractor implements TrueNTHDemographicsExtr
 
 	    JsonObject id = idArray.getJsonObject(index);
 
-	    String idType = id.getString(TrueNTHDemographics.IDENTIFIER_LABEL.toString());
+	    String idType = id.getString(SSDemographicsProtocolProperties.IDENTIFIER_LABEL.toString());
 
-	    if (TrueNTHDemographics.IDENTIFIER_TRUENTH_USERNAME.toString().equals(idType)) { return id.getString(TrueNTHDemographics.IDENTIFIER_VALUE
+	    if (SSDemographicsProtocolProperties.IDENTIFIER_TRUENTH_USERNAME.toString().equals(idType)) { return id.getString(SSDemographicsProtocolProperties.IDENTIFIER_VALUE
 		    .toString()); }
 	}
 
@@ -173,23 +173,23 @@ public class TrueNTHDemographicsJsonExtractor implements TrueNTHDemographicsExtr
      *         <li>null, otherwise.</li>
      *         </ul>
      * 
-     * @see TrueNTHDemographics
+     * @see SSDemographicsProtocolProperties
      */
     @Override
     public String extractEmail(JsonObject data) {
 
 	if (data == null) return null;
 
-	JsonArray telecoms = data.getJsonArray(TrueNTHDemographics.TELECOM.toString());
+	JsonArray telecoms = data.getJsonArray(SSDemographicsProtocolProperties.TELECOM.toString());
 
 	if (telecoms == null) return null;
 
 	for (int index = 0; index < telecoms.size(); index++) {
 	    JsonObject telcom = telecoms.getJsonObject(index);
-	    String system = telcom.getString(TrueNTHDemographics.TELECOM_SYSTEM.toString());
+	    String system = telcom.getString(SSDemographicsProtocolProperties.TELECOM_SYSTEM.toString());
 
-	    if (TrueNTHDemographics.TELECOM_SYSTEM_EMAIL.toString().equals(system)) { return telcom
-		    .getString(TrueNTHDemographics.TELECOM_SYSTEM_VALUE.toString()); }
+	    if (SSDemographicsProtocolProperties.TELECOM_SYSTEM_EMAIL.toString().equals(system)) { return telcom
+		    .getString(SSDemographicsProtocolProperties.TELECOM_SYSTEM_VALUE.toString()); }
 	}
 
 	return null;
@@ -220,17 +220,17 @@ public class TrueNTHDemographicsJsonExtractor implements TrueNTHDemographicsExtr
      *         <li>null, otherwise.</li>
      *         </ul>
      * 
-     * @see TrueNTHDemographics
+     * @see SSDemographicsProtocolProperties
      */
     @Override
     public String extractFirstName(JsonObject data) {
 
 	if (data == null) return null;
 
-	JsonObject name = data.getJsonObject(TrueNTHDemographics.NAME.toString());
+	JsonObject name = data.getJsonObject(SSDemographicsProtocolProperties.NAME.toString());
 	if (name == null) return null;
 
-	JsonString firstName = name.getJsonString(TrueNTHDemographics.NAME_GIVEN.toString());
+	JsonString firstName = name.getJsonString(SSDemographicsProtocolProperties.NAME_GIVEN.toString());
 	return (firstName != null) ? firstName.getString() : null;
     }
 
@@ -259,18 +259,18 @@ public class TrueNTHDemographicsJsonExtractor implements TrueNTHDemographicsExtr
      *         <li>null, otherwise.</li>
      *         </ul>
      * 
-     * @see TrueNTHDemographics
+     * @see SSDemographicsProtocolProperties
      */
     @Override
     public String extractLastName(JsonObject data) {
 
 	if (data == null) return null;
 
-	JsonObject name = data.getJsonObject(TrueNTHDemographics.NAME.toString());
+	JsonObject name = data.getJsonObject(SSDemographicsProtocolProperties.NAME.toString());
 
 	if (name == null) return null;
 
-	JsonString lastName = name.getJsonString(TrueNTHDemographics.NAME_FAMILY.toString());
+	JsonString lastName = name.getJsonString(SSDemographicsProtocolProperties.NAME_FAMILY.toString());
 	return (lastName != null) ? lastName.getString() : null;
     }
 
@@ -302,27 +302,27 @@ public class TrueNTHDemographicsJsonExtractor implements TrueNTHDemographicsExtr
      *         <li>null, otherwise.</li>
      *         </ul>
      * 
-     * @see TrueNTHDemographics
+     * @see SSDemographicsProtocolProperties
      */
     @Override
     public String extractGender(JsonObject data) {
 
 	if (data == null) return null;
 
-	JsonObject gender = data.getJsonObject(TrueNTHDemographics.GENDER.toString());
+	JsonObject gender = data.getJsonObject(SSDemographicsProtocolProperties.GENDER.toString());
 
 	if (gender == null) return null;
 
-	JsonArray genderCodingArray = gender.getJsonArray(TrueNTHDemographics.GENDER_CODING.toString());
+	JsonArray genderCodingArray = gender.getJsonArray(SSDemographicsProtocolProperties.GENDER_CODING.toString());
 
 	if (genderCodingArray == null) return null;
 
 	for (int index = 0; index < genderCodingArray.size(); index++) {
 	    JsonObject genderCoding = genderCodingArray.getJsonObject(index);
-	    String code = genderCoding.getString(TrueNTHDemographics.GENDER_CODING_CODE.toString());
+	    String code = genderCoding.getString(SSDemographicsProtocolProperties.GENDER_CODING_CODE.toString());
 
-	    if (TrueNTHDemographics.GENDER_CODING_CODE_MALE.toString().equals(code)
-		    || TrueNTHDemographics.GENDER_CODING_CODE_FEMALE.toString().equals(code)) return code;
+	    if (SSDemographicsProtocolProperties.GENDER_CODING_CODE_MALE.toString().equals(code)
+		    || SSDemographicsProtocolProperties.GENDER_CODING_CODE_FEMALE.toString().equals(code)) return code;
 	}
 
 	return null;
@@ -350,12 +350,12 @@ public class TrueNTHDemographicsJsonExtractor implements TrueNTHDemographicsExtr
 
 	if (data == null) return null;
 
-	JsonArray photo = data.getJsonArray(TrueNTHDemographics.PHOTO.toString());
+	JsonArray photo = data.getJsonArray(SSDemographicsProtocolProperties.PHOTO.toString());
 
 	if (photo == null || photo.isEmpty()) return null;
 
 	try {
-	    return new URL(photo.getJsonObject(0).getString(TrueNTHDemographics.PHOTO_URL.toString()));
+	    return new URL(photo.getJsonObject(0).getString(SSDemographicsProtocolProperties.PHOTO_URL.toString()));
 	} catch (Exception ex) {
 	    return null;
 	}
@@ -384,7 +384,7 @@ public class TrueNTHDemographicsJsonExtractor implements TrueNTHDemographicsExtr
 
 	if (data == null) return birthday;
 
-	JsonString date = data.getJsonString(TrueNTHDemographics.BIRTH_DATE.toString());
+	JsonString date = data.getJsonString(SSDemographicsProtocolProperties.BIRTH_DATE.toString());
 
 	if (date == null) return birthday;
 

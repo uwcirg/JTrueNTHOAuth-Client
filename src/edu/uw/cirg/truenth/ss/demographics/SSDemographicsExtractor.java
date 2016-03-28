@@ -11,7 +11,7 @@ import java.util.Calendar;
  * @param <T>
  *            Data source object type.
  */
-public interface TrueNTHDemographicsExtractor<T> {
+public interface SSDemographicsExtractor<T> {
 
     /**
      * Extracts: email address.
