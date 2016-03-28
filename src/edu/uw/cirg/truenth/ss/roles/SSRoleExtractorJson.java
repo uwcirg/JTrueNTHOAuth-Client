@@ -27,7 +27,7 @@ import javax.json.JsonObject;
  * @author Victor de Lima Soares
  * @since Mar 28, 2016
  */
-public class SSRoleJsonExtractor implements SSRoleExtractor<JsonObject> {
+public class SSRoleExtractorJson implements SSRoleExtractor<JsonObject> {
 
     @Override
     public String extractDescription(final JsonObject data) {
