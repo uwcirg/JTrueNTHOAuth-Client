@@ -12,16 +12,16 @@ import javax.json.JsonObject;
  * @author Victor de Lima Soares
  * @since Mar 28, 2016
  */
-public class TrueNTHRoleJsonExtractor implements TrueNTHRoleExtractor<JsonObject> {
+public class SSRoleJsonExtractor implements SSRoleExtractor<JsonObject> {
     
     @Override
     public String extractName(JsonObject data) {
-	return data.getString(TrueNTHRoleDefinitions.NAME.toString());
+	return data.getString(SSRolesProtocolProperties.NAME.toString());
     }
 
     @Override
     public String extractDescription(JsonObject data) {
-	return data.getString(TrueNTHRoleDefinitions.DESCRIPTION.toString());
+	return data.getString(SSRolesProtocolProperties.DESCRIPTION.toString());
     }
 
     @Override
@@ -34,7 +34,7 @@ public class TrueNTHRoleJsonExtractor implements TrueNTHRoleExtractor<JsonObject
     
     @Override
     public List<SSRole> extractRoles(JsonObject data) {
-	JsonArray rolesData = data.getJsonArray(TrueNTHRoleDefinitions.ROOT.toString());
+	JsonArray rolesData = data.getJsonArray(SSRolesProtocolProperties.ROOT.toString());
 	if(rolesData == null) return null;
 	
 	ArrayList<SSRole> roleList = new ArrayList<SSRole>(rolesData.size());

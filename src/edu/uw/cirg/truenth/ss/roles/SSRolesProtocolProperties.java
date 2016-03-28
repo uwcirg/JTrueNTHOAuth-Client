@@ -6,7 +6,7 @@ package edu.uw.cirg.truenth.ss.roles;
  * @author Victor de Lima Soares
  * @since Mar 28, 2016
  */
-public enum TrueNTHRoleDefinitions {
+public enum SSRolesProtocolProperties {
 
     ROOT("roles"), DESCRIPTION("description"), NAME("name");
 
@@ -18,7 +18,7 @@ public enum TrueNTHRoleDefinitions {
      * @param propName
      *            Property's name.
      */
-    private TrueNTHRoleDefinitions(String propName) {
+    private SSRolesProtocolProperties(String propName) {
 
 	propertyName = propName;
     }

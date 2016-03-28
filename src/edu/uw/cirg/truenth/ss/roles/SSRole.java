@@ -1,10 +1,12 @@
 package edu.uw.cirg.truenth.ss.roles;
 
+import java.io.Serializable;
+
 /**
  * Basic representation for TrueNTH (SS) roles.
  * 
  * <p>
- * Shared service's roles require two fields to be minimally represented: name
+ * Shared services' roles require two fields to be minimally represented: name
  * and description. This class provides a basic bean to hold this information,
  * as provided by SS. For most purposes, this class should be enough, but a
  * local interpretation of such information might be necessary.
@@ -14,8 +16,9 @@ package edu.uw.cirg.truenth.ss.roles;
  * @since Mar 28, 2016
  *
  */
-public class SSRole {
+public class SSRole implements Serializable {
 
+    private static final long serialVersionUID = -6463765730468262298L;
     private String name;
     private String description;
 

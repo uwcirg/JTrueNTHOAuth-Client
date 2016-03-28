@@ -2,8 +2,6 @@ package edu.uw.cirg.truenth.ss.roles;
 
 import java.util.List;
 
-import javax.json.JsonObject;
-
 /**
  * Generic role information extractor.
  * 
@@ -13,7 +11,7 @@ import javax.json.JsonObject;
  * @param <T>
  *            Data type of the information source.
  */
-public interface TrueNTHRoleExtractor<T> {
+public interface SSRoleExtractor<T> {
 
     /**
      * Extracts: name.
@@ -34,18 +32,18 @@ public interface TrueNTHRoleExtractor<T> {
     String extractDescription(T data);
 
     /**
-     * Extracts: TrueNTHRole instance.
+     * Extracts: SSRole instance.
      * 
      * @param data
      *            Data origin.
-     * @return Extracted TrueNTH role.
+     * @return Extracted SS role.
      */
-    SSRole extractRole(JsonObject data);
+    SSRole extractRole(T data);
 
     /**
-     * Extracts: TrueNTHRoles from an array of roles.
+     * Extracts: SSRoles from an array of roles.
      * 
-     * <p>Example:</p>
+     * <p>Example (JSON):</p>
      * 
      *<PRE>
      *{
@@ -61,8 +59,8 @@ public interface TrueNTHRoleExtractor<T> {
      * 
      * @param data
      *            Data origin.
-     * @return Extracted TrueNTH roles.
-     * @see #extractRole(JsonObject)
+     * @return Extracted SS roles.
+     * @see #extractRole(T)
      */
-    List<SSRole> extractRoles(JsonObject data);
+    List<SSRole> extractRoles(T data);
 }
