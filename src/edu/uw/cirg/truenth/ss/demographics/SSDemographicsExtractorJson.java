@@ -32,8 +32,6 @@ import javax.json.JsonString;
  */
 public class SSDemographicsExtractorJson implements SSDemographicsExtractor<JsonObject> {
 
-    private static SimpleDateFormat birthdayFormat = new SimpleDateFormat("yyyy-MM-dd");
-
     /**
      * Extracts: birthday.
      *
@@ -61,6 +59,7 @@ public class SSDemographicsExtractorJson implements SSDemographicsExtractor<Json
 	if (date == null) { return birthday; }
 
 	try {
+	    SimpleDateFormat birthdayFormat = new SimpleDateFormat("yyyy-MM-dd");
 	    birthday.setTime(birthdayFormat.parse(date.getString()));
 	    return birthday;
 	} catch (final ParseException e) {
