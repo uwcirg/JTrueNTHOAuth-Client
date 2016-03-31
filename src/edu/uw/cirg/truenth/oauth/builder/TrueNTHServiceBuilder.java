@@ -27,7 +27,7 @@ import edu.uw.cirg.truenth.oauth.builder.api.TrueNTHOAuthProvider;
 import edu.uw.cirg.truenth.oauth.model.TrueNTHOAuthConfig;
 
 /**
- * "Extension" of ServiceBuilder to include server configuration parameters.
+ * Extension of ServiceBuilder to include server configuration parameters.
  *
  * <p>
  * Due to the private nature of ServiceBuilder's variables, and the lack of
@@ -48,12 +48,14 @@ public class TrueNTHServiceBuilder {
 
     private String	       apiKey;
     private String	       apiSecret;
+    
     /**
      * The redirection URL where users authenticate.
      */
     private String	       baseAuthorizationURL;
+    
     /**
-     * Central Services base URL.
+     * Shared Servicesbase URL.
      * <p>
      * This URL points to central services base URL, it should not be used for
      * OAuth operation, but for fetching static resources, such as css. It is
@@ -63,13 +65,14 @@ public class TrueNTHServiceBuilder {
     private String	       baseURL;
     private String	       callbackURL;
     private OutputStream	 debugStream;
+    
     /**
      * Resource URL.
      */
     private String	       resourceURL;
 
     /**
-     * Central Services roles URL.
+     * Shared Services roles URL.
      */
     private String	       rolesURL;
 

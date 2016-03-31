@@ -51,9 +51,9 @@ public class TrueNTHOAuthService implements OAuthService {
      * Default constructor.
      *
      * @param trueNTHOAuthProvider
-     *            OAuth2.0 api information
+     *            OAuth2.0 api information.
      * @param config
-     *            OAuth 2.0 configuration param object
+     *            OAuth 2.0 configuration parameter object.
      */
     public TrueNTHOAuthService(final TrueNTHOAuthProvider trueNTHOAuthProvider, final TrueNTHOAuthConfig config) {
 
@@ -63,7 +63,7 @@ public class TrueNTHOAuthService implements OAuthService {
     }
 
     /**
-     * Fetches an access token and returns as a token object - Scribe's model.
+     * Fetches an access token and returns as a token object.
      *
      * @param requestToken
      *            This parameter will not be used and can be safely set to null.

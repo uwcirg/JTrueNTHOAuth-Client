@@ -160,27 +160,14 @@ public class SSDemographicsExtractorJson implements SSDemographicsExtractor<Json
      * Extracts: gender.
      *
      * <pre>
-     * GENDER: {
-     * 	GENDER_CODING: [
-     * 		{
-     * 			<b>GENDER_CODING_CODE: "M"</b>,
-     * 			"display": "Male",
-     * 			"system": "http://hl7.org/fhir/v3/AdministrativeGender"
-     * 		}
-     * 	]
-     * }
+     * GENDER: "gender" : "<code>" // male | female | other | unknown
      * </pre>
-     *
-     * <p>
-     * This method will use the first GENDER_CODING_CODE field inside the data
-     * source, if any.
-     * </p>
      *
      * @param data
      *            JSON object, data origin.
      *
      * @return <ul>
-     *         <li>Gender, if it can be extracted;</li>
+     *         <li>Gender (male | female), if it can be extracted;</li>
      *         <li>null, otherwise.</li>
      *         </ul>
      *
@@ -191,23 +178,16 @@ public class SSDemographicsExtractorJson implements SSDemographicsExtractor<Json
 
 	if (data == null) { return null; }
 
-	final JsonObject gender = data.getJsonObject(SSDemographicsProtocolProperties.GENDER.toString());
+	final JsonString rawGender = data.getJsonString(SSDemographicsProtocolProperties.GENDER.toString());
 
-	if (gender == null) { return null; }
-
-	final JsonArray genderCodingArray = gender.getJsonArray(SSDemographicsProtocolProperties.GENDER_CODING.toString());
-
-	if (genderCodingArray == null) { return null; }
-
-	for (int index = 0; index < genderCodingArray.size(); index++) {
-	    final JsonObject genderCoding = genderCodingArray.getJsonObject(index);
-	    final String code = genderCoding.getString(SSDemographicsProtocolProperties.GENDER_CODING_CODE.toString());
-
-	    if (SSDemographicsProtocolProperties.GENDER_CODING_CODE_MALE.toString().equals(code)
-		    || SSDemographicsProtocolProperties.GENDER_CODING_CODE_FEMALE.toString().equals(code)) { return code; }
-	}
-
-	return null;
+	if (rawGender == null) { return null; }
+	
+	String gender = rawGender.getString();
+	
+	 if (SSDemographicsProtocolProperties.GENDER_MALE.toString().equals(gender)
+		    || SSDemographicsProtocolProperties.GENDER_FEMALE.toString().equals(gender)) { return gender; }
+	 
+	 return null;
     }
 
     /**

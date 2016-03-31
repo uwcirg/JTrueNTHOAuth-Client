@@ -40,7 +40,7 @@ import edu.uw.cirg.truenth.oauth.model.tokens.extractors.TrueNTHAccessTokenExtra
  *
  * <p>
  * This class has similar goals as <i>DefaultApi20</i>, but the particularities
- * of our CS called for a custom implementation that the default APIs would not
+ * of SS called for a custom implementation that the default APIs would not
  * satisfy.
  * </p>
  *
@@ -102,7 +102,7 @@ public class TrueNTHOAuthProvider implements Api {
      *
      * @param config
      *            TrueNTH OAuth configuration.
-     * @return request token URL
+     * @return request token URL.
      */
     public String getAccessTokenEndpoint(final TrueNTHOAuthConfig config) {
 
