@@ -272,11 +272,11 @@ public class SSDemographicsExtractorJson implements SSDemographicsExtractor<Json
      * <pre>
      * IDENTIFIER: [
      * 	 {
-     * 		IDENTIFIER_LABEL: IDENTIFIER_TRUENTH_ID,
+     * 		IDENTIFIER_SYSTEM: IDENTIFIER_TRUENTH_SYSTEM,
      * 		<b>IDENTIFIER_VALUE: 9999</b>
      * 	 },
      * 	 {
-     * 		IDENTIFIER_LABEL: IDENTIFIER_TRUENTH_USERNAME,
+     * 		IDENTIFIER_SYSTEM: IDENTIFIER_TRUENTH_SYSTEM_USERNAME,
      * 		IDENTIFIER_VALUE: "username"
      * 	 }
      * ]
@@ -287,11 +287,11 @@ public class SSDemographicsExtractorJson implements SSDemographicsExtractor<Json
      * <pre>
      * "identifier": [
      *       {
-     *           "label": "Truenth identifier",
+     *           "system": "http://us.truenth.org/identity-codes/TrueNTH-identity",
      *           <b>"value": 10015</b>
      *       },
      *       {
-     *           "label": "Truenth username",
+     *           "system": "http://us.truenth.org/identity-codes/TrueNTH-username",
      *           "value": "Bob Truenth"
      *       }
      *  ]
@@ -307,24 +307,26 @@ public class SSDemographicsExtractorJson implements SSDemographicsExtractor<Json
      */
     @Override
     public long extractTrueNTHID(final JsonObject data) {
+	
+	final long invalid = -1L;
 
-	if (data == null) { return -1; }
+	if (data == null) { return invalid; }
 
 	final JsonArray idArray = data.getJsonArray(SSDemographicsProtocolProperties.IDENTIFIER.toString());
 
-	if (idArray == null) { return -1; }
+	if (idArray == null) { return invalid; }
 
 	for (int index = 0; index < idArray.size(); index++) {
 
 	    final JsonObject id = idArray.getJsonObject(index);
 
-	    final String idType = id.getString(SSDemographicsProtocolProperties.IDENTIFIER_LABEL.toString());
+	    final String idType = id.getString(SSDemographicsProtocolProperties.IDENTIFIER_SYSTEM.toString());
 
-	    if (SSDemographicsProtocolProperties.IDENTIFIER_TRUENTH_ID.toString().equals(idType)) { return id.getJsonNumber(
+	    if (SSDemographicsProtocolProperties.IDENTIFIER_TRUENTH_SYSTEM.toString().equals(idType)) { return id.getJsonNumber(
 		    SSDemographicsProtocolProperties.IDENTIFIER_VALUE.toString()).longValue(); }
 	}
 
-	return -1;
+	return invalid;
     }
 
     /**
@@ -335,12 +337,12 @@ public class SSDemographicsExtractorJson implements SSDemographicsExtractor<Json
      * <pre>
      * IDENTIFIER: [
      * 	 {
-     * 		IDENTIFIER_LABEL: IDENTIFIER_TRUENTH_ID,
-     * 		IDENTIFIER_VALUE: 9999
+     * 		IDENTIFIER_SYSTEM: IDENTIFIER_TRUENTH_SYSTEM,
+     * 		<b>IDENTIFIER_VALUE: 9999</b>
      * 	 },
      * 	 {
-     * 		IDENTIFIER_LABEL: IDENTIFIER_TRUENTH_USERNAME,
-     * 		<b>IDENTIFIER_VALUE: "username"</b>
+     * 		IDENTIFIER_SYSTEM: IDENTIFIER_TRUENTH_SYSTEM_USERNAME,
+     * 		IDENTIFIER_VALUE: "username"
      * 	 }
      * ]
      * </pre>
@@ -350,12 +352,12 @@ public class SSDemographicsExtractorJson implements SSDemographicsExtractor<Json
      * <pre>
      * "identifier": [
      *       {
-     *           "label": "Truenth identifier",
+     *           "system": "http://us.truenth.org/identity-codes/TrueNTH-identity",
      *           <b>"value": 10015</b>
      *       },
      *       {
-     *           "label": "Truenth username",
-     *           <b>"value": "Bob Truenth"</b>
+     *           "system": "http://us.truenth.org/identity-codes/TrueNTH-username",
+     *           "value": "Bob Truenth"
      *       }
      *  ]
      * </pre>
@@ -381,9 +383,9 @@ public class SSDemographicsExtractorJson implements SSDemographicsExtractor<Json
 
 	    final JsonObject id = idArray.getJsonObject(index);
 
-	    final String idType = id.getString(SSDemographicsProtocolProperties.IDENTIFIER_LABEL.toString());
+	    final String idType = id.getString(SSDemographicsProtocolProperties.IDENTIFIER_SYSTEM.toString());
 
-	    if (SSDemographicsProtocolProperties.IDENTIFIER_TRUENTH_USERNAME.toString().equals(idType)) { return id
+	    if (SSDemographicsProtocolProperties.IDENTIFIER_TRUENTH_SYSTEM_USERNAME.toString().equals(idType)) { return id
 		    .getString(SSDemographicsProtocolProperties.IDENTIFIER_VALUE.toString()); }
 	}
 
