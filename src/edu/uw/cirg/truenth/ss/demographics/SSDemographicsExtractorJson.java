@@ -26,7 +26,11 @@ import javax.json.JsonString;
 
 /**
  * JSON demographic information extractor.
- *
+ * 
+ * <p>
+ * Constants are defined by {@link SSDemographicsProtocolProperties}.
+ * </p>
+ * 
  * @author Victor de Lima Soares
  * @since Mar 25, 2016
  */
@@ -44,7 +48,7 @@ public class SSDemographicsExtractorJson implements SSDemographicsExtractor<Json
      *
      * @return <ul>
      *         <li>Birthday, if it can be extracted;</li>
-     *         <li>new date instance (January 1, 1970), otherwise.</li>
+     *         <li>New date instance (January 1, 1970), otherwise.</li>
      *         </ul>
      */
     @Override
@@ -81,15 +85,15 @@ public class SSDemographicsExtractorJson implements SSDemographicsExtractor<Json
      * ]
      * </pre>
      *
+     * 
+     * <p>
+     * This method will use the first TELECOM_SYSTEM=TELECOM_SYSTEM_EMAIL field
+     * inside the data source, if any.
+     * </p>
+     * 
      * @param data
      *            JSON object, data origin.
-     *
-     *            <p>
-     *            This method will use the first
-     *            TELECOM_SYSTEM=TELECOM_SYSTEM_EMAIL field inside the data
-     *            source, if any.
-     *            </p>
-     *
+     * 
      * @return <ul>
      *         <li>Email address, if it can be extracted;</li>
      *         <li>null, otherwise.</li>
@@ -119,9 +123,11 @@ public class SSDemographicsExtractorJson implements SSDemographicsExtractor<Json
 
     /**
      * Extracts: first name.
-     *
+     * 
+     * <p>
      * Input format:
-     *
+     * </p> 
+     * 
      * <pre>
      * NAME: {
      * 	FAMILY: "Truenth",
@@ -160,7 +166,7 @@ public class SSDemographicsExtractorJson implements SSDemographicsExtractor<Json
      * Extracts: gender.
      *
      * <pre>
-     * GENDER: "gender" : "<code>" // male | female | other | unknown
+     * GENDER: "gender" : "code" // male | female | other | unknown
      * </pre>
      *
      * @param data
@@ -181,19 +187,21 @@ public class SSDemographicsExtractorJson implements SSDemographicsExtractor<Json
 	final JsonString rawGender = data.getJsonString(SSDemographicsProtocolProperties.GENDER.toString());
 
 	if (rawGender == null) { return null; }
-	
+
 	String gender = rawGender.getString();
-	
-	 if (SSDemographicsProtocolProperties.GENDER_MALE.toString().equals(gender)
-		    || SSDemographicsProtocolProperties.GENDER_FEMALE.toString().equals(gender)) { return gender; }
-	 
-	 return null;
+
+	if (SSDemographicsProtocolProperties.GENDER_MALE.toString().equals(gender)
+		|| SSDemographicsProtocolProperties.GENDER_FEMALE.toString().equals(gender)) { return gender; }
+
+	return null;
     }
 
     /**
      * Extracts: last name.
      *
+     * <p>
      * Input format:
+     * </p> 
      *
      * <pre>
      * NAME: {
@@ -232,7 +240,11 @@ public class SSDemographicsExtractorJson implements SSDemographicsExtractor<Json
 
     /**
      * Extracts: TrueNTH profile picture URL.
-     *
+     * 
+     * <p>
+     * Input format:
+     * </p> 
+     * 
      * <pre>
      * PHOTO: {
      * 	PHOTO_URL: url
@@ -267,7 +279,9 @@ public class SSDemographicsExtractorJson implements SSDemographicsExtractor<Json
     /**
      * Extracts: TrueNTH ID.
      *
+     * <p>
      * Input format:
+     * </p> 
      *
      * <pre>
      * IDENTIFIER: [
@@ -307,7 +321,7 @@ public class SSDemographicsExtractorJson implements SSDemographicsExtractor<Json
      */
     @Override
     public long extractTrueNTHID(final JsonObject data) {
-	
+
 	final long invalid = -1L;
 
 	if (data == null) { return invalid; }
@@ -332,7 +346,9 @@ public class SSDemographicsExtractorJson implements SSDemographicsExtractor<Json
     /**
      * Extracts: TrueNTH Username.
      *
+     * <p>
      * Input format:
+     * </p> 
      *
      * <pre>
      * IDENTIFIER: [

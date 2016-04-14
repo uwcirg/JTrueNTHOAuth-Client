@@ -39,7 +39,7 @@ public interface SSDemographicsExtractor<T> {
      *         <li>new date instance (January 1, 1970), otherwise.</li>
      *         </ul>
      */
-    public Calendar extractBirthday(T data);
+    Calendar extractBirthday(T data);
 
     /**
      * Extracts: email address.
@@ -48,7 +48,7 @@ public interface SSDemographicsExtractor<T> {
      *            Data origin.
      * @return email address.
      */
-    public String extractEmail(T data);
+    String extractEmail(T data);
 
     /**
      * Extracts: first name.
@@ -57,7 +57,7 @@ public interface SSDemographicsExtractor<T> {
      *            Data origin.
      * @return first name.
      */
-    public String extractFirstName(T data);
+    String extractFirstName(T data);
 
     /**
      * Extracts: gender.
@@ -70,7 +70,7 @@ public interface SSDemographicsExtractor<T> {
      *         <li>null, otherwise.</li>
      *         </ul>
      */
-    public String extractGender(T data);
+    String extractGender(T data);
 
     /**
      * Extracts: last name.
@@ -79,7 +79,7 @@ public interface SSDemographicsExtractor<T> {
      *            Data origin.
      * @return last name.
      */
-    public String extractLastName(T data);
+    String extractLastName(T data);
 
     /**
      * Extracts: TrueNTH profile picture URL.
@@ -92,7 +92,7 @@ public interface SSDemographicsExtractor<T> {
      *         <li>null, otherwise.</li>
      *         </ul>
      */
-    public URL extractPhotoUrl(T data);
+    URL extractPhotoUrl(T data);
 
     /**
      * Extracts: TrueNTH ID.
@@ -101,7 +101,7 @@ public interface SSDemographicsExtractor<T> {
      *            Data origin.
      * @return TrueNTH ID.
      */
-    public long extractTrueNTHID(T data);
+    long extractTrueNTHID(T data);
 
     /**
      * Extracts: TrueNTH username.
@@ -110,5 +110,5 @@ public interface SSDemographicsExtractor<T> {
      *            Data origin.
      * @return TrueNTH username.
      */
-    public String extractTrueNTHUsername(T data);
+    String extractTrueNTHUsername(T data);
 }

@@ -14,7 +14,7 @@
  *
  *******************************************************************************/
 /**
- * This package implements the TrueNTH (SS) demographic information protocol, whose data is protected by OAuth.
+ * This package implements artifacts for the TrueNTH (SS) demographics protocol, whose data is protected by OAuth.
  *
  * <p>
  * Inside this package the acronym SS means Shared Services.
