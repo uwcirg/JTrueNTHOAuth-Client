@@ -6,5 +6,6 @@ edu.uw.cirg.truenth.oauth.model.definitions
 edu.uw.cirg.truenth.oauth.model.tokens
 edu.uw.cirg.truenth.oauth.model.tokens.extractors
 edu.uw.cirg.truenth.oauth.providers
+edu.uw.cirg.truenth.ss
 edu.uw.cirg.truenth.ss.demographics
 edu.uw.cirg.truenth.ss.roles
