@@ -37,12 +37,6 @@ public class SSRole implements Serializable {
     private String	    description;
     private String	    name;
 
-    public SSRole() {
-
-	name = "";
-	description = "";
-    }
-
     public SSRole(final String ssName, final String ssDescription) {
 
 	name = ssName;
@@ -62,29 +56,21 @@ public class SSRole implements Serializable {
     /**
      * Sets the description attribute.
      * 
-     * <p>
-     * In case the parameter is null, the attribute will be set to an empty string.
-     * </p>
-     * 
      * @param ssDescription
      */
     public void setDescription(final String ssDescription) {
 
-	this.description = (ssDescription==null)?"":ssDescription;
+	this.description = ssDescription;
     }
 
     /**
      * Sets the name attribute.
      * 
-     * <p>
-     * In case the parameter is null, the attribute will be set to an empty string.
-     * </p>
-     * 
      * @param ssName
      */
     public void setName(final String ssName) {
 
-	this.name = (ssName==null)?"":ssName;
+	this.name = ssName;
     }
 
 }
