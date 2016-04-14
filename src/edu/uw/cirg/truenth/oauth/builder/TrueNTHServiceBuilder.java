@@ -48,12 +48,12 @@ public class TrueNTHServiceBuilder {
 
     private String	       apiKey;
     private String	       apiSecret;
-    
+
     /**
      * The redirection URL where users authenticate.
      */
     private String	       baseAuthorizationURL;
-    
+
     /**
      * Shared Servicesbase URL.
      * <p>
@@ -65,7 +65,7 @@ public class TrueNTHServiceBuilder {
     private String	       baseURL;
     private String	       callbackURL;
     private OutputStream	 debugStream;
-    
+
     /**
      * Resource URL.
      */

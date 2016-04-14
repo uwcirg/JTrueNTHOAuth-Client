@@ -37,8 +37,10 @@ public class SSRole implements Serializable {
     private String	    description;
     private String	    name;
 
-    public SSRole() {}
-    
+    public SSRole() {
+
+    }
+
     public SSRole(final String ssName, final String ssDescription) {
 
 	name = ssName;

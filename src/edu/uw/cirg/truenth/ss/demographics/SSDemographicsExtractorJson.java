@@ -126,7 +126,7 @@ public class SSDemographicsExtractorJson implements SSDemographicsExtractor<Json
      * 
      * <p>
      * Input format:
-     * </p> 
+     * </p>
      * 
      * <pre>
      * NAME: {
@@ -201,7 +201,7 @@ public class SSDemographicsExtractorJson implements SSDemographicsExtractor<Json
      *
      * <p>
      * Input format:
-     * </p> 
+     * </p>
      *
      * <pre>
      * NAME: {
@@ -243,7 +243,7 @@ public class SSDemographicsExtractorJson implements SSDemographicsExtractor<Json
      * 
      * <p>
      * Input format:
-     * </p> 
+     * </p>
      * 
      * <pre>
      * PHOTO: {
@@ -281,7 +281,7 @@ public class SSDemographicsExtractorJson implements SSDemographicsExtractor<Json
      *
      * <p>
      * Input format:
-     * </p> 
+     * </p>
      *
      * <pre>
      * IDENTIFIER: [
@@ -348,7 +348,7 @@ public class SSDemographicsExtractorJson implements SSDemographicsExtractor<Json
      *
      * <p>
      * Input format:
-     * </p> 
+     * </p>
      *
      * <pre>
      * IDENTIFIER: [
