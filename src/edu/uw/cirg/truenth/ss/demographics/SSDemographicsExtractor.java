@@ -111,4 +111,14 @@ public interface SSDemographicsExtractor<T> {
      * @return TrueNTH username.
      */
     String extractTrueNTHUsername(T data);
+
+    /**
+     * Extracts: SSDemographics instance.
+     *
+     * @param data
+     *            Data origin.
+     * @return Extracted demographics.
+     */
+    SSDemographics extractDemographics(T data);
+
 }

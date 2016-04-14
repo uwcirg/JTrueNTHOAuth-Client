@@ -408,4 +408,18 @@ public class SSDemographicsExtractorJson implements SSDemographicsExtractor<Json
 	return null;
     }
 
+    @Override
+    public SSDemographics extractDemographics(JsonObject data) {
+    
+	SSDemographics demographics = new SSDemographics();
+	demographics.setBirthday(extractBirthday(data));
+	demographics.setEmail(extractEmail(data));
+	demographics.setFirstName(extractFirstName(data));
+	demographics.setLastName(extractLastName(data));
+	demographics.setGender(extractGender(data));
+	demographics.setPhotoUrl(extractPhotoUrl(data));
+	demographics.setTrueNTHUsername(extractTrueNTHUsername(data));
+	demographics.setTrueNTHID(extractTrueNTHID(data));
+        return demographics;
+    }
 }

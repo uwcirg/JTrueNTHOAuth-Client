@@ -15,6 +15,7 @@
  *******************************************************************************/
 package edu.uw.cirg.truenth.ss.demographics;
 
+import java.net.URL;
 import java.util.Calendar;
 
 /**
@@ -36,8 +37,8 @@ public class SSDemographics {
     private String   email;
     private String   firstName;
     private String   lastName;
-    private String   gender;
-    private String   photoUrl;
+    private boolean  gender;
+    private URL      photoUrl;
     private String   trueNTHUsername;
     private long     trueNTHID;
 
@@ -81,24 +82,59 @@ public class SSDemographics {
 	this.lastName = lastName;
     }
 
-    public String getGender() {
+    /**
+     * Return the gender as a boolean value.
+     * 
+     * @return <ul>
+     *         <li>true, if its male;</li>
+     *         <li>false, otherwise.</li>
+     *         </ul>
+     */
+    public boolean getGender() {
 
 	return gender;
     }
 
+    /**
+     * Sets the gender attribute.
+     * 
+     * <p>
+     * The gender is represented as a boolean flag: true for male, false for
+     * female.
+     * </p>
+     * 
+     * @param gender ("male"|"female").
+     */
     public void setGender(String gender) {
 
-	this.gender = gender;
+	String male = SSDemographicsProtocolProperties.GENDER_MALE.toString();
+
+	this.gender = male.equals(gender);
     }
 
-    public String getPhotoUrl() {
+    /**
+     * Sets the gender attribute.
+     * 
+     * <p>
+     * The gender is represented as a boolean flag: true for male, false for
+     * female.
+     * </p>
+     * 
+     * @param gender
+     */
+    public void setGender(boolean isMale) {
+
+	this.gender = isMale;
+    }
+
+    public URL getPhotoUrl() {
 
 	return photoUrl;
     }
 
-    public void setPhotoUrl(String photoUrl) {
+    public void setPhotoUrl(URL url) {
 
-	this.photoUrl = photoUrl;
+	this.photoUrl = url;
     }
 
     public String getTrueNTHUsername() {
@@ -119,6 +155,52 @@ public class SSDemographics {
     public void setTrueNTHID(long trueNTHID) {
 
 	this.trueNTHID = trueNTHID;
+    }
+
+    @Override
+    public int hashCode() {
+
+	final int prime = 31;
+	int result = 1;
+	result = prime * result + ((birthday == null) ? 0 : birthday.hashCode());
+	result = prime * result + ((email == null) ? 0 : email.hashCode());
+	result = prime * result + ((firstName == null) ? 0 : firstName.hashCode());
+	result = prime * result + (gender ? 1231 : 1237);
+	result = prime * result + ((lastName == null) ? 0 : lastName.hashCode());
+	result = prime * result + ((photoUrl == null) ? 0 : photoUrl.hashCode());
+	result = prime * result + (int) (trueNTHID ^ (trueNTHID >>> 32));
+	result = prime * result + ((trueNTHUsername == null) ? 0 : trueNTHUsername.hashCode());
+	return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+
+	if (this == obj) { return true; }
+	if (obj == null) { return false; }
+	if (!(obj instanceof SSDemographics)) { return false; }
+	SSDemographics other = (SSDemographics) obj;
+	if (birthday == null) {
+	    if (other.birthday != null) { return false; }
+	} else if (!birthday.equals(other.birthday)) { return false; }
+	if (email == null) {
+	    if (other.email != null) { return false; }
+	} else if (!email.equals(other.email)) { return false; }
+	if (firstName == null) {
+	    if (other.firstName != null) { return false; }
+	} else if (!firstName.equals(other.firstName)) { return false; }
+	if (gender != other.gender) { return false; }
+	if (lastName == null) {
+	    if (other.lastName != null) { return false; }
+	} else if (!lastName.equals(other.lastName)) { return false; }
+	if (photoUrl == null) {
+	    if (other.photoUrl != null) { return false; }
+	} else if (!photoUrl.equals(other.photoUrl)) { return false; }
+	if (trueNTHID != other.trueNTHID) { return false; }
+	if (trueNTHUsername == null) {
+	    if (other.trueNTHUsername != null) { return false; }
+	} else if (!trueNTHUsername.equals(other.trueNTHUsername)) { return false; }
+	return true;
     }
 
 }
