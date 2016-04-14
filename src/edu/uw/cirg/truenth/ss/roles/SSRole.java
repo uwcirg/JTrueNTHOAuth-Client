@@ -33,7 +33,7 @@ import java.io.Serializable;
  */
 public class SSRole implements Serializable {
 
-    private static final long serialVersionUID = -6463765730468262298L;
+    private static final long serialVersionUID = 1L;
     private String	    description;
     private String	    name;
 
@@ -59,14 +59,32 @@ public class SSRole implements Serializable {
 	return name;
     }
 
+    /**
+     * Sets the description attribute.
+     * 
+     * <p>
+     * In case the parameter is null, the attribute will be set to an empty string.
+     * </p>
+     * 
+     * @param ssDescription
+     */
     public void setDescription(final String ssDescription) {
 
-	description = ssDescription;
+	this.description = (ssDescription==null)?"":ssDescription;
     }
 
+    /**
+     * Sets the name attribute.
+     * 
+     * <p>
+     * In case the parameter is null, the attribute will be set to an empty string.
+     * </p>
+     * 
+     * @param ssName
+     */
     public void setName(final String ssName) {
 
-	name = ssName;
+	this.name = (ssName==null)?"":ssName;
     }
 
 }
