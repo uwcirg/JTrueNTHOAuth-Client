@@ -33,7 +33,7 @@ import edu.uw.cirg.truenth.oauth.model.tokens.TrueNTHAccessToken;
  * @since Oct 22, 2015
  *
  */
-public class JSonTrueNTHAccessTokenExtractor implements TrueNTHAccessTokenExtractor<JsonObject> {
+public class TrueNTHAccessTokenExtractorJSon implements TrueNTHAccessTokenExtractor<JsonObject> {
 
     /**
      * Reads a TrueNTH access token from a JsonObject instance.

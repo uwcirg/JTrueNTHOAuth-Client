@@ -28,7 +28,7 @@ import org.scribe.utils.OAuthEncoder;
 import edu.uw.cirg.truenth.oauth.TrueNTHOAuthService;
 import edu.uw.cirg.truenth.oauth.model.TrueNTHOAuthConfig;
 import edu.uw.cirg.truenth.oauth.model.definitions.TrueNTHOAuthConstants;
-import edu.uw.cirg.truenth.oauth.model.tokens.extractors.JSonTrueNTHAccessTokenExtractor;
+import edu.uw.cirg.truenth.oauth.model.tokens.extractors.TrueNTHAccessTokenExtractorJSon;
 import edu.uw.cirg.truenth.oauth.model.tokens.extractors.TrueNTHAccessTokenExtractor;
 
 /**
@@ -120,7 +120,7 @@ public class TrueNTHOAuthProvider implements Api {
      */
     public TrueNTHAccessTokenExtractor<JsonObject> getAccessTokenExtractor() {
 
-	return new JSonTrueNTHAccessTokenExtractor();
+	return new TrueNTHAccessTokenExtractorJSon();
     }
 
     /**
