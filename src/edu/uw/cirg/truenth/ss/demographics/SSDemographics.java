@@ -20,90 +20,90 @@ public class SSDemographics {
     private Calendar birthday;
     private String   email;
     private String   firstName;
-    private  String   lastName;
+    private String   lastName;
     private String   gender;
     private String   photoUrl;
     private String   trueNTHUsername;
-    private long trueNTHID;
-    
+    private long     trueNTHID;
+
     public Calendar getBirthday() {
-    
-        return birthday;
+
+	return birthday;
     }
-    
+
     public void setBirthday(Calendar birthday) {
-    
-        this.birthday = birthday;
+
+	this.birthday = birthday;
     }
-    
+
     public String getEmail() {
-    
-        return email;
+
+	return email;
     }
-    
+
     public void setEmail(String email) {
-    
-        this.email = email;
+
+	this.email = email;
     }
-    
+
     public String getFirstName() {
-    
-        return firstName;
+
+	return firstName;
     }
-    
+
     public void setFirstName(String firstName) {
-    
-        this.firstName = firstName;
+
+	this.firstName = firstName;
     }
-    
+
     public String getLastName() {
-    
-        return lastName;
+
+	return lastName;
     }
-    
+
     public void setLastName(String lastName) {
-    
-        this.lastName = lastName;
+
+	this.lastName = lastName;
     }
-    
+
     public String getGender() {
-    
-        return gender;
+
+	return gender;
     }
-    
+
     public void setGender(String gender) {
-    
-        this.gender = gender;
+
+	this.gender = gender;
     }
-    
+
     public String getPhotoUrl() {
-    
-        return photoUrl;
+
+	return photoUrl;
     }
-    
+
     public void setPhotoUrl(String photoUrl) {
-    
-        this.photoUrl = photoUrl;
+
+	this.photoUrl = photoUrl;
     }
-    
+
     public String getTrueNTHUsername() {
-    
-        return trueNTHUsername;
+
+	return trueNTHUsername;
     }
-    
+
     public void setTrueNTHUsername(String trueNTHUsername) {
-    
-        this.trueNTHUsername = trueNTHUsername;
+
+	this.trueNTHUsername = trueNTHUsername;
     }
-    
+
     public long getTrueNTHID() {
-    
-        return trueNTHID;
+
+	return trueNTHID;
     }
-    
+
     public void setTrueNTHID(long trueNTHID) {
-    
-        this.trueNTHID = trueNTHID;
+
+	this.trueNTHID = trueNTHID;
     }
-    
+
 }
