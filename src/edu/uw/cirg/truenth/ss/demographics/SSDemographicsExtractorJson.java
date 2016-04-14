@@ -166,7 +166,7 @@ public class SSDemographicsExtractorJson implements SSDemographicsExtractor<Json
      * Extracts: gender.
      *
      * <pre>
-     * GENDER: "gender" : "code" // male | female | other | unknown
+     * GENDER: "gender" : "code" // male | female 
      * </pre>
      *
      * @param data

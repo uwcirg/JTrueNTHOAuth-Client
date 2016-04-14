@@ -15,6 +15,7 @@
  *******************************************************************************/
 package edu.uw.cirg.truenth.ss.demographics;
 
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Calendar;
 
@@ -103,7 +104,8 @@ public class SSDemographics {
      * female.
      * </p>
      * 
-     * @param gender ("male"|"female").
+     * @param gender
+     *            ("male"|"female").
      */
     public void setGender(String gender) {
 
@@ -135,6 +137,11 @@ public class SSDemographics {
     public void setPhotoUrl(URL url) {
 
 	this.photoUrl = url;
+    }
+
+    public void setPhotoUrl(String url) throws MalformedURLException {
+
+	setPhotoUrl((url == null) ? null : new URL(url));
     }
 
     public String getTrueNTHUsername() {
