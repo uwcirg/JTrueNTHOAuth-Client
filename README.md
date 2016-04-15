@@ -34,7 +34,7 @@ https://uwcirg.github.io/JTrueNTHOAuth-Client
 
 ## How to use
 This library was designed to behave like the ScribeJava OAuth library. 
-We developed its interface to be similar to that library and for most situations, its usage is aligned with Scribe's documentation. 
+We developed its interface to be similar to that library and, for most situations, its usage is aligned with Scribe's documentation. 
 
 ### 1.Create a service
 A service is the main object that will provide all OAuth services and centralize all necessary configuration. 
@@ -53,18 +53,18 @@ TrueNTHOAuthService service = new TrueNTHServiceBuilder()
 		    .apiSecret(YOUR_API_SECRET)
 		    .build();
 ```
+
 [TrueNTHOAuthService class documentation](http://uwcirg.github.io/JTrueNTHOAuth-Client/index.html?edu/uw/cirg/truenth/oauth/TrueNTHOAuthService.html)
+
 [SS API specification](https://stg.us.truenth.org/dist/)
 
 ### 2.Using the service
 Here, you will find some examples we use in our code. 
-This should be just a guideline, and you can adapt your code accordingly to implement your protocol.
+This should be just a guideline and you can adapt your code accordingly to implement your protocol.
 
-Whenever you see services.get(companyId), you can just assume that we are retrieving a service instance created as described above (we use a service repository).
+Whenever you see `services.get(companyId)`, you can just assume that we are retrieving a service instance created as described above (we use a service repository).
 
-We built some helper classes to help manage basic functionally and the library is responsible for setting all necessary parameters for us automatically.
-
-These are some of the methods in one of our client applications, which uses the library.
+We built some helper classes to help manage basic functionally and the library is responsible for automatically setting all necessary parameters for us.
 
 Those methods are implemented in a helper class called TrueNTHConnectUtil, which is used inside the system to consistently call functionalities from our OAuth library. We suggest you implement one like it in your own system, although it is not necessary.
 
@@ -89,7 +89,7 @@ public TrueNTHAccessToken getAccessToken(long companyId, String code) {
 }
 ```
 
-This method provides the system with the ability to fetch any resource from the Shared Services' API, given that the token has the necessary permissions.
+This method provides the system with the ability to fetch any resource from Shared Services' API, given that the token has the necessary permissions.
 
 The library provides:
 
@@ -141,8 +141,8 @@ Basically, whenever SS sends us a set of roles for a given user, it does so by s
 Our library is able to read such data and return it as a list of Java objects.
  
 ```Java 
- @Override
- public List<SSRole> getTrueNTHRoles(final long companyId, final long trueNTHUserId, final TrueNTHAccessToken accessToken) {
+@Override
+public List<SSRole> getTrueNTHRoles(final long companyId, final long trueNTHUserId, final TrueNTHAccessToken accessToken) {
 
 	TrueNTHOAuthService service = null;
 	URL url = null;
@@ -175,7 +175,7 @@ Our library is able to read such data and return it as a list of Java objects.
 With this helper class defined, we can just use it to retrieve resources whenever necessary.
 
 #### Login case
-The following code chunk was extracted from a Struts action, which is responsible for retrieving information about the user: demographics and roles.
+The following code chunk was extracted from a Struts action, which is responsible for retrieving information about the user: demographic and roles.
 
 ```Java
 /**
@@ -219,5 +219,5 @@ public String execute(HttpServletRequest request, HttpServletResponse response) 
 
 }
 ```
-This example shows that the library provides everything that is necessary to communicate with SS, and to fetch resources. However, each application should implement their own logic in order to effectively use the obtained data. In the example, we use the library to get an access code from SS. Then we use this token in two occasions to identify the user: setTrueNTHCredentials and updateGroups. 
+This example shows that the library provides everything that is necessary to communicate with SS, and to fetch resources. However, each application should implement their own logic in order to effectively use the obtained data. In the example, we use the library to get an access code from SS. Then, we use this token in two occasions to identify the user: setTrueNTHCredentials and updateGroups. 
 
