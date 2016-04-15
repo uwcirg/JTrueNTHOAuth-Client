@@ -122,7 +122,8 @@ public class SSDemographics {
      * female.
      * </p>
      * 
-     * @param gender
+     * @param isMale
+     *            True for male, false for female.
      */
     public void setGender(boolean isMale) {
 
