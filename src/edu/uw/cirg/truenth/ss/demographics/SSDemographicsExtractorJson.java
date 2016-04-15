@@ -166,7 +166,7 @@ public class SSDemographicsExtractorJson implements SSDemographicsExtractor<Json
      * Extracts: gender.
      *
      * <pre>
-     * GENDER: "gender" : "code" // male | female
+     * GENDER: "gender" : "code" // male | female 
      * </pre>
      *
      * @param data
@@ -410,7 +410,7 @@ public class SSDemographicsExtractorJson implements SSDemographicsExtractor<Json
 
     @Override
     public SSDemographics extractDemographics(JsonObject data) {
-
+    
 	SSDemographics demographics = new SSDemographics();
 	demographics.setBirthday(extractBirthday(data));
 	demographics.setEmail(extractEmail(data));
@@ -420,6 +420,6 @@ public class SSDemographicsExtractorJson implements SSDemographicsExtractor<Json
 	demographics.setPhotoUrl(extractPhotoUrl(data));
 	demographics.setTrueNTHUsername(extractTrueNTHUsername(data));
 	demographics.setTrueNTHID(extractTrueNTHID(data));
-	return demographics;
+        return demographics;
     }
 }
