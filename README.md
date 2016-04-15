@@ -24,19 +24,19 @@ Additionally, the library was conceived as a independent
 project, not linked in anyway to the portal, in order to make it available to
 other projects to come. 
 
-###Documentation
+## Documentation
 https://uwcirg.github.io/JTrueNTHOAuth-Client
 
-###Dependences
+## Dependences
 1. scribe-1.3.0.jar
 2. javax.json-1.04.jar
 3. commons-codec-1.10.jar
 
-###How to use
+## How to use
 This library was designed to behave like the ScribeJava OAuth library. 
 We developed its interface to be similar to that library and for most situations, its usage is aligned with Scribe's documentation. 
 
-####1.Create a service
+### 1.Create a service
 A service is the main object that will provide all OAuth services and centralize all necessary configuration. 
 The class is named TrueNTHOAuthService. The following example demonstrates how to create an instance, using the staging server configuration in the comments to illustrate possible values.
 
@@ -53,28 +53,28 @@ TrueNTHOAuthService service = new TrueNTHServiceBuilder()
 		    .apiSecret(YOUR_API_SECRET)
 		    .build();
 ```
+[TrueNTHOAuthService class documentation](http://uwcirg.github.io/JTrueNTHOAuth-Client/index.html?edu/uw/cirg/truenth/oauth/TrueNTHOAuthService.html)
+[SS API specification](https://stg.us.truenth.org/dist/)
 
-[API definition](https://stg.us.truenth.org/dist/)
-
-####2.Using the service
+### 2.Using the service
 Here, you will find some examples we use in our code. 
 This should be just a guideline, and you can adapt your code accordingly to implement your protocol.
 
 Whenever you see services.get(companyId), you can just assume that we are retrieving a service instance created as described above (we use a service repository).
 
-We built some helper classes to help managing basic functionally and the library is responsible for setting all necessary parameters for you automatically.
+We built some helper classes to help manage basic functionally and the library is responsible for setting all necessary parameters for us automatically.
 
-These are some methods in one of our client applications, which use the library.
+These are some of the methods in one of our client applications, which uses the library.
 
 Those methods are implemented in a helper class called TrueNTHConnectUtil, which is used inside the system to consistently call functionalities from our OAuth library. We suggest you implement one like it in your own system, although it is not necessary.
 
-#####Real example: TrueNTHConnectUtil
+#### Example: TrueNTHConnectUtil
 The following method fetches a OAuth token, using the code provided by the user.
 
 The library provides:
 
 1. TrueNTHOAuthService
-2. Verifier
+2. Verifier, from Scribe
 3. TrueNTHAccessToken 
 
 ```Java
@@ -93,7 +93,7 @@ This method provides the system with the ability to fetch any resource from the 
 
 The library provides:
 
-1. OAuthRequest, coming from Scribe
+1. OAuthRequest, from Scribe
 2. Json, coming from javax.json
 3. JsonObject, coming from javax.json
 
@@ -123,134 +123,101 @@ public JsonObject getResources(long companyId, String path, Token accessToken) {
 }
 ```
 
-Now, this method demonstrates how to retrieve roles from CS.
+An interesting use of this function is the following code, which is used to obtain users' demographic information.
 
-Basically, whenever CS sends us a set of roles for a given user, it does so by sending a JSON object. 
+```Java
+	final JsonObject data = TrueNTHConnectUtil.getResources(companyId, "/demographics", accessToken);
+
+	if ((data == null) || (data.getJsonObject("error") != null)) { return null; }
+
+	final SSDemographics demographics = extractor.extractDemographics(data);
+```
+
+#### Retrieving Roles
+
+Now, the following method demonstrates how to retrieve roles from SS.
+
+Basically, whenever SS sends us a set of roles for a given user, it does so by sending a JSON object. 
 Our library is able to read such data and return it as a list of Java objects.
-
-Please note that the library does not provide TrueNTHRoleJsonExtractor or  TrueNTHRole, as TrueNTHRole is an internal representation of roles in our system. 
-We will be putting a basic representation of such elements into the library this week (you can watch the library on Git to receive the new code). 
-PS: roles are not necessary in order to implement login protocols.
-
+ 
 ```Java 
-@Override
-public List<TrueNTHRole> getTrueNTHRoles(long companyId, long trueNTHUserId, TrueNTHAccessToken accessToken) {
+ @Override
+ public List<SSRole> getTrueNTHRoles(final long companyId, final long trueNTHUserId, final TrueNTHAccessToken accessToken) {
 
-		TrueNTHOAuthService service = null;
-		URL url = null;
-		String json = null;
-	
-		try {
-		    service = services.get(companyId);
-		    if (service == null) return null;
-	
-		    TrueNTHRoleJsonExtractor roleExtractor = new TrueNTHRoleJsonExtractor();
-	
-		    url = new URL(service.getRolesURL(trueNTHUserId));
-	
-		    OAuthRequest request = new OAuthRequest(Verb.GET, url.toString());
-		    service.signRequest(accessToken, request);
-	
-		    json = request.send().getBody();
-	
-		    return roleExtractor.extractRoles(Json.createReader(new StringReader(json)).readObject());
-	
-		} catch (Exception e) {
-	
-		    log.error(e);
-		    log.error(url + "/n" + json);
-		    return null;
-		}
+	TrueNTHOAuthService service = null;
+	URL url = null;
+	String json = null;
+
+	try {
+	    service = services.get(companyId);
+	    if (service == null) { return null; }
+
+	    final SSRoleExtractorJson roleExtractor = new SSRoleExtractorJson();
+
+	    url = new URL(service.getRolesURL(trueNTHUserId));
+
+	    final OAuthRequest request = new OAuthRequest(Verb.GET, url.toString());
+	    service.signRequest(accessToken, request);
+
+	    json = request.send().getBody();
+
+	    return roleExtractor.extractRoles(Json.createReader(new StringReader(json)).readObject());
+
+	} catch (final Exception e) {
+
+	    log.error(e);
+	    log.error(url + "/n" + json);
+	    return null;
+	}
 }
 ```
 
 With this helper class defined, we can just use it to retrieve resources whenever necessary.
-The following code represents a Struts action, which is responsible for retrieving information about the user: demographics and roles.
+
+#### Login case
+The following code chunk was extracted from a Struts action, which is responsible for retrieving information about the user: demographics and roles.
 
 ```Java
 /**
-* Executes the struts login action: sets login environment for auto login.
-* 
-* @throws PrincipalException
-* @throws SystemException
-* @throws IOException
-*/
+ * TrueNTH OAuth login action.
+ *
+ * <p>
+ * Sets login environment for auto login. This action represents the callback
+ * functionality in the OAuth service configuration. As such, the user will be
+ * redirected here after they obtained an authorization grant (parameter named
+ * code).
+ * </p>
+ * 
+ * @throws PrincipalException
+ * @throws SystemException
+ * @throws IOException
+ */
 @Override
 public String execute(HttpServletRequest request, HttpServletResponse response) throws PrincipalException, SystemException, IOException {
 
-		boolean canLogin = Maintenance.startLogin();
-	
-		try {
-	
-		    String redirect = ParamUtil.getString(request, "redirect");
-		    HttpSession session = request.getSession();
-	
-		    if (canLogin) {
-		
-				ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
-				long companyId = themeDisplay.getCompanyId();
-		
-				if (!TrueNTHConnectUtil.isEnabled(companyId)) { throw new PrincipalException(); }
-		
-				String code = ParamUtil.getString(request, "code");
-		
-				try {
-		
-				    TrueNTHAccessToken accessToken = TrueNTHConnectUtil.getAccessToken(companyId, code);
-		
-				    TrueNTHUser user = setTrueNTHCredentials(session, themeDisplay.getCompanyId(), accessToken);
-		
-				    if ((user != null)) {
-		
-						updateGroups(companyId, user.getTrueNTHAssociation(), accessToken);
-			
-						if ((user.getStatus() == WorkflowConstants.STATUS_INCOMPLETE)) {
-			
-						    redirectUpdateAccount(request, response, user);
-			
-						    return null;
-						}
-				    }
-		
-				} catch (Exception e) {
-				    // Invalid codes, tokens, communication with CS
-				    // (demographics and roles APIs)...
-				    log.error(e);
-				    session.invalidate();
-				    response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
-				}
-		    } else {
-				session.setAttribute(Maintenance.PRIVATE_BLOCKED, true);
+		//...
+		final String code = ParamUtil.getString(request, "code");
+		TrueNTHAccessToken accessToken;
+
+		accessToken = TrueNTHConnectUtil.getAccessToken(companyId, code);
+		session.setAttribute(TrueNTHConnectWebkeys.TRUENTH_ACCESS_TOKEN, accessToken);
+
+		final TrueNTHUser user = setTrueNTHCredentials(session, themeDisplay.getCompanyId(), accessToken);
+
+		if (user != null) {
+
+		    updateGroups(companyId, user.getTrueNTHAssociation(), accessToken);
+
+		    if ((user.getStatus() == WorkflowConstants.STATUS_INCOMPLETE)) {
+
+				redirectUpdateAccount(request, response, user);
+
+				return null;
 		    }
-		    
-		    if (Validator.isNotNull(redirect)) response.sendRedirect(redirect);
-		    return null;
-	
-		} finally {
-		    if (canLogin) Maintenance.finishLogin();
 		}
+		//...
 
 }
 ```
+This example shows that the library provides everything that is necessary to communicate with SS, and to fetch resources. However, each application should implement their own logic in order to effectively use the obtained data. In the example, we use the library to get an access code from SS. Then we use this token in two occasions to identify the user: setTrueNTHCredentials and updateGroups. 
 
-Those examples present all that is necessary to fetch demographic information and roles; however, how systems use and store this information needs to be implemented in each system, as the internal needs greatly changes. Here is an example, the updateGroups function, used on the above example, fetches the user's roles and stores them into our database, next we use this information to associate the user with user groups, which is one of our internal representation for CS roles.
-
-```Java
-/**
-* Updates TrueNTH user groups.
-* 
-* @param companyId
-* @param association
-* @param accessToken
-* @throws SystemException
-* @throws PortalException
-*/
-protected void updateGroups(long companyId, TrueNTHAssociation association, TrueNTHAccessToken accessToken) throws SystemException,
-	    PortalException {
-
-		long[] trueNTHRoleIds = getTrueNTHRoles(companyId, association.getTrueNTHId(), accessToken);
-		TrueNTHAssociationLocalServiceUtil.updateTrueNTHRoles(association.getAssociationId(), trueNTHRoleIds);
-	
-		UserGroupLocalServiceUtil.setUserUserGroups(association.getUserId(), getUpdatedGroupIds(companyId, association, trueNTHRoleIds));
-}
-```

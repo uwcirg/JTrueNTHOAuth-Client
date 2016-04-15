@@ -36,7 +36,7 @@
  * Dependences:
  * </p>
  * <ul>
- * <li>Scribe 1.3;</li>
+ * <li>Scribe 1.3.0;</li>
  * <li>Apache Commons Codec 1.10;</li>
  * <li>javax.json 1.0.4.</li>
  * </ul>

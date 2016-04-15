@@ -22,7 +22,6 @@ import org.scribe.model.Response;
 import org.scribe.model.Token;
 import org.scribe.model.Verifier;
 import org.scribe.oauth.OAuthService;
-import org.scribe.utils.Preconditions;
 
 import edu.uw.cirg.truenth.oauth.builder.TrueNTHServiceBuilder;
 import edu.uw.cirg.truenth.oauth.builder.api.TrueNTHOAuthProvider;
