@@ -55,10 +55,11 @@ public class TrueNTHServiceBuilder {
     private String	       baseAuthorizationURL;
 
     /**
-     * Shared Servicesbase URL.
+     * Shared Services base URL.
+     * 
      * <p>
      * This URL points to Shared Services base URL, it should not be used for
-     * OAuth operation, but for fetching static resources, such as css. It is
+     * OAuth operations, but for fetching static resources, such as CSS. It is
      * mainly used for templates.
      * </p>
      */
@@ -81,7 +82,7 @@ public class TrueNTHServiceBuilder {
     private SignatureType	signatureType;
 
     /**
-     * Default constructor
+     * Default constructor.
      */
     public TrueNTHServiceBuilder() {
 
@@ -104,11 +105,11 @@ public class TrueNTHServiceBuilder {
     }
 
     /**
-     * Configures the App key.
+     * Configures the application key (application ID).
      *
      * @param apiKey
-     *            The App key for your application.
-     * @return the {@link TrueNTHServiceBuilder} instance for method chaining
+     *            The application key (ID): configured in SS.
+     * @return the {@link TrueNTHServiceBuilder} instance for method chaining.
      */
     public TrueNTHServiceBuilder apiKey(final String apiKey) {
 
@@ -118,11 +119,11 @@ public class TrueNTHServiceBuilder {
     }
 
     /**
-     * Configures the api secret.
+     * Configures the application secret.
      *
      * @param apiSecret
-     *            The api secret for your application.
-     * @return the {@link TrueNTHServiceBuilder} instance for method chaining
+     *            The application secret: configured in SS.
+     * @return the {@link TrueNTHServiceBuilder} instance for method chaining.
      */
     public TrueNTHServiceBuilder apiSecret(final String apiSecret) {
 
@@ -163,7 +164,7 @@ public class TrueNTHServiceBuilder {
     /**
      * Returns the fully configured TrueNTHOAuthService
      *
-     * @return Fully configured {@link TrueNTHOAuthService}
+     * @return Fully configured {@link TrueNTHOAuthService}.
      */
     public TrueNTHOAuthService build() {
 
@@ -176,8 +177,8 @@ public class TrueNTHServiceBuilder {
 	Preconditions.checkEmptyString(apiKey, "Must provide an api key");
 	Preconditions.checkEmptyString(apiSecret, "Must provide an api secret");
 
-	return api.createService(new TrueNTHOAuthConfig(apiKey, apiSecret, accessTokenEndpointURL, baseAuthorizationURL, baseURL, resourceURL,
-		rolesURL, callbackURL, signatureType, scope, debugStream));
+	return api.createService(new TrueNTHOAuthConfig(getApiKey(), getApiSecret(), getAccessTokenEndpointURL(), getBaseAuthorizationURL(),
+		getBaseURL(), getResourceURL(), getRolesURL(), getCallbackURL(), getSignatureType(), getScope(), getDebugStream()));
     }
 
     /**
@@ -263,6 +264,30 @@ public class TrueNTHServiceBuilder {
     public SignatureType getSignatureType() {
 
 	return signatureType;
+    }
+
+    /**
+     * @return The baseURL.
+     */
+    public String getBaseURL() {
+
+	return baseURL;
+    }
+
+    /**
+     * @return The resourceURL.
+     */
+    public String getResourceURL() {
+
+	return resourceURL;
+    }
+
+    /**
+     * @return The rolesURL.
+     */
+    public String getRolesURL() {
+
+	return rolesURL;
     }
 
     /**

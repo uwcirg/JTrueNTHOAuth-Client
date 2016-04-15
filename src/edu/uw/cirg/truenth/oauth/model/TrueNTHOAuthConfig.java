@@ -36,7 +36,7 @@ import edu.uw.cirg.truenth.oauth.builder.api.TrueNTHOAuthProvider;
 public class TrueNTHOAuthConfig extends OAuthConfig {
 
     /**
-     * URL that receives the access tokens.
+     * URL that receives the access token requests.
      */
     private final String accessTokenEndpoint;
 
@@ -69,11 +69,11 @@ public class TrueNTHOAuthConfig extends OAuthConfig {
      * Constructor.
      *
      * @param key
-     *            APP key, distributed by SS.
+     *            APP key, distributed by SS (application ID).
      * @param secret
      *            APP secret, distributed by SS.
      * @param accessTokenEndpointURL
-     *            URL that receives the access token requests.
+     *            URL that receives the access tokens.
      * @param baseAuthorizationURL
      *            The redirection URL where users authenticate.
      * @param baseURL
@@ -107,7 +107,7 @@ public class TrueNTHOAuthConfig extends OAuthConfig {
     }
 
     /**
-     * Returns the URL that receives the access tokens.
+     * Returns the URL that receives the access token requests.
      *
      * @return Request token URL.
      */
@@ -121,8 +121,8 @@ public class TrueNTHOAuthConfig extends OAuthConfig {
      *
      * <p>
      * This URL will be the base for building new authorization URLs, not being
-     * directly suitable for that use as encoding needs to be
-     * applied and parameters added.
+     * directly suitable for that use as encoding needs to be applied and
+     * parameters added.
      * </p>
      * 
      * @see TrueNTHOAuthProvider#getAuthorizationUrl(TrueNTHOAuthConfig)
@@ -138,7 +138,7 @@ public class TrueNTHOAuthConfig extends OAuthConfig {
      *
      * <p>
      * This URL points to Shared Services base URL, it should not be used for
-     * OAuth operation, but for fetching static resources, such as CSS. It is
+     * OAuth operations, but for fetching static resources, such as CSS. It is
      * mainly used for templates.
      * </p>
      *

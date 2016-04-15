@@ -98,7 +98,7 @@ public class TrueNTHOAuthProvider implements Api {
     }
 
     /**
-     * Returns the URL that receives the access tokens.
+     * Returns the URL that receives the access token requests.
      *
      * @param config
      *            TrueNTH OAuth configuration.
