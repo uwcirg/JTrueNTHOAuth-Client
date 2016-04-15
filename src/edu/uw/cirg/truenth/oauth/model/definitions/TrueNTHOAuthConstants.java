@@ -24,7 +24,7 @@ package edu.uw.cirg.truenth.oauth.model.definitions;
 public class TrueNTHOAuthConstants {
 
     /**
-     * Error messages' identification, sent by CS.
+     * Error messages' identification, sent by SS.
      */
     public static final String ERROR    = "error";
 
@@ -32,11 +32,11 @@ public class TrueNTHOAuthConstants {
      * Name of "next" parameter.
      *
      * <p>
-     * <b>Removed from the CS's protocols</b>.
+     * <b>Removed from the SS's protocols</b>.
      * </p>
      *
      * <p>
-     * Used by third parties to redirect users after an OAuth call. Per CS
+     * Used by third parties to redirect users after an OAuth call. Per SS
      * rules.
      * </p>
      *
@@ -59,7 +59,7 @@ public class TrueNTHOAuthConstants {
      * <p>
      * This parameter is similar to <code>next</code>, as it is destined to
      * perform redirections made by the local server that originated the OAuth
-     * calls. <code>next</code> was used the redirect clients coming from CS,
+     * calls. <code>next</code> was used the redirect clients coming from SS,
      * after an OAuth login operation, but was removed from the protocol.
      * </p>
      *

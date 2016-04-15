@@ -111,7 +111,7 @@ public class TrueNTHOAuthService implements OAuthService {
      * @param numberEncodings
      *            Number of encoding operations to be applied on the callback
      *            URL. Two encoding operations are necessary to communicate
-     *            properly with CS after browser redirections in POP UPs.
+     *            properly with SS after browser redirections in POP UPs.
      * @param callbackParameters
      *            Additional parameters to add with the callback URL. This
      *            parameter list will be added to the callback URL. Those
@@ -130,7 +130,7 @@ public class TrueNTHOAuthService implements OAuthService {
      * @param numberEncodings
      *            Number of encoding operations to be applied on the callback
      *            URL. Two encoding operations are necessary to communicate
-     *            properly with CS after browser redirections in POP UPs.
+     *            properly with SS after browser redirections in POP UPs.
      * @param callbackParameters
      *            Additional parameters to add with the callback URL. This
      *            parameter list will be added to the callback URL. Those
@@ -139,7 +139,7 @@ public class TrueNTHOAuthService implements OAuthService {
      *            Additional parameters to add on the Authorization URL. This
      *            parameter list should be used for especial circumstances to
      *            fine tune requests directed to the the OAuth server; for
-     *            instance CS's "next" parameter. Parameters coming form the
+     *            instance SS's "next" parameter. Parameters coming form the
      *            OAuthConfig will be automatically appended (by the provider);
      *            such as "scope".
      * @return the URL where users will be redirected.
@@ -199,7 +199,7 @@ public class TrueNTHOAuthService implements OAuthService {
      * Fetches request token.
      *
      * @throws UnsupportedOperationException
-     *             This operation is not supported by CS; thus, this workflow
+     *             This operation is not supported by SS; thus, this workflow
      *             shall not be used.
      * @return Nothing will be returned, and an exception will be thrown.
      */
