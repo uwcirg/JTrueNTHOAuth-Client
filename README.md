@@ -38,25 +38,23 @@ We developed its interface to be similar to that library and for most situations
 
 ####1.Create a service
 A service is the main object that will provide all OAuth services and centralize all necessary configuration. 
-The class is named TrueNTHOAuthService.
+The class is named TrueNTHOAuthService. The following example demonstrates how to create an instance, using the staging server configuration in the comments to illustrate possible values.
 
 ```Java
 TrueNTHOAuthService service = new TrueNTHServiceBuilder()
 		    .provider(TrueNTHOAuthProvider.class)
-		    .baseAuthorizationURL(serverConfig.getAuthURL())
-		    .accessTokenEndpointURL(serverConfig.getTokenURL())
-		    .baseURL(CS_BASE) // As https://stg.us.truenth.org
-		    .resourceURL(CS_API) // As https://stg.us.truenth.org/api
-		    .rolesURL(CS_ROLE_API) // As https://stg.us.truenth.org/api/user/#userId/roles
+		    .baseAuthorizationURL(SS_AUTHORIZATION_URL) // As https://stg.us.truenth.org/oauth/authorize
+		    .accessTokenEndpointURL(SS_TOKEN_ENDPOINT) // As https://stg.us.truenth.org/oauth/token
+		    .baseURL(SS_BASE) // As https://stg.us.truenth.org
+		    .resourceURL(SS_API) // As https://stg.us.truenth.org/api
+		    .rolesURL(SS_ROLE_API) // As https://stg.us.truenth.org/api/user/#userId/roles
 		    .callbackURL(YOUR_APP_CALLBACK_URL) 
 		    .apiKey(YOUR_API_KEY)
 		    .apiSecret(YOUR_API_SECRET)
-		    .signatureType(SignatureType.Header)
-		    .scope("email")
 		    .build();
 ```
 
-(As our API becomes more stable, this example will be simplified.)
+[API definition](https://stg.us.truenth.org/dist/)
 
 ####2.Using the service
 Here, you will find some examples we use in our code. 

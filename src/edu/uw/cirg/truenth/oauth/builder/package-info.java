@@ -17,7 +17,7 @@
  * Service builders.
  *
  * <p>
- * This package contains the necessary classes to build a working service given a defined provider.
+ * This package contains the necessary classes to build a working service, given a defined provider.
  * </p>
  * <p>
  * Definitions:

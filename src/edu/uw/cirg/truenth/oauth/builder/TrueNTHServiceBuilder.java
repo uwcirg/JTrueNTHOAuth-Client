@@ -17,7 +17,6 @@ package edu.uw.cirg.truenth.oauth.builder;
 
 import java.io.OutputStream;
 
-import org.scribe.builder.api.Api;
 import org.scribe.exceptions.OAuthException;
 import org.scribe.model.SignatureType;
 import org.scribe.utils.Preconditions;
@@ -39,9 +38,6 @@ import edu.uw.cirg.truenth.oauth.model.TrueNTHOAuthConfig;
  */
 public class TrueNTHServiceBuilder {
 
-    /**
-     * URL that receives the access token requests.
-     */
     private String	       accessTokenEndpointURL;
 
     private TrueNTHOAuthProvider api;
@@ -49,51 +45,37 @@ public class TrueNTHServiceBuilder {
     private String	       apiKey;
     private String	       apiSecret;
 
-    /**
-     * The redirection URL where users authenticate.
-     */
     private String	       baseAuthorizationURL;
-
-    /**
-     * Shared Services base URL.
-     * 
-     * <p>
-     * This URL points to Shared Services base URL, it should not be used for
-     * OAuth operations, but for fetching static resources, such as CSS. It is
-     * mainly used for templates.
-     * </p>
-     */
     private String	       baseURL;
     private String	       callbackURL;
     private OutputStream	 debugStream;
 
-    /**
-     * Resource URL.
-     */
     private String	       resourceURL;
-
-    /**
-     * Shared Services roles URL.
-     */
     private String	       rolesURL;
-
     private String	       scope;
-
     private SignatureType	signatureType;
 
     /**
      * Default constructor.
+     * 
+     * <p>
+     * It automatically sets the signature type to "Header" and the scope to email.
+     * </p>
      */
     public TrueNTHServiceBuilder() {
-
+	scope = "email";
 	signatureType = SignatureType.Header;
     }
 
     /**
-     * Adds an OAuth access token endpoint URL.
+     * Configures the SS' OAuth access token request URL.
      *
+     * <p>
+     * Example: https://stg.us.truenth.org/oauth/token (staging server).
+     * </p>
+     * 
      * @param accessTokenEndpointURL
-     *            Access token end point URL. Must be a valid URL.
+     *            Access token request URL. Must be a valid URL.
      *
      * @return The {@link TrueNTHServiceBuilder} instance for method chaining.
      */
@@ -108,8 +90,8 @@ public class TrueNTHServiceBuilder {
      * Configures the application key (application ID).
      *
      * @param apiKey
-     *            The application key (ID): configured in SS.
-     * @return the {@link TrueNTHServiceBuilder} instance for method chaining.
+     *            The application key (ID), configured in SS.
+     * @return The {@link TrueNTHServiceBuilder} instance for method chaining.
      */
     public TrueNTHServiceBuilder apiKey(final String apiKey) {
 
@@ -122,8 +104,8 @@ public class TrueNTHServiceBuilder {
      * Configures the application secret.
      *
      * @param apiSecret
-     *            The application secret: configured in SS.
-     * @return the {@link TrueNTHServiceBuilder} instance for method chaining.
+     *            The application secret, configured in SS.
+     * @return The {@link TrueNTHServiceBuilder} instance for method chaining.
      */
     public TrueNTHServiceBuilder apiSecret(final String apiSecret) {
 
@@ -133,8 +115,18 @@ public class TrueNTHServiceBuilder {
     }
 
     /**
-     * Adds an OAuth base Authorization URL.
-     *
+     * Configures the OAuth base authorization URL.
+     * 
+     * <p>
+     * This URL will be the base for building new authorization URLs, not being
+     * directly suitable for that use as encoding needs to be applied and
+     * parameters added.
+     * </p>
+     * 
+     * <p>
+     * Example: https://stg.us.truenth.org/oauth/authorize (staging server).
+     * </p>
+     * 
      * @param baseAuthorizationURL
      *            Base Authorization URL. Must be a valid URL.
      *
@@ -150,9 +142,19 @@ public class TrueNTHServiceBuilder {
     /**
      * Configures the Shared Services' base URL.
      *
+     * <p>
+     * This URL points to Shared Services' base URL, it should not be used for
+     * OAuth operations, but for fetching static resources, such as CSS. It is
+     * mainly used for templates.
+     * </p>
+     * 
+     * <p>
+     * Example: https://stg.us.truenth.org (staging server).
+     * </p>
+     * 
      * @param baseURL
      *            Shared Services' base URL. Must be a valid URL.
-     * @return the {@link TrueNTHServiceBuilder} instance for method chaining.
+     * @return The {@link TrueNTHServiceBuilder} instance for method chaining.
      */
     public TrueNTHServiceBuilder baseURL(final String baseURL) {
 
@@ -162,7 +164,7 @@ public class TrueNTHServiceBuilder {
     }
 
     /**
-     * Returns the fully configured TrueNTHOAuthService
+     * Returns the fully configured TrueNTHOAuthService.
      *
      * @return Fully configured {@link TrueNTHOAuthService}.
      */
@@ -182,8 +184,14 @@ public class TrueNTHServiceBuilder {
     }
 
     /**
-     * Adds an OAuth callbackURL URL.
-     *
+     * Configures the OAuth callbackURL URL.
+     * 
+     * <p>
+     * Local application's URL for processing token request responses. The users
+     * will land into this URL after they obtain an authorization grant, only
+     * "code" is used by SS.
+     * </p>
+     * 
      * @param callback
      *            Callback URL. Must be a valid URL.
      *
@@ -208,12 +216,22 @@ public class TrueNTHServiceBuilder {
 	return api;
     }
 
+    /**
+     * Configures the debug stream as System.out.
+     * 
+     * @return The {@link TrueNTHServiceBuilder} instance for method chaining.
+     */
     public TrueNTHServiceBuilder debug() {
 
 	debugStream(System.out);
 	return this;
     }
 
+    /**
+     * Configures the debug stream.
+     * 
+     * @return The {@link TrueNTHServiceBuilder} instance for method chaining.
+     */
     public TrueNTHServiceBuilder debugStream(final OutputStream stream) {
 
 	Preconditions.checkNotNull(stream, "debug stream can't be null");
@@ -221,53 +239,126 @@ public class TrueNTHServiceBuilder {
 	return this;
     }
 
+    /**
+     * Returns the SS' URL that receives access token requests.
+     * 
+     * @return Access token request URL.
+     */
     public String getAccessTokenEndpointURL() {
 
 	return accessTokenEndpointURL;
     }
 
+    /**
+     * Access the provider instance.
+     * 
+     * @return The provider instance used to build the service.
+     */
     public TrueNTHOAuthProvider getApi() {
 
 	return api;
     }
 
+    /**
+     * Returns the application key (application ID), configured in SS.
+     * 
+     * @return Application key.
+     */
     public String getApiKey() {
 
 	return apiKey;
     }
 
+    /**
+     * Returns the application secret, configured in SS.
+     * 
+     * @return Application secret.
+     */
     public String getApiSecret() {
 
 	return apiSecret;
     }
 
+    /**
+     * Returns the OAuth base authorization URL.
+     * 
+     * <p>
+     * This URL will be the base for building new authorization URLs, not being
+     * directly suitable for that use as encoding needs to be applied and
+     * parameters added.
+     * </p>
+     * 
+     * <p>
+     * Example: https://stg.us.truenth.org/oauth/authorize (staging server).
+     * </p>
+     * 
+     * @return Base authorization URL.
+     */
     public String getBaseAuthorizationURL() {
 
 	return baseAuthorizationURL;
     }
 
+    /**
+     * Returns the OAuth callbackURL URL.
+     * 
+     * <p>
+     * Local application's URL for processing token request responses. The users
+     * will land into this URL after they obtain an authorization grant, only
+     * "code" is used by SS.
+     * </p>
+     * 
+     * @return OAuth callbackURL URL
+     */
     public String getCallbackURL() {
 
 	return callbackURL;
     }
 
+    /**
+     * Returns the the debug stream.
+     * 
+     * @return The debug stream
+     */
     public OutputStream getDebugStream() {
 
 	return debugStream;
     }
 
+    /**
+     * Returns the scope of the resources to be accessed through the service.
+     * 
+     * @return OAuth API scope.
+     */
     public String getScope() {
 
 	return scope;
     }
 
+    /**
+     * Type of signature to be used by the service (header or querystring).
+     * 
+     * @return Signature type.
+     */
     public SignatureType getSignatureType() {
 
 	return signatureType;
     }
 
     /**
-     * @return The baseURL.
+     * Returns the Shared Services' base URL.
+     *
+     * <p>
+     * This URL points to Shared Services' base URL, it should not be used for
+     * OAuth operations, but for fetching static resources, such as CSS. It is
+     * mainly used for templates.
+     * </p>
+     * 
+     * <p>
+     * Example: https://stg.us.truenth.org (staging server).
+     * </p>
+     * 
+     * @return The SS' base URL.
      */
     public String getBaseURL() {
 
@@ -275,6 +366,20 @@ public class TrueNTHServiceBuilder {
     }
 
     /**
+     * Returns the resources URL.
+     * 
+     * <p>
+     * This URL is the base for obtaining protected resources.
+     * </p>
+     * 
+     * <p>
+     * Example: https://stg.us.truenth.org/api
+     * </p>
+     * 
+     * <p>
+     * Derived from the example: https://stg.us.truenth.org/api/demographics
+     * </p>
+     * 
      * @return The resourceURL.
      */
     public String getResourceURL() {
@@ -283,6 +388,19 @@ public class TrueNTHServiceBuilder {
     }
 
     /**
+     * Returns the URL used to fetch users' roles.
+     * 
+     * <p>
+     * The following example demonstrates a URL used to obtain the roles granted
+     * to a specific user, where #userId is a placeholder for the user's ID.
+     * This library understands this placeholder and automatically replaces it
+     * when requests are made.
+     * <p>
+     * <p>
+     * Example: https://stg.us.truenth.org/api/user/#userId/roles
+     * </p>
+     * 
+     * 
      * @return The rolesURL.
      */
     public String getRolesURL() {
@@ -291,11 +409,11 @@ public class TrueNTHServiceBuilder {
     }
 
     /**
-     * Configures the {@link TrueNTHOAuthProvider} ({@link Api}).
+     * Configures the API TrueNTHOAuthProvider.
      *
      * @param apiClass
-     *            The class of one of the existent {@link TrueNTHOAuthProvider}
-     *            s.
+     *            The provider class to be used.
+     * 
      * @return The {@link TrueNTHServiceBuilder} instance for method chaining.
      */
     public TrueNTHServiceBuilder provider(final Class<? extends TrueNTHOAuthProvider> apiClass) {
@@ -305,12 +423,10 @@ public class TrueNTHServiceBuilder {
     }
 
     /**
-     * Configures the {@link TrueNTHServiceBuilder} ({@link Api}).
-     *
-     * Overloaded version. Let's you use an instance instead of a class.
+     * Configures the API TrueNTHOAuthProvider.
      *
      * @param api
-     *            instance of {@link Api}s
+     *            Instance of {@link TrueNTHOAuthProvider}.
      * @return The {@link TrueNTHServiceBuilder} instance for method chaining.
      */
     public TrueNTHServiceBuilder provider(final TrueNTHOAuthProvider api) {
@@ -325,7 +441,7 @@ public class TrueNTHServiceBuilder {
      *
      * @param resourceURL
      *            Shared Services' resource URL. Must be a valid URL.
-     * @return the {@link TrueNTHServiceBuilder} instance for method chaining.
+     * @return The {@link TrueNTHServiceBuilder} instance for method chaining.
      */
     public TrueNTHServiceBuilder resourceURL(final String resourceURL) {
 
@@ -339,7 +455,7 @@ public class TrueNTHServiceBuilder {
      *
      * @param rolesURL
      *            Shared Services' roles URL. Must be a valid URL.
-     * @return the {@link TrueNTHServiceBuilder} instance for method chaining.
+     * @return The {@link TrueNTHServiceBuilder} instance for method chaining.
      */
     public TrueNTHServiceBuilder rolesURL(final String rolesURL) {
 
@@ -354,10 +470,14 @@ public class TrueNTHServiceBuilder {
      * <p>
      * This is only necessary in some APIs.
      * </p>
+     * 
+     * <p>
+     * Example: email.
+     * </p>
      *
      * @param scope
      *            The OAuth scope.
-     * @return the {@link TrueNTHServiceBuilder} instance for method chaining
+     * @return The {@link TrueNTHServiceBuilder} instance for method chaining
      */
     public TrueNTHServiceBuilder scope(final String scope) {
 
@@ -367,7 +487,7 @@ public class TrueNTHServiceBuilder {
     }
 
     /**
-     * Configures the signature type, choose between header, querystring, etc.
+     * Configures the signature type, chosen between header or querystring.
      *
      * <p>
      * Defaults to Header.
@@ -375,7 +495,7 @@ public class TrueNTHServiceBuilder {
      *
      * @param type
      *            The OAuth signature type.
-     * @return the ServiceBuilder instance for method chaining
+     * @return The ServiceBuilder instance for method chaining
      */
     public TrueNTHServiceBuilder signatureType(final SignatureType type) {
 

@@ -24,6 +24,7 @@ import org.scribe.model.Verifier;
 import org.scribe.oauth.OAuthService;
 import org.scribe.utils.Preconditions;
 
+import edu.uw.cirg.truenth.oauth.builder.TrueNTHServiceBuilder;
 import edu.uw.cirg.truenth.oauth.builder.api.TrueNTHOAuthProvider;
 import edu.uw.cirg.truenth.oauth.model.TrueNTHOAuthConfig;
 import edu.uw.cirg.truenth.oauth.model.definitions.TrueNTHGrantType;
@@ -33,7 +34,28 @@ import edu.uw.cirg.truenth.oauth.model.tokens.TrueNTHAccessToken;
 
 /**
  * OAuth service.
- *
+ * 
+ * <p>
+ * This class produces the main artifacts to issue requests towards SS,
+ * providing instances that centralize all configuration and addressing elements
+ * to access SS' OAuth APIs. Each SS instance will have its own client side
+ * counterpart represented by an instance of this class.
+ * </p>
+ * 
+ * <p>
+ * Services:
+ * </p>
+ * <ul>
+ * <li>Obtain access tokens;</li>
+ * <li>Create authorization URLs;</li>
+ * <li>Access configured SS URLs;</li>
+ * <li>Sign requests.</li>
+ * </ul>
+ * 
+ * <p>
+ * API specification: https://stg.us.truenth.org/dist/
+ * </p>
+ * 
  * @author Victor de Lima Soares
  * @since Sep 11, 2015
  */
@@ -48,18 +70,24 @@ public class TrueNTHOAuthService implements OAuthService {
     private final TrueNTHOAuthConfig   config;
 
     /**
-     * Default constructor.
-     *
+     * Builds the service with a predefined configuration.
+     * 
+     * <p>
+     * This library provides a helper class to build the configuration and
+     * automatically construct the service. Please check the
+     * TrueNTHServiceBuilder class.
+     * </p>
+     * 
+     * @see TrueNTHServiceBuilder
      * @param trueNTHOAuthProvider
-     *            OAuth2.0 api information.
+     *            OAuth2.0 API provider.
      * @param config
-     *            OAuth 2.0 configuration parameter object.
+     *            OAuth 2.0 Configuration.
      */
     public TrueNTHOAuthService(final TrueNTHOAuthProvider trueNTHOAuthProvider, final TrueNTHOAuthConfig config) {
 
 	api = trueNTHOAuthProvider;
 	this.config = config;
-	Preconditions.checkValidUrl(config.getCallback(), "Callback URL must be a valid URL.");
     }
 
     /**
@@ -90,7 +118,7 @@ public class TrueNTHOAuthService implements OAuthService {
     /**
      * Returns the redirection URL where users authenticate.
      *
-     * @return the URL where you should redirect your users.
+     * @return The URL where you should redirect your users.
      *
      * @see TrueNTHOAuthProvider#getAuthorizationUrl(TrueNTHOAuthConfig)
      */
@@ -113,10 +141,9 @@ public class TrueNTHOAuthService implements OAuthService {
      *            URL. Two encoding operations are necessary to communicate
      *            properly with SS after browser redirections in POP UPs.
      * @param callbackParameters
-     *            Additional parameters to add with the callback URL. This
-     *            parameter list will be added to the callback URL. Those
+     *            Additional parameters to add into the callback URL. Those
      *            parameters are destined to the callback target.
-     * @return the URL where users will be redirected.
+     * @return The URL where users will be redirected.
      */
     public String getAuthorizationUrl(final int numberEncodings, final ParameterList callbackParameters) {
 
@@ -132,17 +159,16 @@ public class TrueNTHOAuthService implements OAuthService {
      *            URL. Two encoding operations are necessary to communicate
      *            properly with SS after browser redirections in POP UPs.
      * @param callbackParameters
-     *            Additional parameters to add with the callback URL. This
-     *            parameter list will be added to the callback URL. Those
+     *            Additional parameters to add into the callback URL. Those
      *            parameters are destined to the callback target.
      * @param parameters
      *            Additional parameters to add on the Authorization URL. This
      *            parameter list should be used for especial circumstances to
-     *            fine tune requests directed to the the OAuth server; for
+     *            fine tune requests directed to the OAuth server; for
      *            instance SS's "next" parameter. Parameters coming form the
      *            OAuthConfig will be automatically appended (by the provider);
      *            such as "scope".
-     * @return the URL where users will be redirected.
+     * @return The URL where users will be redirected.
      */
     public String getAuthorizationUrl(final int numberEncodings, final ParameterList callbackParameters, final ParameterList parameters) {
 
@@ -159,11 +185,12 @@ public class TrueNTHOAuthService implements OAuthService {
      * </p>
      *
      * @param requestToken
-     *            Access token.
-     * @return the URL where you should redirect your users.
+     *            Access token (not used).
+     * @return The URL where you should redirect your users.
      * @see TrueNTHOAuthProvider#getAuthorizationUrl(TrueNTHOAuthConfig)
      */
     @Override
+    @Deprecated
     public String getAuthorizationUrl(final Token requestToken) {
 
 	return api.getAuthorizationUrl(config);
@@ -174,7 +201,7 @@ public class TrueNTHOAuthService implements OAuthService {
      *
      * <p>
      * This URL points to Shared Services base URL, it should not be used for
-     * OAuth operation, but for fetching static resources, such as css. It is
+     * OAuth operation, but for fetching static resources, such as CSS. It is
      * mainly used for templates.
      * </p>
      *
@@ -235,7 +262,7 @@ public class TrueNTHOAuthService implements OAuthService {
      * Returns the configured roles URL, for a specific user.
      *
      * <p>
-     * Replaces the userId place holder the the String representation of the
+     * Replaces the userId place holder with the String representation of the
      * TrueNTH user ID.
      * </p>
      *
@@ -273,7 +300,7 @@ public class TrueNTHOAuthService implements OAuthService {
      * <li><code>SignatureType.QueryString</code></li>
      * </ul>
      * <p>
-     * SignatureType.Header: Appends "BEARER" token as an authentication header.
+     * SignatureType.Header: Appends "BEARER" as an authentication header.
      * </p>
      * <p>
      * SignatureType.QueryString: Append "oauth_token" as a query string
