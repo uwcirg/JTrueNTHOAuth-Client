@@ -57,7 +57,7 @@ public class TrueNTHServiceBuilder {
     /**
      * Shared Servicesbase URL.
      * <p>
-     * This URL points to central services base URL, it should not be used for
+     * This URL points to Shared Services base URL, it should not be used for
      * OAuth operation, but for fetching static resources, such as css. It is
      * mainly used for templates.
      * </p>
@@ -147,10 +147,10 @@ public class TrueNTHServiceBuilder {
     }
 
     /**
-     * Configures the Central Services' base URL.
+     * Configures the Shared Services' base URL.
      *
      * @param baseURL
-     *            Central Services' base URL. Must be a valid URL.
+     *            Shared Services' base URL. Must be a valid URL.
      * @return the {@link TrueNTHServiceBuilder} instance for method chaining.
      */
     public TrueNTHServiceBuilder baseURL(final String baseURL) {
@@ -296,10 +296,10 @@ public class TrueNTHServiceBuilder {
     }
 
     /**
-     * Configures the Central Services' resource URL.
+     * Configures the Shared Services' resource URL.
      *
      * @param resourceURL
-     *            Central Services' resource URL. Must be a valid URL.
+     *            Shared Services' resource URL. Must be a valid URL.
      * @return the {@link TrueNTHServiceBuilder} instance for method chaining.
      */
     public TrueNTHServiceBuilder resourceURL(final String resourceURL) {
@@ -310,10 +310,10 @@ public class TrueNTHServiceBuilder {
     }
 
     /**
-     * Configures the Central Services roles URL.
+     * Configures the Shared Services roles URL.
      *
      * @param rolesURL
-     *            Central Services' roles URL. Must be a valid URL.
+     *            Shared Services' roles URL. Must be a valid URL.
      * @return the {@link TrueNTHServiceBuilder} instance for method chaining.
      */
     public TrueNTHServiceBuilder rolesURL(final String rolesURL) {

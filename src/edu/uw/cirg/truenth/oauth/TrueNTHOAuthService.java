@@ -170,15 +170,15 @@ public class TrueNTHOAuthService implements OAuthService {
     }
 
     /**
-     * Returns the configured Central Services' base URL.
+     * Returns the configured Shared Services' base URL.
      *
      * <p>
-     * This URL points to central services base URL, it should not be used for
+     * This URL points to Shared Services base URL, it should not be used for
      * OAuth operation, but for fetching static resources, such as css. It is
      * mainly used for templates.
      * </p>
      *
-     * @return Configured Central Services base URL.
+     * @return Configured Shared Services base URL.
      */
     public String getBaseURL() {
 

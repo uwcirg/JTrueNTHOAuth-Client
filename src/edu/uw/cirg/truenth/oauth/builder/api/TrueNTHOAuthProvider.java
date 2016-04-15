@@ -46,7 +46,7 @@ import edu.uw.cirg.truenth.oauth.model.tokens.extractors.TrueNTHAccessTokenExtra
  *
  * <p>
  * Originally, this class was aligned with Scribe's service implementations, but
- * as new requirements for dynamic server configuration emerged and the use of
+ * as new requirements for dynamic server configuration emerged, the use of
  * {@link TrueNTHOAuthConfig} became imperative.
  * </p>
  *
@@ -98,7 +98,7 @@ public class TrueNTHOAuthProvider implements Api {
     }
 
     /**
-     * Returns the URL that receives the access token requests.
+     * Returns the URL that receives the access tokens.
      *
      * @param config
      *            TrueNTH OAuth configuration.
@@ -113,7 +113,7 @@ public class TrueNTHOAuthProvider implements Api {
      * Returns the access token extractor.
      *
      * <p>
-     * This method uses a JSON based extractor as required by CS.
+     * This method uses a JSON based extractor as required by SS.
      * </p>
      *
      * @return access token extractor
@@ -127,7 +127,7 @@ public class TrueNTHOAuthProvider implements Api {
      * Returns the chosen method to obtain an access token.
      *
      * <p>
-     * CS requires POST.
+     * SS requires POST.
      * </p>
      *
      * @return Access method.
@@ -140,9 +140,14 @@ public class TrueNTHOAuthProvider implements Api {
     /**
      * Returns the redirection URL where users authenticate.
      *
+     * <p>
+     * This URL will be used to redirect the users to SS, which will
+     * authenticate them and redirect them back to the callback URL.
+     * </p>
+     * 
      * @param config
      *            OAuth configuration.
-     * @return the URL where you should redirect your users.
+     * @return The URL where the system should redirect users.
      */
     public String getAuthorizationUrl(final TrueNTHOAuthConfig config) {
 
@@ -160,7 +165,12 @@ public class TrueNTHOAuthProvider implements Api {
 
     /**
      * Returns the redirection URL where users authenticate.
-     *
+     * 
+     * <p>
+     * This URL will be used to redirect the users to SS, which will
+     * authenticate them and redirect them back to the callback URL.
+     * </p>
+     * 
      * <p>
      * Same as
      * <code>getAuthorizationUrl(config, numberEncodings, callbackParameters, null)</code>
@@ -172,12 +182,12 @@ public class TrueNTHOAuthProvider implements Api {
      * @param numberEncodings
      *            Number of encoding operations to be applied on the callback
      *            URL. Two encoding operations are necessary to communicate
-     *            properly with CS after browser redirections in POP UPs.
+     *            properly with SS after browser redirections in POP UPs.
      * @param callbackParameters
      *            Additional parameters to add with the callback URL. This
      *            parameter list will be added to the callback URL. Those
      *            parameters are destined to the callback target.
-     * @return the URL where users will be redirected.
+     * @return The URL where users will be redirected.
      *
      * @see #getAuthorizationUrl(TrueNTHOAuthConfig, int, ParameterList,
      *      ParameterList)
@@ -189,13 +199,18 @@ public class TrueNTHOAuthProvider implements Api {
 
     /**
      * Returns the redirection URL where users authenticate.
-     *
+     * 
+     * <p>
+     * This URL will be used to redirect the users to SS, which will
+     * authenticate them and redirect them back to the callback URL.
+     * </p>
+     * 
      * @param config
      *            OAuth configuration.
      * @param numberEncodings
      *            Number of encoding operations to be applied on the callback
      *            URL. Two encoding operations are necessary to communicate
-     *            properly with CS after browser redirections in POP UPs.
+     *            properly with SS after browser redirections in POP UPs.
      * @param callbackParameters
      *            Additional parameters to add with the callback URL. This
      *            parameter list will be added to the callback URL. Those
@@ -205,7 +220,7 @@ public class TrueNTHOAuthProvider implements Api {
      *            Additional parameters to add on the Authorization URL. This
      *            parameter list should be used for especial circumstances to
      *            fine tune requests directed to the the OAuth server; for
-     *            instance, CS's "next" parameter:
+     *            instance, SS's "next" parameter:
      *            {@link TrueNTHOAuthConstants#NEXT}.
      * @return the URL where users will be redirected.
      */

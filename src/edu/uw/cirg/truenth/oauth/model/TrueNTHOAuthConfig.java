@@ -20,6 +20,8 @@ import java.io.OutputStream;
 import org.scribe.model.OAuthConfig;
 import org.scribe.model.SignatureType;
 
+import edu.uw.cirg.truenth.oauth.builder.api.TrueNTHOAuthProvider;
+
 /**
  * Extension of OAuthConfig to include OAuth providers' server configuration.
  *
@@ -34,7 +36,7 @@ import org.scribe.model.SignatureType;
 public class TrueNTHOAuthConfig extends OAuthConfig {
 
     /**
-     * URL that receives the access token requests.
+     * URL that receives the access tokens.
      */
     private final String accessTokenEndpoint;
 
@@ -44,10 +46,10 @@ public class TrueNTHOAuthConfig extends OAuthConfig {
     private final String baseAuthorizationURL;
 
     /**
-     * Central Services base URL.
+     * Shared Services base URL.
      * <p>
-     * This URL points to central services base URL, it should not be used for
-     * OAuth operation, but for fetching static resources, such as css. It is
+     * This URL points to Shared Services base URL, it should not be used for
+     * OAuth operations, but for fetching static resources, such as SSS. It is
      * mainly used for templates.
      * </p>
      */
@@ -59,7 +61,7 @@ public class TrueNTHOAuthConfig extends OAuthConfig {
     private final String resourceURL;
 
     /**
-     * Central Services' roles URL.
+     * Shared Services' roles URL.
      */
     private final String rolesURL;
 
@@ -67,19 +69,19 @@ public class TrueNTHOAuthConfig extends OAuthConfig {
      * Constructor.
      *
      * @param key
-     *            APP key, distributed by CS.
+     *            APP key, distributed by SS.
      * @param secret
-     *            APP secret, distributed by CS.
+     *            APP secret, distributed by SS.
      * @param accessTokenEndpointURL
      *            URL that receives the access token requests.
      * @param baseAuthorizationURL
      *            The redirection URL where users authenticate.
      * @param baseURL
-     *            Central Services' base URL.
+     *            Shared Services' base URL.
      * @param resourceURL
-     *            Central Services' resource URL (protected API base).
+     *            Shared Services' resource URL (protected API base).
      * @param rolesURL
-     *            Central Services' roles URL.
+     *            Shared Services' roles URL.
      * @param callback
      *            Point where to redirect users after receiving a code to
      *            request access tokens.
@@ -104,26 +106,43 @@ public class TrueNTHOAuthConfig extends OAuthConfig {
 
     }
 
+    /**
+     * Returns the URL that receives the access tokens.
+     *
+     * @return Request token URL.
+     */
     public String getAccessTokenEndpoint() {
 
 	return accessTokenEndpoint;
     }
 
+    /**
+     * Returns the redirection URL where users authenticate.
+     *
+     * <p>
+     * This URL will be the base for building new authorization URLs, not being
+     * directly suitable for that use as encoding needs to be
+     * applied and parameters added.
+     * </p>
+     * 
+     * @see TrueNTHOAuthProvider#getAuthorizationUrl(TrueNTHOAuthConfig)
+     * @return Base for authorization URLs.
+     */
     public String getBaseAuthorizationURL() {
 
 	return baseAuthorizationURL;
     }
 
     /**
-     * Returns the configured Central Services base URL.
+     * Returns the configured Shared Services base URL.
      *
      * <p>
-     * This URL points to central services base URL, it should not be used for
-     * OAuth operation, but for fetching static resources, such as css. It is
+     * This URL points to Shared Services base URL, it should not be used for
+     * OAuth operation, but for fetching static resources, such as CSS. It is
      * mainly used for templates.
      * </p>
      *
-     * @return Configured Central Services base URL.
+     * @return Configured Shared Services base URL.
      */
     public String getBaseURL() {
 

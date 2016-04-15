@@ -16,7 +16,7 @@ ___
 # JTrueNTHOAuth-Client
 
 TrueNTHConnect includes its own OAuth library to ease communication
-with our Central Services. This component was designed to provide a stable
+with our Shared Services. This component was designed to provide a stable
 and uniform methodology for issuing requests and interpreting their outcomes, while observing our specific OAuth needs. The artifacts explicitly
 extend ScribeJava elements; thus, it has a stable and mature implementation as its base. 
 
@@ -91,7 +91,7 @@ public TrueNTHAccessToken getAccessToken(long companyId, String code) {
 }
 ```
 
-This method provides the system with the ability to fetch any resource from the Central Services' API, given that the token has the necessary permissions.
+This method provides the system with the ability to fetch any resource from the Shared Services' API, given that the token has the necessary permissions.
 
 The library provides:
 

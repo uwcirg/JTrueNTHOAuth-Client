@@ -17,7 +17,7 @@
  * TrueNTHConnect OAuth implementation.
  *
  * <p>
- * This package provides core OAuth functionality, following the restrictions imposed by our Central Services (CS).
+ * This package provides core OAuth functionality, following the restrictions imposed by our Shared Services (CS).
  * </p>
  * <p>
  * The current implementation includes a Scribe compatible set of components, implementing Scribe interfaces and hierarchy.
