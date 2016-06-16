@@ -226,7 +226,7 @@ public class TrueNTHOAuthService implements OAuthService {
     }
 
     /**
-     * Returns the redirection URL where users authenticate.
+     * Returns the URL where users authenticate and authorize clients.
      *
      * <p>
      * This URL will be used to redirect users to SS, which will authenticate
@@ -270,7 +270,7 @@ public class TrueNTHOAuthService implements OAuthService {
     }
 
     /**
-     * Returns the redirection URL where users authenticate.
+     * Returns the URL where users authenticate and authorize clients.
      *
      * <p>
      * This URL will be used to redirect users to SS, which will authenticate
@@ -315,7 +315,7 @@ public class TrueNTHOAuthService implements OAuthService {
     }
 
     /**
-     * Returns the redirection URL where users authenticate.
+     * Returns the URL where users authenticate and authorize clients.
      *
      * <p>
      * Same as {@link #getAuthorizationUrl()}

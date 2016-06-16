@@ -27,12 +27,11 @@ import org.scribe.utils.OAuthEncoder;
 
 import edu.uw.cirg.truenth.oauth.TrueNTHOAuthService;
 import edu.uw.cirg.truenth.oauth.model.TrueNTHOAuthConfig;
-import edu.uw.cirg.truenth.oauth.model.definitions.TrueNTHOAuthConstants;
 import edu.uw.cirg.truenth.oauth.model.tokens.extractors.TrueNTHAccessTokenExtractor;
 import edu.uw.cirg.truenth.oauth.model.tokens.extractors.TrueNTHAccessTokenExtractorJSon;
 
 /**
- * OAuth API provider.
+ * SS' OAuth API provider.
  *
  * <p>
  * Based on <i>org.scribe.builder.api.Api</i> and <i>DefaultApi20</i>.
@@ -66,11 +65,12 @@ public class TrueNTHOAuthProvider implements Api {
      *
      *
      * @param config
-     *            OAuth API configuration.
+     *            SS' OAuth API configuration.
+     *            
      * @return Fully configured {@link TrueNTHOAuthService}.
      *
      * @throws InvalidParameterException
-     *             config is not a instance of TrueNTHOAuthConfig.
+     *             If config is not a instance of TrueNTHOAuthConfig.
      *
      * @see TrueNTHOAuthService
      * @deprecated Use {@link #createService(TrueNTHOAuthConfig)}.
@@ -81,15 +81,17 @@ public class TrueNTHOAuthProvider implements Api {
 
 	if (config instanceof TrueNTHOAuthConfig) { return createService((TrueNTHOAuthConfig) config); }
 
-	throw new InvalidParameterException("config is not a instance of TrueNTHOAuthConfig");
+	throw new InvalidParameterException("Configuration object is not an instance of TrueNTHOAuthConfig");
     }
 
     /**
      * Creates an {@link TrueNTHOAuthService}
      *
      * @param config
-     *            OAuth API configuration.
+     *            SS' OAuth API configuration.
+     *            
      * @return Fully configured {@link TrueNTHOAuthService}
+     * 
      * @see TrueNTHOAuthService
      */
     public TrueNTHOAuthService createService(final TrueNTHOAuthConfig config) {
@@ -98,10 +100,11 @@ public class TrueNTHOAuthProvider implements Api {
     }
 
     /**
-     * Returns the URL that receives the access token requests.
+     * Returns the URL that receives access token requests.
      *
      * @param config
      *            TrueNTH OAuth configuration.
+     *            
      * @return request token URL.
      */
     public String getAccessTokenEndpoint(final TrueNTHOAuthConfig config) {
@@ -110,11 +113,12 @@ public class TrueNTHOAuthProvider implements Api {
     }
 
     /**
-     * Returns the URL that receives the access token status requests.
+     * Returns the URL that receives access token status requests.
      *
      * @param config
      *            TrueNTH OAuth configuration.
-     * @return request token status URL.
+     *            
+     * @return request Token status URL.
      */
     public String getAccessTokenStatusEndpoint(final TrueNTHOAuthConfig config) {
 
@@ -128,7 +132,7 @@ public class TrueNTHOAuthProvider implements Api {
      * This method uses a JSON based extractor as required by SS.
      * </p>
      *
-     * @return access token extractor
+     * @return access Token extractor.
      */
     public TrueNTHAccessTokenExtractor<JsonObject> getAccessTokenExtractor() {
 
@@ -136,7 +140,7 @@ public class TrueNTHOAuthProvider implements Api {
     }
 
     /**
-     * Returns the chosen method to obtain an access token.
+     * Returns the chosen method for obtaining an access token.
      *
      * <p>
      * SS requires POST.
@@ -150,15 +154,33 @@ public class TrueNTHOAuthProvider implements Api {
     }
 
     /**
-     * Returns the redirection URL where users authenticate.
+     * Returns the URL where users authenticate and authorize clients.
      *
      * <p>
-     * This URL will be used to redirect the users to SS, which will
-     * authenticate them and redirect them back to the callback URL.
+     * This URL will be used to redirect users to SS, which will authenticate
+     * them and redirect them back to the local callback URL.
      * </p>
+     *
+     * <p>
+     * This URL will point to the SS' Authorization address. In that location,
+     * users will be authenticated to receive an Authorization Code.
+     * </p>
+     *
+     * <p>
+     * With the Authorization Code, the users will be redirected back to the
+     * callback URL, where the local system receives the Authorization Code to
+     * be exchanged for an Access Token.
+     * </p>
+     * 
+     * <p>
+     * The callback URL is encoded only once.
+     * </p>
+     *
+     * @return The URL where users should be redirected.
      *
      * @param config
      *            OAuth configuration.
+     *            
      * @return The URL where the system should redirect users.
      */
     public String getAuthorizationUrl(final TrueNTHOAuthConfig config) {
@@ -176,65 +198,44 @@ public class TrueNTHOAuthProvider implements Api {
     }
 
     /**
-     * Returns the redirection URL where users authenticate.
+     * Returns the URL where users authenticate and authorize clients.
      *
      * <p>
-     * This URL will be used to redirect the users to SS, which will
-     * authenticate them and redirect them back to the callback URL.
+     * This URL will be used to redirect users to SS, which will authenticate
+     * them and redirect them back to the local callback URL.
      * </p>
      *
      * <p>
-     * Same as
-     * <code>getAuthorizationUrl(config, numberEncodings, callbackParameters, null)</code>
-     * .
+     * This URL will point to the SS' Authorization address. In that location,
+     * users will be authenticated to receive an Authorization Code.
      * </p>
      *
-     * @param config
-     *            OAuth configuration.
+     * <p>
+     * With the Authorization Code, the users will be redirected back to the
+     * callback URL, where the local system receives the Authorization Code to
+     * be exchanged for an Access Token.
+     * </p>
+     *
+     *
      * @param numberEncodings
-     *            Number of encoding operations to be applied on the callback
-     *            URL. Two encoding operations are necessary to communicate
-     *            properly with SS after browser redirections in POP UPs.
+     *            Number of URL encoding operations to be applied on the
+     *            callback URL. For instance, two encoding operations are
+     *            necessary to communicate properly with SS after browser
+     *            redirections in POP UPs.
+     *
      * @param callbackParameters
-     *            Additional parameters to add with the callback URL. This
-     *            parameter list will be added to the callback URL. Those
+     *            Additional parameters to add into the callback URL. Those
      *            parameters are destined to the callback target.
-     * @return The URL where users will be redirected.
      *
-     * @see #getAuthorizationUrl(TrueNTHOAuthConfig, int, ParameterList,
-     *      ParameterList)
-     */
-    public String getAuthorizationUrl(final TrueNTHOAuthConfig config, final int numberEncodings, final ParameterList callbackParameters) {
-
-	return getAuthorizationUrl(config, numberEncodings, callbackParameters, null);
-    }
-
-    /**
-     * Returns the redirection URL where users authenticate.
-     *
-     * <p>
-     * This URL will be used to redirect the users to SS, which will
-     * authenticate them and redirect them back to the callback URL.
-     * </p>
-     *
-     * @param config
-     *            OAuth configuration.
-     * @param numberEncodings
-     *            Number of encoding operations to be applied on the callback
-     *            URL. Two encoding operations are necessary to communicate
-     *            properly with SS after browser redirections in POP UPs.
-     * @param callbackParameters
-     *            Additional parameters to add with the callback URL. This
-     *            parameter list will be added to the callback URL. Those
-     *            parameters are destined to the callback target. For instance,
-     *            {@link TrueNTHOAuthConstants#REDIRECT}.
      * @param parameters
-     *            Additional parameters to add on the Authorization URL. This
-     *            parameter list should be used for especial circumstances to
-     *            fine tune requests directed to the the OAuth server; for
-     *            instance, SS's "next" parameter:
-     *            {@link TrueNTHOAuthConstants#NEXT}.
-     * @return the URL where users will be redirected.
+     *            Additional parameters to add into the Authorization URL. This
+     *            parameter list should be used for special circumstances to
+     *            fine tune requests directed to the OAuth server; for instance
+     *            SS's "next" parameter. Parameters coming form the OAuthConfig
+     *            will be automatically appended (by the provider); such as
+     *            "scope".
+     *            
+     * @return The URL where users will be redirected.
      */
     public String getAuthorizationUrl(final TrueNTHOAuthConfig config, final int numberEncodings, final ParameterList callbackParameters,
 	    final ParameterList parameters) {
