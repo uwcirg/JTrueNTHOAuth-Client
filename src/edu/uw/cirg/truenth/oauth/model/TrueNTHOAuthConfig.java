@@ -23,11 +23,11 @@ import org.scribe.model.SignatureType;
 import edu.uw.cirg.truenth.oauth.builder.api.TrueNTHOAuthProvider;
 
 /**
- * Extension of OAuthConfig to include OAuth providers' server configuration.
+ * Extension of OAuthConfig to include SS provider' configuration.
  *
  * <p>
- * This class was designed to use in multithreading environments, it is tread
- * safe <b>after creation</b>. It is immutable and does not rely on locks.
+ * This class was designed to be used in multithreading environments, it is
+ * tread safe <b>after creation</b>. It is immutable and does not rely on locks.
  * </p>
  *
  * @author Victor de Lima Soares

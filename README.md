@@ -49,7 +49,7 @@ TrueNTHOAuthService service = new TrueNTHServiceBuilder()
 		    .baseURL(SS_BASE) // As in https://stg.us.truenth.org
 		    .resourceURL(SS_API) // As in https://stg.us.truenth.org/api
 		    .rolesURL(SS_ROLE_API) // As in https://stg.us.truenth.org/api/user/#userId/roles
-		    .callbackURL(YOUR_APP_CALLBACK_URL) // This is where users land after getting an Authorization code form SS.
+		    .callbackURL(YOUR_APP_CALLBACK_URL) // This is where users land after getting an Authorization code from SS.
 		    .apiKey(YOUR_API_KEY)
 		    .apiSecret(YOUR_API_SECRET)
 		    .build();

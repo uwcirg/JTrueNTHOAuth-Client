@@ -17,6 +17,7 @@ package edu.uw.cirg.truenth.oauth;
 
 import java.io.StringReader;
 import java.net.URL;
+import java.util.List;
 
 import javax.json.Json;
 import javax.json.JsonObject;
@@ -37,6 +38,8 @@ import edu.uw.cirg.truenth.oauth.model.definitions.TrueNTHGrantType;
 import edu.uw.cirg.truenth.oauth.model.definitions.TrueNTHTokenType;
 import edu.uw.cirg.truenth.oauth.model.definitions.TrueNTHUrlPlaceHolders;
 import edu.uw.cirg.truenth.oauth.model.tokens.TrueNTHAccessToken;
+import edu.uw.cirg.truenth.ss.roles.SSRole;
+import edu.uw.cirg.truenth.ss.roles.SSRoleExtractorJson;
 
 /**
  * OAuth service.
@@ -104,8 +107,10 @@ public class TrueNTHOAuthService implements OAuthService {
      * @param requestToken
      *            This parameter will not be used and can be safely set to null
      *            (it comes from a deprecated API).
+     *
      * @param verifier
      *            Authorization Code to obtain an access token.
+     *
      * @return access token.
      */
     @Override
@@ -122,6 +127,24 @@ public class TrueNTHOAuthService implements OAuthService {
 	}
 	final Response response = request.send();
 	return api.getAccessTokenExtractor().extract(response.getBody());
+    }
+
+    /**
+     * Fetches an access token and returns as a token object.
+     *
+     * @param requestToken
+     *            This parameter will not be used and can be safely set to null
+     *            (it comes from a deprecated API).
+     *
+     * @param code
+     *            Authorization Code to obtain an access token.
+     *
+     * @return access token.
+     */
+    public TrueNTHAccessToken getAccessToken(final String code) {
+
+	final Verifier verifierCode = new Verifier(code);
+	return getAccessToken(null, verifierCode);
     }
 
     /**
@@ -142,7 +165,7 @@ public class TrueNTHOAuthService implements OAuthService {
 
 	    return api.getAccessTokenExtractor().extract(json);
 
-	} catch (Exception ex) {
+	} catch (final Exception ex) {
 	    return null;
 	}
     }
@@ -152,7 +175,7 @@ public class TrueNTHOAuthService implements OAuthService {
      *
      * @param accessToken
      *            Token that will be verified.
-     * 
+     *
      * @return <ul>
      *         <li>True, if the token is still valid;</li>
      *         <li>False, if the token is invalid or expired;</li>
@@ -169,30 +192,30 @@ public class TrueNTHOAuthService implements OAuthService {
 
 	    return responseCode == 200;
 
-	} catch (Exception ex) {
+	} catch (final Exception ex) {
 	    return false;
 	}
     }
 
     /**
      * Returns the redirection URL where users authenticate.
-     * 
+     *
      * <p>
      * This URL will be used to redirect users to SS, which will authenticate
      * them and redirect them back to the local callback URL.
      * </p>
-     * 
+     *
      * <p>
      * This URL will point to the SS' Authorization address. In that location,
      * users will be authenticated to receive an Authorization Code.
      * </p>
-     * 
+     *
      * <p>
      * With the Authorization Code, the users will be redirected back to the
      * callback URL, where the local system receives the Authorization code to
      * be exchanged for an Access Token.
      * </p>
-     * 
+     *
      * @return The URL where users should be redirected.
      *
      * @see TrueNTHOAuthProvider#getAuthorizationUrl(TrueNTHOAuthConfig)
@@ -204,17 +227,17 @@ public class TrueNTHOAuthService implements OAuthService {
 
     /**
      * Returns the redirection URL where users authenticate.
-     * 
+     *
      * <p>
      * This URL will be used to redirect users to SS, which will authenticate
      * them and redirect them back to the local callback URL.
      * </p>
-     * 
+     *
      * <p>
      * This URL will point to the SS' Authorization address. In that location,
      * users will be authenticated to receive an Authorization Code.
      * </p>
-     * 
+     *
      * <p>
      * With the Authorization Code, the users will be redirected back to the
      * callback URL, where the local system receives the Authorization Code to
@@ -232,13 +255,13 @@ public class TrueNTHOAuthService implements OAuthService {
      *            callback URL. For instance, two encoding operations are
      *            necessary to communicate properly with SS after browser
      *            redirections in POP UPs.
-     * 
+     *
      * @param callbackParameters
      *            Additional parameters to add into the callback URL. Those
      *            parameters are destined to the callback target.
-     * 
+     *
      * @return The URL where users will be redirected.
-     * 
+     *
      * @see #getAuthorizationUrl(int, ParameterList, ParameterList)
      */
     public String getAuthorizationUrl(final int numberEncodings, final ParameterList callbackParameters) {
@@ -248,17 +271,17 @@ public class TrueNTHOAuthService implements OAuthService {
 
     /**
      * Returns the redirection URL where users authenticate.
-     * 
+     *
      * <p>
      * This URL will be used to redirect users to SS, which will authenticate
      * them and redirect them back to the local callback URL.
      * </p>
-     * 
+     *
      * <p>
      * This URL will point to the SS' Authorization address. In that location,
      * users will be authenticated to receive an Authorization Code.
      * </p>
-     * 
+     *
      * <p>
      * With the Authorization Code, the users will be redirected back to the
      * callback URL, where the local system receives the Authorization Code to
@@ -271,11 +294,11 @@ public class TrueNTHOAuthService implements OAuthService {
      *            callback URL. For instance, two encoding operations are
      *            necessary to communicate properly with SS after browser
      *            redirections in POP UPs.
-     * 
+     *
      * @param callbackParameters
      *            Additional parameters to add into the callback URL. Those
      *            parameters are destined to the callback target.
-     * 
+     *
      * @param parameters
      *            Additional parameters to add into the Authorization URL. This
      *            parameter list should be used for special circumstances to
@@ -283,7 +306,7 @@ public class TrueNTHOAuthService implements OAuthService {
      *            SS's "next" parameter. Parameters coming form the OAuthConfig
      *            will be automatically appended (by the provider); such as
      *            "scope".
-     * 
+     *
      * @return The URL where users will be redirected.
      */
     public String getAuthorizationUrl(final int numberEncodings, final ParameterList callbackParameters, final ParameterList parameters) {
@@ -300,9 +323,9 @@ public class TrueNTHOAuthService implements OAuthService {
      *
      * @param requestToken
      *            Access token (not used).
-     * 
+     *
      * @return The URL where you should redirect your users.
-     * 
+     *
      * @see TrueNTHOAuthProvider#getAuthorizationUrl(TrueNTHOAuthConfig)
      */
     @Override
@@ -345,7 +368,7 @@ public class TrueNTHOAuthService implements OAuthService {
      * @throws UnsupportedOperationException
      *             This operation is not supported by SS; thus, this workflow
      *             shall not be used.
-     * 
+     *
      * @return Nothing will be returned, and an exception will be thrown.
      */
     @Override
@@ -357,11 +380,11 @@ public class TrueNTHOAuthService implements OAuthService {
 
     /**
      * Returns the configured OAuth API base URL (API base).
-     * 
+     *
      * <p>
      * For instance: https://stg.us.truenth.org/api
      * </p>
-     * 
+     *
      * @return API base URL.
      */
     public String getResourceURL() {
@@ -376,11 +399,11 @@ public class TrueNTHOAuthService implements OAuthService {
      * This method returns the generic address of users' roles. It contains the
      * #userId wildcard, and it does not represent a real location.
      * </p>
-     * 
+     *
      * <p>
      * For instance: https://stg.us.truenth.org/api/user/#userId/roles
      * </p>
-     * 
+     *
      * @return Roles URL.
      */
     public String getRolesURL() {
@@ -418,25 +441,25 @@ public class TrueNTHOAuthService implements OAuthService {
 
     /**
      * Signs a request.
-     * 
+     *
      * <p>
      * This method appends the access token into the request, according to the
      * configured signature type.
      * </p>
-     * 
+     *
      * <p>
      * It supports the following two signature types:
      * </p>
-     * 
+     *
      * <ul>
      * <li><code>SignatureType.Header</code>;</li>
      * <li><code>SignatureType.QueryString</code>;</li>
      * </ul>
-     * 
+     *
      * <p>
      * SignatureType.Header: Appends "BEARER" as an authentication header.
      * </p>
-     * 
+     *
      * <p>
      * SignatureType.QueryString: Append "oauth_token" as a query string
      * parameter.
@@ -458,17 +481,17 @@ public class TrueNTHOAuthService implements OAuthService {
 
     /**
      * Get a resource that is know to be a JSON object.
-     * 
+     *
      * @param path
      *            Resource relative path. It should be relative to the Resource
      *            URL.
-     * 
+     *
      * @param accessToken
      *            Access Token.
-     * 
+     *
      * @return The JSON object extracted from the response, or null in case of
      *         exceptions.
-     * 
+     *
      * @see #getResourceURL()
      */
     public JsonObject getResourceJson(final String path, final Token accessToken) {
@@ -477,10 +500,34 @@ public class TrueNTHOAuthService implements OAuthService {
 
 	    final URL url = new URL(getResourceURL().concat(path));
 
+	    return getResourceJson(url, accessToken);
+
+	} catch (final Exception e) {
+
+	    return null;
+	}
+    }
+
+    /**
+     * Get a resource that is know to be a JSON object.
+     *
+     * @param address
+     *            Complete URL, which points to the desired resource.
+     *
+     * @param accessToken
+     *            Access Token.
+     *
+     * @return The JSON object extracted from the response, or null in case of
+     *         exceptions.
+     */
+    private JsonObject getResourceJson(final URL url, final Token accessToken) {
+
+	try {
+
 	    final OAuthRequest request = new OAuthRequest(Verb.GET, url.toString());
 	    signRequest(accessToken, request);
 
-	    final String json = getResource(path, accessToken).getBody();
+	    final String json = getResource(url, accessToken).getBody();
 
 	    return Json.createReader(new StringReader(json)).readObject();
 
@@ -492,17 +539,17 @@ public class TrueNTHOAuthService implements OAuthService {
 
     /**
      * Get a generic OAuth protected resource.
-     * 
+     *
      * @param path
      *            Resource relative path. It should be relative to the Resource
      *            URL.
-     * 
+     *
      * @param accessToken
      *            Access Token.
-     * 
+     *
      * @return The received response, without and treatment, or null in case of
      *         exceptions.
-     * 
+     *
      * @see #getResourceURL()
      */
     public Response getResource(final String path, final Token accessToken) {
@@ -511,7 +558,32 @@ public class TrueNTHOAuthService implements OAuthService {
 
 	    final URL url = new URL(getResourceURL().concat(path));
 
-	    final OAuthRequest request = new OAuthRequest(Verb.GET, url.toString());
+	    return getResource(url, accessToken);
+
+	} catch (final Exception e) {
+
+	    return null;
+	}
+    }
+
+    /**
+     * Get a generic OAuth protected resource.
+     *
+     * @param address
+     *            Complete URL, which points to the desired resource.
+     *
+     * @param accessToken
+     *            Access Token.
+     *
+     * @return The received response, without and treatment, or null in case of
+     *         exceptions.
+     *
+     */
+    private Response getResource(final URL address, final Token accessToken) {
+
+	try {
+
+	    final OAuthRequest request = new OAuthRequest(Verb.GET, address.toString());
 	    signRequest(accessToken, request);
 
 	    return request.send();
@@ -523,27 +595,25 @@ public class TrueNTHOAuthService implements OAuthService {
     }
 
     /**
-     * Get a generic OAuth protected resource.
-     * 
-     * @param address
-     *            Complete URL, which points to the desired resource.
-     * 
+     * Get user roles.
+     *
+     * @param trueNTHUserId
+     *            TrueNTH User ID.
      * @param accessToken
      *            Access Token.
-     * 
-     * @return The received response, without and treatment, or null in case of
-     *         exceptions.
-     * 
-     * @see #getResourceURL()
+     * @return A list of the roles associated with the user.
      */
-    public Response getResource(final URL address, final Token accessToken) {
+    public List<SSRole> getTrueNTHRoles(final long trueNTHUserId, final TrueNTHAccessToken accessToken) {
 
 	try {
 
-	    final OAuthRequest request = new OAuthRequest(Verb.GET, address.toString());
-	    signRequest(accessToken, request);
+	    final URL url = new URL(getRolesURL(trueNTHUserId));
 
-	    return request.send();
+	    final JsonObject json = getResourceJson(url, accessToken);
+
+	    final SSRoleExtractorJson roleExtractor = new SSRoleExtractorJson();
+
+	    return roleExtractor.extractRoles(json);
 
 	} catch (final Exception e) {
 

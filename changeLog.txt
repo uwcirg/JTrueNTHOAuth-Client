@@ -9,5 +9,5 @@ Add support for /oauth/token-status
 Auxiliary functions to retrieve resources
 	*Service: function getResourceJson appended
 	*Service: function getResource appended 
-	
-Create the changeLog file =)
+	*Service: getAccessToken(final String code) appended
+	*Service: function getTrueNTHRoles appended
