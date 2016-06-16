@@ -43,12 +43,13 @@ The class is named TrueNTHOAuthService. The following example demonstrates how t
 ```Java
 TrueNTHOAuthService service = new TrueNTHServiceBuilder()
 		    .provider(TrueNTHOAuthProvider.class)
-		    .baseAuthorizationURL(SS_AUTHORIZATION_URL) // As https://stg.us.truenth.org/oauth/authorize
-		    .accessTokenEndpointURL(SS_TOKEN_ENDPOINT) // As https://stg.us.truenth.org/oauth/token
-		    .baseURL(SS_BASE) // As https://stg.us.truenth.org
-		    .resourceURL(SS_API) // As https://stg.us.truenth.org/api
-		    .rolesURL(SS_ROLE_API) // As https://stg.us.truenth.org/api/user/#userId/roles
-		    .callbackURL(YOUR_APP_CALLBACK_URL) 
+		    .baseAuthorizationURL(SS_AUTHORIZATION_URL) // As in https://stg.us.truenth.org/oauth/authorize
+		    .accessTokenEndpointURL(SS_TOKEN_ENDPOINT) // As in https://stg.us.truenth.org/oauth/token
+		    accessTokenStatusEndpointURL(SS_TOKEN_STATUS_ENDPOINT) // As in https://stg.us.truenth.org/oauth/oauth/token-status
+		    .baseURL(SS_BASE) // As in https://stg.us.truenth.org
+		    .resourceURL(SS_API) // As in https://stg.us.truenth.org/api
+		    .rolesURL(SS_ROLE_API) // As in https://stg.us.truenth.org/api/user/#userId/roles
+		    .callbackURL(YOUR_APP_CALLBACK_URL) // This is where users land after getting an Authorization code form SS.
 		    .apiKey(YOUR_API_KEY)
 		    .apiSecret(YOUR_API_SECRET)
 		    .build();

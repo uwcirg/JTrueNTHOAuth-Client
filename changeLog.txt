@@ -1,9 +1,13 @@
 
-Since 1.0.0: ----------------------------------------------------------------
+Version 1.0.2: ----------------------------------------------------------------
 
 Add support for /oauth/token-status
-	*Service: function to fetch updated token
-	*Service: function to test if a token is still active in the SS instance
+	*Service: function isAccessTokenActive appended
+	*Service: function getAccessTokenStatus appended
 	*TrueNTHServiceBuilder: function accessTokenEndpointStatusURL
+	
+Auxiliary functions to retrieve resources
+	*Service: function getResourceJson appended
+	*Service: function getResource appended 
 	
 Create the changeLog file =)

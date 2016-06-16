@@ -15,6 +15,12 @@
  *******************************************************************************/
 package edu.uw.cirg.truenth.oauth;
 
+import java.io.StringReader;
+import java.net.URL;
+
+import javax.json.Json;
+import javax.json.JsonObject;
+
 import org.scribe.model.OAuthConstants;
 import org.scribe.model.OAuthRequest;
 import org.scribe.model.ParameterList;
@@ -50,6 +56,7 @@ import edu.uw.cirg.truenth.oauth.model.tokens.TrueNTHAccessToken;
  * <li>Obtain updated access tokens;</li>
  * <li>Create authorization URLs;</li>
  * <li>Access configured SS' URLs;</li>
+ * <li>Issue requests;</li>
  * <li>Sign requests.</li>
  * </ul>
  *
@@ -129,12 +136,9 @@ public class TrueNTHOAuthService implements OAuthService {
 
 	try {
 
-	    final String url = api.getAccessTokenStatusEndpoint(config);
+	    final URL url = new URL(api.getAccessTokenStatusEndpoint(config));
 
-	    final OAuthRequest request = new OAuthRequest(Verb.GET, url);
-	    signRequest(accessToken, request);
-
-	    final String json = request.send().getBody();
+	    final String json = getResource(url, accessToken).getBody();
 
 	    return api.getAccessTokenExtractor().extract(json);
 
@@ -159,12 +163,9 @@ public class TrueNTHOAuthService implements OAuthService {
 
 	try {
 
-	    final String url = api.getAccessTokenStatusEndpoint(config);
+	    final URL url = new URL(api.getAccessTokenStatusEndpoint(config));
 
-	    final OAuthRequest request = new OAuthRequest(Verb.GET, url);
-	    signRequest(accessToken, request);
-
-	    final int responseCode = request.send().getCode();
+	    final int responseCode = getResource(url, accessToken).getCode();
 
 	    return responseCode == 200;
 
@@ -287,9 +288,7 @@ public class TrueNTHOAuthService implements OAuthService {
      */
     public String getAuthorizationUrl(final int numberEncodings, final ParameterList callbackParameters, final ParameterList parameters) {
 
-	final String baseURL = api.getAuthorizationUrl(config, numberEncodings, callbackParameters, parameters);
-
-	return baseURL;
+	return api.getAuthorizationUrl(config, numberEncodings, callbackParameters, parameters);
     }
 
     /**
@@ -358,6 +357,7 @@ public class TrueNTHOAuthService implements OAuthService {
 
     /**
      * Returns the configured OAuth API base URL (API base).
+     * 
      * <p>
      * For instance: https://stg.us.truenth.org/api
      * </p>
@@ -453,6 +453,101 @@ public class TrueNTHOAuthService implements OAuthService {
 	    case QueryString:
 		request.addQuerystringParameter(OAuthConstants.ACCESS_TOKEN, accessToken.getToken());
 		break;
+	}
+    }
+
+    /**
+     * Get a resource that is know to be a JSON object.
+     * 
+     * @param path
+     *            Resource relative path. It should be relative to the Resource
+     *            URL.
+     * 
+     * @param accessToken
+     *            Access Token.
+     * 
+     * @return The JSON object extracted from the response, or null in case of
+     *         exceptions.
+     * 
+     * @see #getResourceURL()
+     */
+    public JsonObject getResourceJson(final String path, final Token accessToken) {
+
+	try {
+
+	    final URL url = new URL(getResourceURL().concat(path));
+
+	    final OAuthRequest request = new OAuthRequest(Verb.GET, url.toString());
+	    signRequest(accessToken, request);
+
+	    final String json = getResource(path, accessToken).getBody();
+
+	    return Json.createReader(new StringReader(json)).readObject();
+
+	} catch (final Exception e) {
+
+	    return null;
+	}
+    }
+
+    /**
+     * Get a generic OAuth protected resource.
+     * 
+     * @param path
+     *            Resource relative path. It should be relative to the Resource
+     *            URL.
+     * 
+     * @param accessToken
+     *            Access Token.
+     * 
+     * @return The received response, without and treatment, or null in case of
+     *         exceptions.
+     * 
+     * @see #getResourceURL()
+     */
+    public Response getResource(final String path, final Token accessToken) {
+
+	try {
+
+	    final URL url = new URL(getResourceURL().concat(path));
+
+	    final OAuthRequest request = new OAuthRequest(Verb.GET, url.toString());
+	    signRequest(accessToken, request);
+
+	    return request.send();
+
+	} catch (final Exception e) {
+
+	    return null;
+	}
+    }
+
+    /**
+     * Get a generic OAuth protected resource.
+     * 
+     * @param address
+     *            Complete URL, which points to the desired resource.
+     * 
+     * @param accessToken
+     *            Access Token.
+     * 
+     * @return The received response, without and treatment, or null in case of
+     *         exceptions.
+     * 
+     * @see #getResourceURL()
+     */
+    public Response getResource(final URL address, final Token accessToken) {
+
+	try {
+
+	    final OAuthRequest request = new OAuthRequest(Verb.GET, address.toString());
+	    signRequest(accessToken, request);
+
+	    return request.send();
+
+	} catch (final Exception e) {
+
+	    return null;
 	}
     }
 }
