@@ -27,7 +27,8 @@ import edu.uw.cirg.truenth.oauth.builder.api.TrueNTHOAuthProvider;
  *
  * <p>
  * This class was designed to be used in multithreading environments, it is
- * tread safe <b>after creation</b>. It is immutable and does not rely on locks.
+ * tread safe, <b>after creation</b>. It is immutable and it does not rely on
+ * locks.
  * </p>
  *
  * @author Victor de Lima Soares
@@ -46,27 +47,47 @@ public class TrueNTHOAuthConfig extends OAuthConfig {
     private final String accessTokenStatusEndpoint;
 
     /**
-     * The redirection URL where users authenticate.
+     * The redirection URL where users authenticate and authorize clients.
      */
     private final String baseAuthorizationURL;
 
     /**
      * Shared Services base URL.
+     * 
      * <p>
      * This URL points to Shared Services base URL, it should not be used for
-     * OAuth operations, but for fetching static resources, such as SSS. It is
-     * mainly used for templates.
+     * OAuth operation, but for fetching static resources, such as CSS. It is
+     * mainly used for templates and cases where the resource must come form the
+     * same SS instance.
      * </p>
      */
     private final String baseURL;
 
     /**
      * Resource URL.
+     * 
+     * <p>
+     * OAuth API base URL (API base).
+     * </p>
+     * 
+     * <p>
+     * For instance: https://stg.us.truenth.org/api
+     * </p>
      */
     private final String resourceURL;
 
     /**
      * Shared Services' roles URL.
+     * 
+     *
+     * <p>
+     * This URL is the generic address for retrieving users' roles. It contains
+     * the #userId wildcard, and it does not represent a real location.
+     * </p>
+     *
+     * <p>
+     * For instance: https://stg.us.truenth.org/api/user/#userId/roles
+     * </p>
      */
     private final String rolesURL;
 
@@ -76,13 +97,14 @@ public class TrueNTHOAuthConfig extends OAuthConfig {
      * @param key
      *            APP key, distributed by SS (application ID).
      * @param secret
-     *            APP secret, distributed by SS.
+     *            APP secret (password), distributed by SS.
      * @param accessTokenEndpointURL
-     *            URL that receives the access tokens requests.
+     *            URL that receives access tokens requests.
      * @param accessTokenStatusEndpointURL
-     *            URL that receives the access tokens status requests.
+     *            URL that receives access tokens status requests.
      * @param baseAuthorizationURL
-     *            The redirection URL where users authenticate.
+     *            The redirection URL where users authenticate and authorize
+     *            clients. (This is where they receive a grant code).
      * @param baseURL
      *            Shared Services' base URL.
      * @param resourceURL
@@ -90,10 +112,10 @@ public class TrueNTHOAuthConfig extends OAuthConfig {
      * @param rolesURL
      *            Shared Services' roles URL.
      * @param callback
-     *            Point where to redirect users after receiving a code to
-     *            request access tokens.
+     *            Point where to redirect users after receiving an Authorization
+     *            Code to request Access Tokens.
      * @param signatureType
-     *            Type of signature, to be used when issuing requests.
+     *            Type of signature to be used when issuing requests.
      * @param scope
      *            Authorization scope.
      * @param stream
@@ -115,7 +137,7 @@ public class TrueNTHOAuthConfig extends OAuthConfig {
     }
 
     /**
-     * Returns the URL that receives the access token requests.
+     * Returns the URL that receives access token requests.
      *
      * @return Request token URL.
      */
@@ -125,7 +147,7 @@ public class TrueNTHOAuthConfig extends OAuthConfig {
     }
 
     /**
-     * Returns the URL that receives the access token status requests.
+     * Returns the URL that receives access token status requests.
      *
      * @return Request token status URL.
      */
@@ -135,7 +157,7 @@ public class TrueNTHOAuthConfig extends OAuthConfig {
     }
 
     /**
-     * Returns the redirection URL where users authenticate.
+     * Returns the URL where users authenticate and authorize clients.
      *
      * <p>
      * This URL will be the base for building new authorization URLs, not being
