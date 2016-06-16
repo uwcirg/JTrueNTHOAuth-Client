@@ -1,0 +1,9 @@
+
+Since 1.0.0: ----------------------------------------------------------------
+
+Add support for /oauth/token-status
+	*Service: function to fetch updated token
+	*Service: function to test if a token is still active in the SS instance
+	*TrueNTHServiceBuilder: function accessTokenEndpointStatusURL
+	
+Create the changeLog file =)

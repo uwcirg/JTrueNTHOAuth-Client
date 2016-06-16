@@ -59,22 +59,22 @@ public class SSRole implements Serializable {
 
     /**
      * Sets the description attribute.
-     * 
+     *
      * @param ssDescription
      */
     public void setDescription(final String ssDescription) {
 
-	this.description = ssDescription;
+	description = ssDescription;
     }
 
     /**
      * Sets the name attribute.
-     * 
+     *
      * @param ssName
      */
     public void setName(final String ssName) {
 
-	this.name = ssName;
+	name = ssName;
     }
 
 }

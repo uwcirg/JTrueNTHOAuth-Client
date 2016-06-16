@@ -20,6 +20,7 @@ import org.scribe.model.OAuthRequest;
 import org.scribe.model.ParameterList;
 import org.scribe.model.Response;
 import org.scribe.model.Token;
+import org.scribe.model.Verb;
 import org.scribe.model.Verifier;
 import org.scribe.oauth.OAuthService;
 
@@ -33,14 +34,14 @@ import edu.uw.cirg.truenth.oauth.model.tokens.TrueNTHAccessToken;
 
 /**
  * OAuth service.
- * 
+ *
  * <p>
  * This class produces the main artifacts to issue requests towards SS,
  * providing instances that centralize all configuration and addressing elements
  * to access SS' OAuth APIs. Each SS instance will have its own client side
  * counterpart represented by an instance of this class.
  * </p>
- * 
+ *
  * <p>
  * Services:
  * </p>
@@ -50,11 +51,11 @@ import edu.uw.cirg.truenth.oauth.model.tokens.TrueNTHAccessToken;
  * <li>Access configured SS URLs;</li>
  * <li>Sign requests.</li>
  * </ul>
- * 
+ *
  * <p>
  * API specification: https://stg.us.truenth.org/dist/
  * </p>
- * 
+ *
  * @author Victor de Lima Soares
  * @since Sep 11, 2015
  */
@@ -70,13 +71,13 @@ public class TrueNTHOAuthService implements OAuthService {
 
     /**
      * Builds the service with a predefined configuration.
-     * 
+     *
      * <p>
      * This library provides a helper class to build the configuration and
      * automatically construct the service. Please check the
      * TrueNTHServiceBuilder class.
      * </p>
-     * 
+     *
      * @see TrueNTHServiceBuilder
      * @param trueNTHOAuthProvider
      *            OAuth2.0 API provider.
@@ -112,6 +113,44 @@ public class TrueNTHOAuthService implements OAuthService {
 	}
 	final Response response = request.send();
 	return api.getAccessTokenExtractor().extract(response.getBody());
+    }
+
+    /**
+     * Fetches an access token, via status, and returns as a token object.
+     *
+     * @param accessToken
+     *            Token that will be updated, if valid.
+     * @return Updated access token.
+     */
+    public TrueNTHAccessToken getAccessTokenStatus(final Token accessToken) {
+
+	final String url = api.getAccessTokenStatusEndpoint(config);
+
+	final OAuthRequest request = new OAuthRequest(Verb.GET, url);
+	signRequest(accessToken, request);
+
+	final String json = request.send().getBody();
+
+	return api.getAccessTokenExtractor().extract(json);
+    }
+
+    /**
+     * Checks if the access token is active in the SS instance.
+     *
+     * @param accessToken
+     *            Token that will be verified, if valid.
+     * @return True, if the token is still valid.
+     */
+    public boolean isAccessTokenActive(final Token accessToken) {
+
+	final String url = api.getAccessTokenStatusEndpoint(config);
+
+	final OAuthRequest request = new OAuthRequest(Verb.GET, url);
+	signRequest(accessToken, request);
+
+	final int responseCode = request.send().getCode();
+
+	return responseCode == 200;
     }
 
     /**
@@ -163,10 +202,10 @@ public class TrueNTHOAuthService implements OAuthService {
      * @param parameters
      *            Additional parameters to add on the Authorization URL. This
      *            parameter list should be used for especial circumstances to
-     *            fine tune requests directed to the OAuth server; for
-     *            instance SS's "next" parameter. Parameters coming form the
-     *            OAuthConfig will be automatically appended (by the provider);
-     *            such as "scope".
+     *            fine tune requests directed to the OAuth server; for instance
+     *            SS's "next" parameter. Parameters coming form the OAuthConfig
+     *            will be automatically appended (by the provider); such as
+     *            "scope".
      * @return The URL where users will be redirected.
      */
     public String getAuthorizationUrl(final int numberEncodings, final ParameterList callbackParameters, final ParameterList parameters) {

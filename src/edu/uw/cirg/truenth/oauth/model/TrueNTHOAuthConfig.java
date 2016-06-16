@@ -41,6 +41,11 @@ public class TrueNTHOAuthConfig extends OAuthConfig {
     private final String accessTokenEndpoint;
 
     /**
+     * URL that receives the access token status requests.
+     */
+    private final String accessTokenStatusEndpoint;
+
+    /**
      * The redirection URL where users authenticate.
      */
     private final String baseAuthorizationURL;
@@ -73,7 +78,9 @@ public class TrueNTHOAuthConfig extends OAuthConfig {
      * @param secret
      *            APP secret, distributed by SS.
      * @param accessTokenEndpointURL
-     *            URL that receives the access tokens.
+     *            URL that receives the access tokens requests.
+     * @param accessTokenStatusEndpointURL
+     *            URL that receives the access tokens status requests.
      * @param baseAuthorizationURL
      *            The redirection URL where users authenticate.
      * @param baseURL
@@ -92,12 +99,13 @@ public class TrueNTHOAuthConfig extends OAuthConfig {
      * @param stream
      *            Output stream.
      */
-    public TrueNTHOAuthConfig(final String key, final String secret, final String accessTokenEndpointURL, final String baseAuthorizationURL,
-	    final String baseURL, final String resourceURL, final String rolesURL, final String callback, final SignatureType signatureType,
-	    final String scope, final OutputStream stream) {
+    public TrueNTHOAuthConfig(final String key, final String secret, final String accessTokenEndpointURL, final String accessTokenStatusEndpointURL,
+	    final String baseAuthorizationURL, final String baseURL, final String resourceURL, final String rolesURL, final String callback,
+	    final SignatureType signatureType, final String scope, final OutputStream stream) {
 
 	super(key, secret, callback, signatureType, scope, stream);
 	accessTokenEndpoint = accessTokenEndpointURL;
+	accessTokenStatusEndpoint = accessTokenStatusEndpointURL;
 	this.baseAuthorizationURL = baseAuthorizationURL;
 
 	this.baseURL = baseURL;
@@ -117,6 +125,16 @@ public class TrueNTHOAuthConfig extends OAuthConfig {
     }
 
     /**
+     * Returns the URL that receives the access token status requests.
+     *
+     * @return Request token status URL.
+     */
+    public String getAccessTokenStatusEndpoint() {
+
+	return accessTokenStatusEndpoint;
+    }
+
+    /**
      * Returns the redirection URL where users authenticate.
      *
      * <p>
@@ -124,7 +142,7 @@ public class TrueNTHOAuthConfig extends OAuthConfig {
      * directly suitable for that use as encoding needs to be applied and
      * parameters added.
      * </p>
-     * 
+     *
      * @see TrueNTHOAuthProvider#getAuthorizationUrl(TrueNTHOAuthConfig)
      * @return Base for authorization URLs.
      */

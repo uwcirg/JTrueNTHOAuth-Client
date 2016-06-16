@@ -27,7 +27,7 @@ import java.util.Calendar;
  * by SS. For most purposes, this class should be enough, but a local
  * interpretation of such information might be necessary.
  * </p>
- * 
+ *
  * @author Victor de Lima Soares
  * @since Apr 14, 2016
  *
@@ -48,7 +48,7 @@ public class SSDemographics {
 	return birthday;
     }
 
-    public void setBirthday(Calendar birthday) {
+    public void setBirthday(final Calendar birthday) {
 
 	this.birthday = birthday;
     }
@@ -58,7 +58,7 @@ public class SSDemographics {
 	return email;
     }
 
-    public void setEmail(String email) {
+    public void setEmail(final String email) {
 
 	this.email = email;
     }
@@ -68,7 +68,7 @@ public class SSDemographics {
 	return firstName;
     }
 
-    public void setFirstName(String firstName) {
+    public void setFirstName(final String firstName) {
 
 	this.firstName = firstName;
     }
@@ -78,14 +78,14 @@ public class SSDemographics {
 	return lastName;
     }
 
-    public void setLastName(String lastName) {
+    public void setLastName(final String lastName) {
 
 	this.lastName = lastName;
     }
 
     /**
      * Return the gender as a boolean value.
-     * 
+     *
      * @return <ul>
      *         <li>true, if its male;</li>
      *         <li>false, otherwise.</li>
@@ -98,36 +98,36 @@ public class SSDemographics {
 
     /**
      * Sets the gender attribute.
-     * 
+     *
      * <p>
      * The gender is represented as a boolean flag: true for male, false for
      * female.
      * </p>
-     * 
+     *
      * @param gender
      *            ("male"|"female").
      */
-    public void setGender(String gender) {
+    public void setGender(final String gender) {
 
-	String male = SSDemographicsProtocolProperties.GENDER_MALE.toString();
+	final String male = SSDemographicsProtocolProperties.GENDER_MALE.toString();
 
 	this.gender = male.equals(gender);
     }
 
     /**
      * Sets the gender attribute.
-     * 
+     *
      * <p>
      * The gender is represented as a boolean flag: true for male, false for
      * female.
      * </p>
-     * 
+     *
      * @param isMale
      *            True for male, false for female.
      */
-    public void setGender(boolean isMale) {
+    public void setGender(final boolean isMale) {
 
-	this.gender = isMale;
+	gender = isMale;
     }
 
     public URL getPhotoUrl() {
@@ -135,12 +135,12 @@ public class SSDemographics {
 	return photoUrl;
     }
 
-    public void setPhotoUrl(URL url) {
+    public void setPhotoUrl(final URL url) {
 
-	this.photoUrl = url;
+	photoUrl = url;
     }
 
-    public void setPhotoUrl(String url) throws MalformedURLException {
+    public void setPhotoUrl(final String url) throws MalformedURLException {
 
 	setPhotoUrl((url == null) ? null : new URL(url));
     }
@@ -150,7 +150,7 @@ public class SSDemographics {
 	return trueNTHUsername;
     }
 
-    public void setTrueNTHUsername(String trueNTHUsername) {
+    public void setTrueNTHUsername(final String trueNTHUsername) {
 
 	this.trueNTHUsername = trueNTHUsername;
     }
@@ -160,7 +160,7 @@ public class SSDemographics {
 	return trueNTHID;
     }
 
-    public void setTrueNTHID(long trueNTHID) {
+    public void setTrueNTHID(final long trueNTHID) {
 
 	this.trueNTHID = trueNTHID;
     }
@@ -170,24 +170,24 @@ public class SSDemographics {
 
 	final int prime = 31;
 	int result = 1;
-	result = prime * result + ((birthday == null) ? 0 : birthday.hashCode());
-	result = prime * result + ((email == null) ? 0 : email.hashCode());
-	result = prime * result + ((firstName == null) ? 0 : firstName.hashCode());
-	result = prime * result + (gender ? 1231 : 1237);
-	result = prime * result + ((lastName == null) ? 0 : lastName.hashCode());
-	result = prime * result + ((photoUrl == null) ? 0 : photoUrl.hashCode());
-	result = prime * result + (int) (trueNTHID ^ (trueNTHID >>> 32));
-	result = prime * result + ((trueNTHUsername == null) ? 0 : trueNTHUsername.hashCode());
+	result = (prime * result) + ((birthday == null) ? 0 : birthday.hashCode());
+	result = (prime * result) + ((email == null) ? 0 : email.hashCode());
+	result = (prime * result) + ((firstName == null) ? 0 : firstName.hashCode());
+	result = (prime * result) + (gender ? 1231 : 1237);
+	result = (prime * result) + ((lastName == null) ? 0 : lastName.hashCode());
+	result = (prime * result) + ((photoUrl == null) ? 0 : photoUrl.hashCode());
+	result = (prime * result) + (int) (trueNTHID ^ (trueNTHID >>> 32));
+	result = (prime * result) + ((trueNTHUsername == null) ? 0 : trueNTHUsername.hashCode());
 	return result;
     }
 
     @Override
-    public boolean equals(Object obj) {
+    public boolean equals(final Object obj) {
 
 	if (this == obj) { return true; }
 	if (obj == null) { return false; }
 	if (!(obj instanceof SSDemographics)) { return false; }
-	SSDemographics other = (SSDemographics) obj;
+	final SSDemographics other = (SSDemographics) obj;
 	if (birthday == null) {
 	    if (other.birthday != null) { return false; }
 	} else if (!birthday.equals(other.birthday)) { return false; }

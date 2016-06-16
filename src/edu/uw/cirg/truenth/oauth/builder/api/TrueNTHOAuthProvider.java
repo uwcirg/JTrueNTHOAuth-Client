@@ -28,8 +28,8 @@ import org.scribe.utils.OAuthEncoder;
 import edu.uw.cirg.truenth.oauth.TrueNTHOAuthService;
 import edu.uw.cirg.truenth.oauth.model.TrueNTHOAuthConfig;
 import edu.uw.cirg.truenth.oauth.model.definitions.TrueNTHOAuthConstants;
-import edu.uw.cirg.truenth.oauth.model.tokens.extractors.TrueNTHAccessTokenExtractorJSon;
 import edu.uw.cirg.truenth.oauth.model.tokens.extractors.TrueNTHAccessTokenExtractor;
+import edu.uw.cirg.truenth.oauth.model.tokens.extractors.TrueNTHAccessTokenExtractorJSon;
 
 /**
  * OAuth API provider.
@@ -110,6 +110,18 @@ public class TrueNTHOAuthProvider implements Api {
     }
 
     /**
+     * Returns the URL that receives the access token status requests.
+     *
+     * @param config
+     *            TrueNTH OAuth configuration.
+     * @return request token status URL.
+     */
+    public String getAccessTokenStatusEndpoint(final TrueNTHOAuthConfig config) {
+
+	return config.getAccessTokenStatusEndpoint();
+    }
+
+    /**
      * Returns the access token extractor.
      *
      * <p>
@@ -144,7 +156,7 @@ public class TrueNTHOAuthProvider implements Api {
      * This URL will be used to redirect the users to SS, which will
      * authenticate them and redirect them back to the callback URL.
      * </p>
-     * 
+     *
      * @param config
      *            OAuth configuration.
      * @return The URL where the system should redirect users.
@@ -153,7 +165,7 @@ public class TrueNTHOAuthProvider implements Api {
 
 	final String baseURL = config.getBaseAuthorizationURL();
 
-	final String callback = OAuthEncoder.encode((config.getCallback()));
+	final String callback = OAuthEncoder.encode(config.getCallback());
 
 	if (config.hasScope()) {
 	    return baseURL + String.format(SCOPED_AUTHORIZE_URL, config.getApiKey(), callback, OAuthEncoder.encode(config.getScope()));
@@ -165,12 +177,12 @@ public class TrueNTHOAuthProvider implements Api {
 
     /**
      * Returns the redirection URL where users authenticate.
-     * 
+     *
      * <p>
      * This URL will be used to redirect the users to SS, which will
      * authenticate them and redirect them back to the callback URL.
      * </p>
-     * 
+     *
      * <p>
      * Same as
      * <code>getAuthorizationUrl(config, numberEncodings, callbackParameters, null)</code>
@@ -199,12 +211,12 @@ public class TrueNTHOAuthProvider implements Api {
 
     /**
      * Returns the redirection URL where users authenticate.
-     * 
+     *
      * <p>
      * This URL will be used to redirect the users to SS, which will
      * authenticate them and redirect them back to the callback URL.
      * </p>
-     * 
+     *
      * @param config
      *            OAuth configuration.
      * @param numberEncodings

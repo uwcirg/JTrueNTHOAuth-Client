@@ -26,11 +26,11 @@ import javax.json.JsonString;
 
 /**
  * JSON demographic information extractor.
- * 
+ *
  * <p>
  * Constants are defined by {@link SSDemographicsProtocolProperties}.
  * </p>
- * 
+ *
  * @author Victor de Lima Soares
  * @since Mar 25, 2016
  */
@@ -63,7 +63,7 @@ public class SSDemographicsExtractorJson implements SSDemographicsExtractor<Json
 	if (date == null) { return birthday; }
 
 	try {
-	    SimpleDateFormat birthdayFormat = new SimpleDateFormat("yyyy-MM-dd");
+	    final SimpleDateFormat birthdayFormat = new SimpleDateFormat("yyyy-MM-dd");
 	    birthday.setTime(birthdayFormat.parse(date.getString()));
 	    return birthday;
 	} catch (final ParseException e) {
@@ -85,15 +85,15 @@ public class SSDemographicsExtractorJson implements SSDemographicsExtractor<Json
      * ]
      * </pre>
      *
-     * 
+     *
      * <p>
      * This method will use the first TELECOM_SYSTEM=TELECOM_SYSTEM_EMAIL field
      * inside the data source, if any.
      * </p>
-     * 
+     *
      * @param data
      *            JSON object, data origin.
-     * 
+     *
      * @return <ul>
      *         <li>Email address, if it can be extracted;</li>
      *         <li>null, otherwise.</li>
@@ -123,11 +123,11 @@ public class SSDemographicsExtractorJson implements SSDemographicsExtractor<Json
 
     /**
      * Extracts: first name.
-     * 
+     *
      * <p>
      * Input format:
      * </p>
-     * 
+     *
      * <pre>
      * NAME: {
      * 	FAMILY: "Truenth",
@@ -188,7 +188,7 @@ public class SSDemographicsExtractorJson implements SSDemographicsExtractor<Json
 
 	if (rawGender == null) { return null; }
 
-	String gender = rawGender.getString();
+	final String gender = rawGender.getString();
 
 	if (SSDemographicsProtocolProperties.GENDER_MALE.toString().equals(gender)
 		|| SSDemographicsProtocolProperties.GENDER_FEMALE.toString().equals(gender)) { return gender; }
@@ -240,11 +240,11 @@ public class SSDemographicsExtractorJson implements SSDemographicsExtractor<Json
 
     /**
      * Extracts: TrueNTH profile picture URL.
-     * 
+     *
      * <p>
      * Input format:
      * </p>
-     * 
+     *
      * <pre>
      * PHOTO: {
      * 	PHOTO_URL: url
@@ -409,9 +409,9 @@ public class SSDemographicsExtractorJson implements SSDemographicsExtractor<Json
     }
 
     @Override
-    public SSDemographics extractDemographics(JsonObject data) {
+    public SSDemographics extractDemographics(final JsonObject data) {
 
-	SSDemographics demographics = new SSDemographics();
+	final SSDemographics demographics = new SSDemographics();
 	demographics.setBirthday(extractBirthday(data));
 	demographics.setEmail(extractEmail(data));
 	demographics.setFirstName(extractFirstName(data));

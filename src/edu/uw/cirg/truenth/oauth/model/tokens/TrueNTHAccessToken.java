@@ -55,7 +55,7 @@ public class TrueNTHAccessToken extends TrueNTHToken {
      * Parameters for a TrueNTH access token.
      *
      * <p>
-     * This parameters represent a name convention to read and write tokens.
+     * These parameters represent a name convention to read and write tokens.
      * </p>
      *
      * @author Victor de Lima Soares
