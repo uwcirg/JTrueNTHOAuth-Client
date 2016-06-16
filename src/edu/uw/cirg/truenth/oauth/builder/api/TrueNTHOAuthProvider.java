@@ -216,7 +216,9 @@ public class TrueNTHOAuthProvider implements Api {
      * be exchanged for an Access Token.
      * </p>
      *
-     *
+     * @param config
+     *            SS' OAuth configuration.
+     *            
      * @param numberEncodings
      *            Number of URL encoding operations to be applied on the
      *            callback URL. For instance, two encoding operations are

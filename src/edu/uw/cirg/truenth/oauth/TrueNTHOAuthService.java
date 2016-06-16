@@ -132,10 +132,6 @@ public class TrueNTHOAuthService implements OAuthService {
     /**
      * Fetches an access token and returns as a token object.
      *
-     * @param requestToken
-     *            This parameter will not be used and can be safely set to null
-     *            (it comes from a deprecated API).
-     *
      * @param code
      *            Authorization Code to obtain an access token.
      *
@@ -180,7 +176,7 @@ public class TrueNTHOAuthService implements OAuthService {
      *         <li>True, if the token is still valid;</li>
      *         <li>False, if the token is invalid or expired;</li>
      *         <li>False, if the verification is not possible.</li>
-     *         <ul>
+     *         </ul>
      */
     public boolean isAccessTokenActive(final Token accessToken) {
 

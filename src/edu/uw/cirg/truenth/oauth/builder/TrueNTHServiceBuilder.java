@@ -253,6 +253,8 @@ public class TrueNTHServiceBuilder {
     /**
      * Configures the debug stream.
      *
+     * @param stream Debug stream.
+     * 
      * @return The {@link TrueNTHServiceBuilder} instance for method chaining.
      */
     public TrueNTHServiceBuilder debugStream(final OutputStream stream) {
@@ -428,7 +430,7 @@ public class TrueNTHServiceBuilder {
      * to a specific user, where #userId is a placeholder for the user's ID.
      * This library understands this placeholder and automatically replaces it
      * when requests are made.
-     * <p>
+     * </p>
      * <p>
      * Example: https://stg.us.truenth.org/api/user/#userId/roles
      * </p>

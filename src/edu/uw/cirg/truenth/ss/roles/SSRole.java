@@ -60,7 +60,7 @@ public class SSRole implements Serializable {
     /**
      * Sets the description attribute.
      *
-     * @param ssDescription
+     * @param ssDescription Description stored in SS.
      */
     public void setDescription(final String ssDescription) {
 
@@ -70,7 +70,7 @@ public class SSRole implements Serializable {
     /**
      * Sets the name attribute.
      *
-     * @param ssName
+     * @param ssName Name within the SS instance.
      */
     public void setName(final String ssName) {
 
